@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dju6tadl6ss46"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
+[ext_resource type="Script" path="res://scripts/debug_mesh.gd" id="3_43qcu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peuui"]
+radius = 0.3
+height = 1.7
+
+[sub_resource type="SphereMesh" id="SphereMesh_hqq2u"]
+radius = 0.05
+height = 0.1
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_6168c")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_peuui")
+
+[node name="PlayerCamera" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("1_ca6ab")
+priority_override = false
+priority = 0
+follow_mode = 0
+look_at_mode = 0
+tween_parameters = null
+tween_on_load = true
+inactive_update_mode = 0
+camera_3D_resource = null
+
+[node name="RayCast" type="RayCast3D" parent="PlayerCamera"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -2.5)
+collision_mask = 4
+
+[node name="GrabPoint" type="Node3D" parent="PlayerCamera/RayCast"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerCamera/RayCast/GrabPoint"]
+mesh = SubResource("SphereMesh_hqq2u")
+script = ExtResource("3_43qcu")
