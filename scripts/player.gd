@@ -1,7 +1,5 @@
 extends CharacterBody3D
 
-const look_speed := 0.0001
-
 @export_category("Player")
 @export_group("Movement")
 @export var max_speed := 5.0
@@ -14,8 +12,15 @@ const look_speed := 0.0001
 @export var jump_velocity := 4.5
 
 @export_group("Controls")
-@export_range(0.0, 1.0) var mouse_look_speed := 0.3
-@export_range(0.0, 1.0) var controller_look_speed := 100.0
+@export_range(0.0, 1.0) var mouse_look_sensitivity := 0.3
+var mouse_look_speed: float:
+	get: return mouse_look_sensitivity * 0.0001
+@export_range(0.0, 1.0) var controller_look_sensitivity := 0.3
+var controller_look_speed: float:
+	get: return controller_look_sensitivity * 0.1
+
+@export_group("Physics")
+@export var gravity_scale := 1.0
 
 @export_group("Internal")
 @export var grab_speed := 5000.0
@@ -23,7 +28,9 @@ const look_speed := 0.0001
 @export var grab_damp := 10.0
 @export var grab_angular_damp := 15.0
 
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity: float:
+	get: return gravity_scale * default_gravity
 var direction := transform.basis.get_rotation_quaternion() * Vector3.FORWARD
 var speed := 0.0
 var acceleration: float:
@@ -58,9 +65,8 @@ func process_movement(delta: float):
 	if mouse_focus:
 		look = -Input.get_last_mouse_velocity() * mouse_look_speed
 	else:
-		look = Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down") * controller_look_speed
+		look = Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * controller_look_speed
 	
-	look *= look_speed
 	%PlayerCamera.rotate_x(look.y)
 	%PlayerCamera.rotation.x = clampf(%PlayerCamera.rotation.x, -PI * 0.5, PI * 0.5)
 	rotate_y(look.x)
@@ -71,7 +77,7 @@ func process_movement(delta: float):
 	if Input.is_action_just_pressed(&"ui_cancel"):
 		mouse_focus = false
 	
-	var input_dir := Input.get_vector(&"player_move_left", &"player_move_right", &"player_move_forward", &"player_move_back")
+	var input_dir := call_function(&"get_input_vector") as Vector2
 	var input_direction := transform.basis.get_rotation_quaternion() * Vector3(input_dir.x, 0, input_dir.y)
 	input_direction = input_direction.normalized()
 	if input_direction:
@@ -98,13 +104,13 @@ func process_raycast():
 		%PlayerCamera/RayCast/GrabPoint.global_position = %PlayerCamera/RayCast.get_collision_point()
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
-			grabbed.gravity_scale = 1
+			#grabbed.gravity_scale = 1
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
 		elif collider != null:
 			grabbed = collider
-			grabbed.gravity_scale = 0
+			#grabbed.gravity_scale = 0
 			grabbed.linear_damp = grab_damp
 			grabbed.angular_damp = grab_angular_damp
 
@@ -123,4 +129,23 @@ func quaternion_from_to(pivot: Node3D, from: Node3D, to: Node3D) -> Quaternion:
 	var pos_a = from.global_position - pivot.global_position
 	var pos_b = to.global_position - pivot.global_position
 	return Quaternion(pos_a, pos_b).normalized()
-	
+
+func get_input_vector() -> Vector2:
+	return Input.get_vector(&"player_move_left", &"player_move_right", &"player_move_forward", &"player_move_back")
+
+func get_effect_component() -> EffectComponent:
+	return %EffectComponent
+
+func get_function(key: StringName) -> Callable:
+	return get_effect_component().get_function(key, get(key))
+
+func call_function(key: StringName, args: Array = []) -> Variant:
+	var function = get_function(key)
+	if function == null:
+		return null
+	else:
+		if function != get(key):
+			args = args.duplicate()
+			args.insert(0, self)
+		var result = function.callv(args)
+		return result

@@ -128,6 +128,7 @@ player_action_grab={
 3d_physics/layer_1="Default"
 3d_physics/layer_2="Static"
 3d_physics/layer_3="Grabbable"
+3d_physics/layer_4="AoE"
 
 [rendering]
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dju6tadl6ss46"]
+[gd_scene load_steps=7 format=3 uid="uid://dju6tadl6ss46"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
 [ext_resource type="Script" path="res://scripts/debug_mesh.gd" id="3_43qcu"]
+[ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="4_ftkig"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peuui"]
 radius = 0.3
@@ -13,6 +14,7 @@ radius = 0.05
 height = 0.1
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 9
 script = ExtResource("1_6168c")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
@@ -45,3 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerCamera/RayCast/GrabPoint"]
 mesh = SubResource("SphereMesh_hqq2u")
 script = ExtResource("3_43qcu")
+
+[node name="EffectComponent" parent="." instance=ExtResource("4_ftkig")]
+unique_name_in_owner = true
