@@ -536,7 +536,7 @@ gravity_strength = 4.9
 environment = SubResource("Environment_b3w5c")
 
 [node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
-transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 14, 0, -26)
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -1.42263, 0, -3.2153)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999405, -0.0222603, 0.0263452, -0.0344697, -0.671156, 0.740514, 0.0011977, -0.740982, -0.671524, 0, 0, 0)

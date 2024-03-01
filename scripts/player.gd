@@ -215,10 +215,12 @@ func do_grab(collider: Node3D):
 func do_interact(collider: Node3D):
 	if Input.is_action_just_released(&"player_action_interact"):
 		if interactive == null:
+			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.global_transform = %PlayerCamera.global_transform
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = true
 			interactive = collider.duplicate()
 			interactive.transform = Transform3D.IDENTITY
 			ItemScene.instance.add_child(interactive)
+			interactive.tree_exiting.connect(func(): collider.queue_free())
 			get_tree().paused = true
 		else:
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
