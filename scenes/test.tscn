@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=46 format=3 uid="uid://cdxndeyjw01wi"]
 
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_cl8dn"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dnnmxd7d8ekff" path="res://scenes/zones/base_zone.tscn" id="5_swip5"]
 [ext_resource type="Script" path="res://scripts/effect_gravity_scale.gd" id="6_g85xc"]
 [ext_resource type="Script" path="res://scripts/effect_invert_controls.gd" id="7_osl30"]
+[ext_resource type="Script" path="res://scripts/effect_custom_gravity.gd" id="8_i02c0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n17xh"]
 
@@ -18,6 +19,18 @@ background_mode = 2
 sky = SubResource("Sky_g52w6")
 ambient_light_source = 3
 tonemap_mode = 3
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mrcce"]
+resource_local_to_scene = true
+bounce = 0.2
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cvtpf"]
+resource_local_to_scene = true
+bounce = 0.2
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0bx8l"]
+resource_local_to_scene = true
+bounce = 0.2
 
 [sub_resource type="Resource" id="Resource_pfqeq"]
 script = ExtResource("2_x5lny")
@@ -187,14 +200,158 @@ face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
 active_face = -1
 face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
 
-[sub_resource type="Resource" id="Resource_n8hye"]
+[sub_resource type="Resource" id="Resource_eml3d"]
 script = ExtResource("2_x5lny")
 selected = false
 active = false
 collsion = true
 physics_layer = 0
 physics_mask = 0
-vertex_points = PackedVector3Array(0, 4, 0, 0, 4, 17, 0, 0, 17, 0, 0, 0, 1, 4, 0, 1, 4, 17, 1, 0, 17, 1, 0, 0)
+vertex_points = PackedVector3Array(0, 4, 17, 0, 4, 10, 1, 4, 10, 1, 4, 17, 0, 0, 10, 0, 0, 17, 1, 0, 17, 1, 0, 10)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 1, 0, 5, 5, 4, 6, 5, 3, 6, 7, 2, 4, 7, 6, 7)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 1, 0, 3, 0, 5, 0, 2, 1, 3, 1, 2, 1, 4, 2, 4, 2, 5, 3, 5, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 1, 0, 5, 6, 5, 0, 3, 7, 2, 1, 4, 6, 7, 4, 5, 6, 3, 2, 7)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 1, 0, 0)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_4s2ov"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(1, 4, 1, 0, 4, 1, 0, 0, 1, 1, 0, 1, 0, 0, 20, 0, 4, 20, 1, 0, 20, 1, 4, 20)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 2, 1, 5, 5, 4, 6, 3, 4, 6, 7, 5, 0, 7, 7, 6)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 3, 0, 1, 0, 2, 0, 5, 1, 2, 1, 3, 1, 4, 2, 5, 2, 4, 3, 4, 3, 5, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 2, 1, 5, 6, 3, 2, 4, 7, 5, 1, 0, 7, 6, 4, 5, 7, 0, 3, 6)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(1, 0, 0, 0, 0, 0)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_362vj"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 11, 0, 0, 11, 1, 0, 0, 1, 0, 0, 0, 15, 0, 0, 15, 0, 1, 15, 4, 1, 15, 4, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 3, 2, 5, 5, 4, 6, 5, 1, 6, 4, 7, 7, 0, 6, 7)
+edge_selected = PackedByteArray(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 5, 0, 2, 0, 1, 0, 3, 1, 3, 1, 2, 1, 4, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 3, 2, 5, 6, 5, 2, 1, 0, 3, 4, 7, 6, 7, 4, 5, 0, 7, 6, 1)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 1)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_43ho6"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(9, -3, -1, 9, -2, -1, 0, -2, -1, 0, -3, -1, 0, -3, 9, 0, -2, 9, 9, -2, 9, 9, -3, 9)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 3, 2, 5, 5, 4, 6, 5, 1, 6, 4, 7, 7, 0, 6, 7)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 5, 0, 2, 0, 1, 0, 3, 1, 3, 1, 2, 1, 4, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 3, 2, 5, 6, 5, 2, 1, 0, 3, 4, 7, 6, 7, 4, 5, 0, 7, 6, 1)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 1)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_y20ho"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(1, 2, 1, 0, 2, 1, 0, 0, 1, 1, 0, 1, 0, 0, 10, 0, 2, 10, 1, 0, 10, 1, 2, 10)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 2, 1, 5, 5, 4, 6, 3, 4, 6, 7, 5, 0, 7, 7, 6)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 3, 0, 1, 0, 2, 0, 5, 1, 2, 1, 3, 1, 4, 2, 5, 2, 4, 3, 4, 3, 5, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 2, 1, 5, 6, 3, 2, 4, 7, 5, 1, 0, 7, 6, 4, 5, 7, 0, 3, 6)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(1, 0, 0, 0, 0, 0)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_bhqe2"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(10, 13, 1, 10, 13, 0, 10, 0, 0, 10, 0, 1, 0, 0, 1, 0, 13, 1, 0, 13, 0, 0, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 0, 3, 4, 6, 1, 5, 6, 6, 7, 7, 2, 7, 4)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 1, 1, 5, 1, 2, 1, 4, 2, 3, 2, 5, 3, 5, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 5, 0, 3, 6, 1, 0, 5, 6, 7, 2, 1, 4, 3, 2, 7, 6, 5, 4, 7)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_ew58m"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 2, 0, 0, 2, 1, 0, 0, 1, 0, 0, 0, 8, 2, 0, 8, 2, 1, 8, 0, 1, 8, 0, 0)
 vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
 active_vertex = -1
 edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
@@ -211,14 +368,62 @@ face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
 active_face = -1
 face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
 
-[sub_resource type="Resource" id="Resource_rbmyy"]
+[sub_resource type="Resource" id="Resource_uikbs"]
 script = ExtResource("2_x5lny")
 selected = false
 active = false
 collsion = true
 physics_layer = 0
 physics_mask = 0
-vertex_points = PackedVector3Array(0, 4, 0, 0, 4, 20, 0, 0, 20, 0, 0, 0, 1, 4, 0, 1, 4, 20, 1, 0, 20, 1, 0, 0)
+vertex_points = PackedVector3Array(10, 0, 0, 0, 0, 0, 0, 0, 1, 10, 0, 1, 10, 11, 1, 0, 11, 1, 0, 11, 0, 10, 11, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 3, 2, 5, 5, 4, 6, 5, 1, 6, 4, 7, 7, 0, 6, 7)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 5, 0, 2, 0, 1, 0, 3, 1, 3, 1, 2, 1, 4, 2, 4, 2, 5, 3, 4, 3, 5, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 3, 2, 5, 6, 5, 2, 1, 0, 3, 4, 7, 6, 7, 4, 5, 6, 1, 0, 7)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 1, 0)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_niiga"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 13, 8, 0, 13, 0, 1, 13, 0, 1, 13, 8, 1, 0, 0, 0, 0, 0, 1, 0, 8, 0, 0, 8)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+active_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 2, 1, 5, 5, 4, 6, 3, 4, 6, 7, 5, 0, 7, 7, 6)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+active_edge = -1
+edge_face_indices = PackedInt32Array(0, 3, 0, 1, 0, 2, 0, 5, 1, 2, 1, 3, 1, 4, 2, 5, 2, 4, 3, 4, 3, 5, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 2, 1, 5, 6, 3, 2, 4, 7, 5, 1, 0, 7, 6, 4, 5, 7, 0, 3, 6)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(1, 0, 0, 0, 0, 0)
+active_face = -1
+face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
+
+[sub_resource type="Resource" id="Resource_7rub2"]
+script = ExtResource("2_x5lny")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 1, 0, 0, 1, 8, 0, 0, 8, 0, 0, 0, 9, 1, 0, 9, 1, 8, 9, 0, 8, 9, 0, 0)
 vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
 active_vertex = -1
 edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
@@ -235,22 +440,22 @@ face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
 active_face = -1
 face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
 
-[sub_resource type="Resource" id="Resource_r2mas"]
+[sub_resource type="Resource" id="Resource_qglh1"]
 script = ExtResource("2_x5lny")
 selected = false
 active = false
 collsion = true
 physics_layer = 0
 physics_mask = 0
-vertex_points = PackedVector3Array(0, 4, 0, 0, 4, 1, 0, 0, 1, 0, 0, 0, 15, 4, 0, 15, 4, 1, 15, 0, 1, 15, 0, 0)
+vertex_points = PackedVector3Array(16, 0, 1, 15, 0, 1, 15, 4, 1, 16, 4, 1, 15, 4, 0, 16, 4, 0, 16, 0, 0, 15, 0, 0)
 vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
 active_vertex = -1
-edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 3, 2, 4, 6, 0, 5, 6, 7, 4, 1, 7, 6, 7)
 edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 active_edge = -1
-edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+edge_face_indices = PackedInt32Array(0, 4, 0, 3, 0, 1, 0, 2, 1, 5, 1, 2, 1, 3, 2, 4, 2, 5, 3, 5, 3, 4, 4, 5)
 face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
-face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 5, 3, 2, 6, 0, 3, 5, 7, 4, 2, 1, 7, 1, 0, 6, 7, 6, 5, 4)
 face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
 face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
 face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
@@ -263,8 +468,66 @@ face_ids = PackedInt32Array(0, 1, 2, 3, 4, 5)
 script = ExtResource("6_g85xc")
 scale = 0.5
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ot6qx"]
+resource_local_to_scene = true
+size = Vector3(4, 3, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_no1kp"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0, 0.792157, 0.552941, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m6eem"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_no1kp")
+size = Vector3(4, 3, 7)
+
 [sub_resource type="Resource" id="Resource_q6jeh"]
 script = ExtResource("7_osl30")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wu6p8"]
+resource_local_to_scene = true
+size = Vector3(6, 3, 6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pivy4"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.847059, 0.678431, 0, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xk1ku"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_pivy4")
+size = Vector3(6, 3, 6)
+
+[sub_resource type="Resource" id="Resource_3wucp"]
+script = ExtResource("8_i02c0")
+gravity_direction = Vector3(0, 1, 0)
+gravity_strength = 9.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s1320"]
+resource_local_to_scene = true
+size = Vector3(8, 8, 9)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecsgi"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0, 0.741176, 1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_67wvh"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ecsgi")
+size = Vector3(8, 8, 9)
+
+[sub_resource type="Resource" id="Resource_rdnpa"]
+script = ExtResource("8_i02c0")
+gravity_direction = Vector3(0, 0, -1)
+gravity_strength = 4.9
 
 [node name="Test" type="Node3D"]
 
@@ -272,18 +535,22 @@ script = ExtResource("7_osl30")
 environment = SubResource("Environment_b3w5c")
 
 [node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 14, 0, -26)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999405, -0.0222603, 0.0263452, -0.0344697, -0.671156, 0.740514, 0.0011977, -0.740982, -0.671524, 0, 0, 0)
 
 [node name="Cube" parent="." instance=ExtResource("1_60o4d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91245, -5.38937)
+physics_material_override = SubResource("PhysicsMaterial_mrcce")
 
 [node name="Cube2" parent="." instance=ExtResource("1_60o4d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22533, 1.91245, -5.38937)
+physics_material_override = SubResource("PhysicsMaterial_cvtpf")
 
 [node name="Cube3" parent="." instance=ExtResource("1_60o4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58856, 2.84081, -5.38937)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.47698, 0.419187, -27.3894)
+physics_material_override = SubResource("PhysicsMaterial_0bx8l")
 
 [node name="CyclopsBlocks" type="Node3D" parent="."]
 script = ExtResource("1_f7s6k")
@@ -326,31 +593,122 @@ block_data = SubResource("Resource_qsqmy")
 [node name="Block_6" type="Node3D" parent="CyclopsBlocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -33)
 script = ExtResource("1_cl8dn")
-block_data = SubResource("Resource_n8hye")
+block_data = SubResource("Resource_eml3d")
 
 [node name="Block_7" type="Node3D" parent="CyclopsBlocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -33)
 script = ExtResource("1_cl8dn")
-block_data = SubResource("Resource_rbmyy")
+block_data = SubResource("Resource_4s2ov")
 
 [node name="Block_8" type="Node3D" parent="CyclopsBlocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -33)
 script = ExtResource("1_cl8dn")
-block_data = SubResource("Resource_r2mas")
+block_data = SubResource("Resource_362vj")
+
+[node name="Block_9" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_43ho6")
+
+[node name="Block_10" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -2, -33)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_y20ho")
+
+[node name="Block_11" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -33)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_bhqe2")
+
+[node name="Block_12" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -24)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_ew58m")
+
+[node name="Block_13" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_uikbs")
+
+[node name="Block_14" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -32)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_niiga")
+
+[node name="Block_15" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 10, -32)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_7rub2")
+
+[node name="Block_16" type="Node3D" parent="CyclopsBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -33)
+script = ExtResource("1_cl8dn")
+block_data = SubResource("Resource_qglh1")
 
 [node name="GravityZone" parent="." instance=ExtResource("5_swip5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 2, -17)
 effects = Array[Resource("res://scripts/base_effect.gd")]([SubResource("Resource_pt2ow")])
+debug_color = Color(0, 0.792157, 0.552941, 1)
 
-[node name="CollisionShape3D" parent="GravityZone/Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 3.5)
+[node name="Shape" parent="GravityZone/Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1, 1)
+shape = SubResource("BoxShape3D_ot6qx")
+
+[node name="DebugMesh" parent="GravityZone" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1, 1)
+mesh = SubResource("BoxMesh_m6eem")
 
 [node name="InputZone" parent="." instance=ExtResource("5_swip5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 2, -28)
 effects = Array[Resource("res://scripts/base_effect.gd")]([SubResource("Resource_q6jeh")])
+debug_color = Color(0.847059, 0.678431, 0, 1)
 
-[node name="CollisionShape3D" parent="InputZone/Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 3.5)
+[node name="Shape" parent="InputZone/Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1, -1.5)
+shape = SubResource("BoxShape3D_wu6p8")
+
+[node name="DebugMesh" parent="InputZone" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1, -1.5)
+mesh = SubResource("BoxMesh_xk1ku")
+
+[node name="GravityUpZone" parent="." instance=ExtResource("5_swip5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -28)
+effects = Array[Resource("res://scripts/base_effect.gd")]([SubResource("Resource_3wucp")])
+debug_color = Color(0, 0.741176, 1, 1)
+
+[node name="Area" parent="GravityUpZone" index="0"]
+gravity_space_override = 3
+gravity_point_center = Vector3(0, 1, 0)
+gravity_direction = Vector3(0, 1, 0)
+
+[node name="Shape" parent="GravityUpZone/Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
+shape = SubResource("BoxShape3D_s1320")
+
+[node name="DebugMesh" parent="GravityUpZone" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
+mesh = SubResource("BoxMesh_67wvh")
+
+[node name="GravitySideZone" parent="." instance=ExtResource("5_swip5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 8, -28)
+effects = Array[Resource("res://scripts/base_effect.gd")]([SubResource("Resource_rdnpa")])
+debug_color = Color(0, 0.741176, 1, 1)
+
+[node name="Area" parent="GravitySideZone" index="0"]
+gravity_space_override = 3
+gravity_point_center = Vector3(0, 0, -1)
+gravity_direction = Vector3(0, 0, -1)
+gravity = 4.9
+
+[node name="Shape" parent="GravitySideZone/Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
+shape = SubResource("BoxShape3D_s1320")
+
+[node name="DebugMesh" parent="GravitySideZone" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
+mesh = SubResource("BoxMesh_67wvh")
 
 [editable path="GravityZone"]
 [editable path="InputZone"]
+[editable path="GravityUpZone"]
+[editable path="GravitySideZone"]

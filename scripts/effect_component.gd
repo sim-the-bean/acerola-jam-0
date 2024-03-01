@@ -5,15 +5,17 @@ var saved_vars: Dictionary
 var replaced_funs: Dictionary
 
 func replace_variable(key: StringName, value: Variant):
-	saved_vars[key] = get_parent().get(key)
+	if not saved_vars.has(key):
+		saved_vars[key] = get_parent().get(key)
 	get_parent().set(key, value)
 
 func replace_function(key: String, value: Callable):
 	replaced_funs[key] = value
 
 func reset_variable(key: StringName):
-	get_parent().set(key, saved_vars[key])
-	saved_vars.erase(key)
+	if saved_vars.has(key):
+		get_parent().set(key, saved_vars[key])
+		saved_vars.erase(key)
 
 func reset_function(key: String):
 	replaced_funs.erase(key)

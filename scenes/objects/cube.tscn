@@ -3,12 +3,15 @@
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_o5qva"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sxott"]
+resource_local_to_scene = true
 bounce = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4u758"]
+resource_local_to_scene = true
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ioba5"]
+resource_local_to_scene = true
 size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Cube" type="RigidBody3D" groups=["grabbable"]]
