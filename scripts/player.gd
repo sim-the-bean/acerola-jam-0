@@ -16,6 +16,7 @@ enum PositionState {
 @export_range(0.0, 10.0, 0.05, "or_greater") var super_acceleration_rate := 0.15
 @export_range(0.0, 10.0, 0.05, "or_greater") var deceleration_rate := 3.0
 @export var jump_velocity := 4.5
+@export var air_control := 0.05
 @export var flip_speed := 1.5
 @export var throw_strength := 5.0
 @export var jump_buffer_duration := 0.2
@@ -149,18 +150,22 @@ func process_input(delta: float):
 	var input_dir := call_function(&"get_input_vector") as Vector2
 	var input_direction := transform.basis.get_rotation_quaternion() * Vector3(input_dir.x, 0, input_dir.y)
 	input_direction = input_direction.limit_length()
+	var new_direction = direction
+	var new_speed = speed
 	if input_direction:
 		var angle := acos(input_direction.dot(transform.basis.get_rotation_quaternion() * Vector3.FORWARD))
 		var backwards := clampf((angle - (PI - backwards_angle)) / backwards_angle, 0.0, 1.0)
 		if backwards:
-			speed = move_toward(speed, lerpf(max_speed, backwards_speed, backwards), acceleration * delta)
+			new_speed = move_toward(speed, lerpf(max_speed, backwards_speed, backwards), acceleration * delta)
 		elif speed < max_speed:
-			speed = move_toward(speed, max_speed, acceleration * delta)
+			new_speed = move_toward(speed, max_speed, acceleration * delta)
 		else:
-			speed = move_toward(speed, super_speed, super_acceleration * delta)
-		direction = input_direction
+			new_speed = move_toward(speed, super_speed, super_acceleration * delta)
+		new_direction = input_direction
 	else:
-		speed = move_toward(speed, 0, deceleration * delta)
+		new_speed = move_toward(speed, 0, deceleration * delta)
+	direction = direction.lerp(new_direction, 1.0 if is_on_floor() else air_control)
+	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
 	
 	velocity = velocity * up_direction.abs() + direction * speed
 
