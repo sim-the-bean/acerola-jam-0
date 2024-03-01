@@ -77,6 +77,7 @@ var rotation_axis := Vector3.ZERO
 var base_rotation := Quaternion.from_euler(rotation)
 var rotation_weight := 0.0
 
+var input_allowed := true
 var direction := transform.basis.get_rotation_quaternion() * Vector3.FORWARD
 var speed := 0.0
 var acceleration: float:
@@ -147,7 +148,8 @@ func process_input(delta: float):
 	if Input.is_action_just_pressed(&"ui_cancel"):
 		mouse_focus = false
 	
-	var input_dir := call_function(&"get_input_vector") as Vector2
+	var raw_input := call_function(&"get_input_vector") as Vector2
+	var input_dir := raw_input if input_allowed else Vector2.ZERO
 	var input_direction := transform.basis.get_rotation_quaternion() * Vector3(input_dir.x, 0, input_dir.y)
 	input_direction = input_direction.limit_length()
 	var new_direction = direction
@@ -163,6 +165,8 @@ func process_input(delta: float):
 			new_speed = move_toward(speed, super_speed, super_acceleration * delta)
 		new_direction = input_direction
 	else:
+		if not input_allowed and not raw_input:
+			input_allowed = true
 		new_speed = move_toward(speed, 0, deceleration * delta)
 	direction = direction.lerp(new_direction, 1.0 if is_on_floor() else air_control)
 	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
