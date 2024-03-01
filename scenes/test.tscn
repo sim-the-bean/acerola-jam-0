@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=47 format=3 uid="uid://cdxndeyjw01wi"]
 
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_cl8dn"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/effect_gravity_scale.gd" id="6_g85xc"]
 [ext_resource type="Script" path="res://scripts/effect_invert_controls.gd" id="7_osl30"]
 [ext_resource type="Script" path="res://scripts/effect_custom_gravity.gd" id="8_i02c0"]
+[ext_resource type="PackedScene" uid="uid://c1kmeui3wfpvs" path="res://scenes/objects/interactive.tscn" id="9_3bmb4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n17xh"]
 
@@ -707,6 +708,9 @@ shape = SubResource("BoxShape3D_s1320")
 [node name="DebugMesh" parent="GravitySideZone" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
 mesh = SubResource("BoxMesh_67wvh")
+
+[node name="Interactive" parent="." instance=ExtResource("9_3bmb4")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 1, -22)
 
 [editable path="GravityZone"]
 [editable path="InputZone"]

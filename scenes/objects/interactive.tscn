@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1kmeui3wfpvs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d0402"]
+resource_local_to_scene = true
+size = Vector3(0.343, 0.48, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j6rrn"]
+resource_local_to_scene = true
+size = Vector3(0.286, 0.4, 0.01)
+
+[node name="Interactive" type="StaticBody3D" groups=["interactive"]]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_d0402")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_j6rrn")

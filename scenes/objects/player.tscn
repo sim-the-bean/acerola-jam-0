@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dju6tadl6ss46"]
+[gd_scene load_steps=10 format=3 uid="uid://dju6tadl6ss46"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
 [ext_resource type="Script" path="res://scripts/debug_mesh.gd" id="3_43qcu"]
+[ext_resource type="Shader" path="res://shaders/item_zoom.gdshader" id="4_apbnp"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="4_ftkig"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peuui"]
@@ -12,6 +13,17 @@ height = 1.7
 [sub_resource type="SphereMesh" id="SphereMesh_hqq2u"]
 radius = 0.05
 height = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_afh3t"]
+render_priority = 0
+shader = ExtResource("4_apbnp")
+shader_parameter/blur_radius = 10.0
+shader_parameter/sigma = 5.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_i4gvn"]
+material = SubResource("ShaderMaterial_afh3t")
+flip_faces = true
+size = Vector2(2, 2)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 9
@@ -31,14 +43,14 @@ priority = 0
 follow_mode = 0
 look_at_mode = 0
 tween_parameters = null
-tween_on_load = true
+tween_on_load = false
 inactive_update_mode = 0
 camera_3D_resource = null
 
 [node name="RayCast" type="RayCast3D" parent="PlayerCamera"]
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -2.5)
-collision_mask = 4
+collision_mask = 20
 
 [node name="GrabPoint" type="Node3D" parent="PlayerCamera/RayCast"]
 unique_name_in_owner = true
@@ -47,6 +59,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerCamera/RayCast/GrabPoint"]
 mesh = SubResource("SphereMesh_hqq2u")
 script = ExtResource("3_43qcu")
+
+[node name="ItemZoomViewport" type="SubViewport" parent="PlayerCamera"]
+unique_name_in_owner = true
+
+[node name="ItemZoomPostProcess" type="MeshInstance3D" parent="PlayerCamera/ItemZoomViewport"]
+unique_name_in_owner = true
+visible = false
+mesh = SubResource("QuadMesh_i4gvn")
 
 [node name="EffectComponent" parent="." instance=ExtResource("4_ftkig")]
 unique_name_in_owner = true

@@ -89,14 +89,11 @@ var deceleration: float:
 var jump_buffer := false
 var jump_buffer_time := 0.0
 
-var mouse_focus := false:
-	set(value):
-		mouse_focus = value
-		if mouse_focus:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 var grabbed: RigidBody3D = null
+var interactive: Node3D = null
+
+func _ready():
+	%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
 
 func _physics_process(delta: float):
 	jump_buffer_time -= delta
@@ -122,7 +119,7 @@ func process_physics(delta: float):
 
 func process_look(_delta: float):
 	var look := Vector2.ZERO
-	if mouse_focus:
+	if Utils.mouse_focus:
 		look += -Input.get_last_mouse_velocity() * mouse_look_speed
 	look += Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * controller_look_speed
 	
@@ -142,11 +139,11 @@ func process_input(delta: float):
 			jump_buffer = true
 			jump_buffer_time = jump_buffer_duration
 	
-	if not mouse_focus and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		mouse_focus = true
+	if not Utils.mouse_focus and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		Utils.mouse_focus = true
 	
 	if Input.is_action_just_pressed(&"ui_cancel"):
-		mouse_focus = false
+		Utils.mouse_focus = false
 	
 	var raw_input := call_function(&"get_input_vector") as Vector2
 	var input_dir := raw_input if input_allowed else Vector2.ZERO
@@ -181,7 +178,6 @@ func process_rotation(delta: float):
 		up_direction = target_up_direction
 		position_state = PositionState.Normal
 	else:
-		#rotation = previous_rotation.slerpni(target_rotation, delta).get_euler(rotation_order)
 		var angle := previous_rotation.angle_to(target_rotation) * delta * flip_speed
 		rotate(rotation_axis, angle)
 		up_direction = up_direction.rotated(rotation_axis, angle)
@@ -192,6 +188,13 @@ func process_raycast():
 	var collider = %PlayerCamera/RayCast.get_collider()
 	if grabbed == null and collider != null:
 		%PlayerCamera/RayCast/GrabPoint.global_position = %PlayerCamera/RayCast.get_collision_point()
+	if collider != null:
+		if collider.is_in_group("grabbable"):
+			do_grab(collider)
+		elif collider.is_in_group("interactive"):
+			do_interact(collider)
+
+func do_grab(collider: Node3D):
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
 			grabbed.linear_damp = 1
@@ -208,6 +211,19 @@ func process_raycast():
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
+
+func do_interact(collider: Node3D):
+	if Input.is_action_just_released(&"player_action_interact"):
+		if interactive == null:
+			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = true
+			interactive = collider.duplicate()
+			interactive.transform = Transform3D.IDENTITY
+			ItemScene.instance.add_child(interactive)
+			get_tree().paused = true
+		else:
+			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
+			interactive.queue_free()
+			interactive = null
 
 func process_grabbed(delta: float):
 	if grabbed != null:
