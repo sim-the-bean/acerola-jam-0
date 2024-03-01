@@ -2,17 +2,17 @@
 extends Resource
 class_name BaseEffect
 
-func _on_enter(node: Node3D):
+func _on_enter(_node: Node3D):
 	pass
 
-func _on_leave(node: Node3D):
+func _on_leave(_node: Node3D):
 	pass
 
-func _process(node: Node3D, delta: float):
+func _process(_node: Node3D, _delta: float):
 	pass
 
-func _physics_process(node: Node3D, delta: float):
+func _physics_process(_node: Node3D, _delta: float):
 	pass
 
-func _on_changed(node: BaseZone):
+func _on_changed(_node: BaseZone):
 	pass

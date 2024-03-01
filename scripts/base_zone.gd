@@ -29,7 +29,6 @@ func _ready():
 		debug_set_size()
 
 func debug_set_size():
-	print($Area/Shape.shape.size)
 	$DebugMesh.mesh.size = $Area/Shape.shape.size
 	$DebugMesh.position = $Area/Shape.position
 

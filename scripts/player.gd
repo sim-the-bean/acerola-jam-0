@@ -25,7 +25,7 @@ enum PositionState {
 @export_range(0.0, 1.0) var mouse_look_sensitivity := 0.3
 var mouse_look_speed: float:
 	get: return mouse_look_sensitivity * 0.0001
-@export_range(0.0, 1.0) var controller_look_sensitivity := 0.3
+@export_range(0.0, 1.0) var controller_look_sensitivity := 0.6
 var controller_look_speed: float:
 	get: return controller_look_sensitivity * 0.1
 @export_range(0.0, 1.0) var rotating_look_sensitivity := 0.2
@@ -119,7 +119,7 @@ func process_physics(delta: float):
 	if not is_on_floor():
 		velocity += gravity * delta
 
-func process_look(delta: float):
+func process_look(_delta: float):
 	var look := Vector2.ZERO
 	if mouse_focus:
 		look += -Input.get_last_mouse_velocity() * mouse_look_speed
@@ -169,7 +169,7 @@ func process_input(delta: float):
 	
 	velocity = velocity * up_direction.abs() + direction * speed
 
-func process_movement(delta: float):
+func process_movement(_delta: float):
 	move_and_slide()
 
 func process_rotation(delta: float):
@@ -199,8 +199,8 @@ func process_raycast():
 			grabbed.angular_damp = grab_angular_damp
 	if Input.is_action_just_pressed(&"player_action_throw"):
 		if grabbed != null:
-			var direction = %PlayerCamera.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
-			grabbed.apply_impulse(direction * throw_strength)
+			var throw_direction = %PlayerCamera.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
+			grabbed.apply_impulse(throw_direction * throw_strength)
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
