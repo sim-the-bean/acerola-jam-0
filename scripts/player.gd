@@ -97,6 +97,11 @@ var mouse_focus := false:
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 var grabbed: RigidBody3D = null
+var interactive: Node3D = null
+var interactive_parent: Node3D = null
+
+func _ready():
+	%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
 
 func _physics_process(delta: float):
 	jump_buffer_time -= delta
@@ -181,7 +186,6 @@ func process_rotation(delta: float):
 		up_direction = target_up_direction
 		position_state = PositionState.Normal
 	else:
-		#rotation = previous_rotation.slerpni(target_rotation, delta).get_euler(rotation_order)
 		var angle := previous_rotation.angle_to(target_rotation) * delta * flip_speed
 		rotate(rotation_axis, angle)
 		up_direction = up_direction.rotated(rotation_axis, angle)
@@ -192,6 +196,13 @@ func process_raycast():
 	var collider = %PlayerCamera/RayCast.get_collider()
 	if grabbed == null and collider != null:
 		%PlayerCamera/RayCast/GrabPoint.global_position = %PlayerCamera/RayCast.get_collision_point()
+	if collider != null:
+		if collider.is_in_group("grabbable"):
+			do_grab(collider)
+		elif collider.is_in_group("interactive"):
+			do_interact(collider)
+
+func do_grab(collider: Node3D):
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
 			grabbed.linear_damp = 1
@@ -208,6 +219,18 @@ func process_raycast():
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
+
+func do_interact(collider: Node3D):
+	if Input.is_action_just_pressed(&"player_action_interact"):
+		if interactive == null:
+			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = true
+			interactive = collider
+			interactive_parent = interactive.get_parent_node_3d()
+			interactive.reparent(%PlayerCamera/ItemZoomViewport)
+		else:
+			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
+			interactive.reparent(interactive_parent, false)
+			interactive = null
 
 func process_grabbed(delta: float):
 	if grabbed != null:

@@ -135,6 +135,7 @@ player_action_throw={
 3d_physics/layer_2="Static"
 3d_physics/layer_3="Grabbable"
 3d_physics/layer_4="AoE"
+3d_physics/layer_5="Interactive"
 
 [rendering]
 
