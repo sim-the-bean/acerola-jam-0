@@ -89,16 +89,8 @@ var deceleration: float:
 var jump_buffer := false
 var jump_buffer_time := 0.0
 
-var mouse_focus := false:
-	set(value):
-		mouse_focus = value
-		if mouse_focus:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 var grabbed: RigidBody3D = null
 var interactive: Node3D = null
-var interactive_parent: Node3D = null
 
 func _ready():
 	%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
@@ -127,7 +119,7 @@ func process_physics(delta: float):
 
 func process_look(_delta: float):
 	var look := Vector2.ZERO
-	if mouse_focus:
+	if Utils.mouse_focus:
 		look += -Input.get_last_mouse_velocity() * mouse_look_speed
 	look += Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * controller_look_speed
 	
@@ -147,11 +139,11 @@ func process_input(delta: float):
 			jump_buffer = true
 			jump_buffer_time = jump_buffer_duration
 	
-	if not mouse_focus and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		mouse_focus = true
+	if not Utils.mouse_focus and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		Utils.mouse_focus = true
 	
 	if Input.is_action_just_pressed(&"ui_cancel"):
-		mouse_focus = false
+		Utils.mouse_focus = false
 	
 	var raw_input := call_function(&"get_input_vector") as Vector2
 	var input_dir := raw_input if input_allowed else Vector2.ZERO
@@ -221,15 +213,16 @@ func do_grab(collider: Node3D):
 			grabbed = null
 
 func do_interact(collider: Node3D):
-	if Input.is_action_just_pressed(&"player_action_interact"):
+	if Input.is_action_just_released(&"player_action_interact"):
 		if interactive == null:
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = true
-			interactive = collider
-			interactive_parent = interactive.get_parent_node_3d()
-			interactive.reparent(%PlayerCamera/ItemZoomViewport)
+			interactive = collider.duplicate()
+			interactive.transform = Transform3D.IDENTITY
+			ItemScene.instance.add_child(interactive)
+			get_tree().paused = true
 		else:
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
-			interactive.reparent(interactive_parent, false)
+			interactive.queue_free()
 			interactive = null
 
 func process_grabbed(delta: float):
