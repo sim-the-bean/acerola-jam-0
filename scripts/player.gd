@@ -17,6 +17,8 @@ enum PositionState {
 @export_range(0.0, 10.0, 0.05, "or_greater") var deceleration_rate := 3.0
 @export var jump_velocity := 4.5
 @export var flip_speed := 1.5
+@export var throw_strength := 5.0
+@export var jump_buffer_duration := 0.2
 
 @export_group("Controls")
 @export_range(0.0, 1.0) var mouse_look_sensitivity := 0.3
@@ -82,6 +84,8 @@ var super_acceleration: float:
 	get: return (super_speed - max_speed) * super_acceleration_rate
 var deceleration: float:
 	get: return max_speed * deceleration_rate
+var jump_buffer := false
+var jump_buffer_time := 0.0
 
 var mouse_focus := false:
 	set(value):
@@ -93,6 +97,7 @@ var mouse_focus := false:
 var grabbed: RigidBody3D = null
 
 func _physics_process(delta: float):
+	jump_buffer_time -= delta
 	match position_state:
 		PositionState.Normal:
 			process_physics(delta)
@@ -106,6 +111,7 @@ func _physics_process(delta: float):
 			process_physics(delta)
 			process_look(delta)
 			process_movement(delta)
+			process_raycast()
 			process_grabbed(delta)
 
 func process_physics(delta: float):
@@ -126,8 +132,13 @@ func process_look(delta: float):
 	rotate(up_direction, look.x)
 
 func process_input(delta: float):
-	if Input.is_action_just_pressed(&"player_jump") and is_on_floor():
-		velocity = up_direction * jump_velocity
+	if Input.is_action_just_pressed(&"player_jump") or (jump_buffer and jump_buffer_time >= 0.0):
+		if is_on_floor():
+			velocity = up_direction * jump_velocity
+			jump_buffer = false
+		elif not jump_buffer:
+			jump_buffer = true
+			jump_buffer_time = jump_buffer_duration
 	
 	if not mouse_focus and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		mouse_focus = true
@@ -181,6 +192,13 @@ func process_raycast():
 			grabbed = collider
 			grabbed.linear_damp = grab_damp
 			grabbed.angular_damp = grab_angular_damp
+	if Input.is_action_just_pressed(&"player_action_throw"):
+		if grabbed != null:
+			var direction = %PlayerCamera.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
+			grabbed.apply_impulse(direction * throw_strength)
+			grabbed.linear_damp = 1
+			grabbed.angular_damp = 1
+			grabbed = null
 
 func process_grabbed(delta: float):
 	if grabbed != null:
