@@ -203,9 +203,9 @@ func process_raycast():
 	if hovered != null:
 		if hovered.is_in_group("grabbable"):
 			do_grab()
-		elif hovered.is_in_group("item"):
-			do_interact()
-		elif hovered.is_in_group("button"):
+		if hovered.is_in_group("item"):
+			do_item()
+		if hovered.is_in_group("button"):
 			var button := hovered
 			if Input.is_action_just_pressed(&"player_action_interact"):
 				button.click()
@@ -233,7 +233,7 @@ func do_grab():
 			grabbed.angular_damp = 1
 			grabbed = null
 
-func do_interact():
+func do_item():
 	if Input.is_action_just_released(&"player_action_interact"):
 		if interactive == null:
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.global_transform = %PlayerCamera.global_transform

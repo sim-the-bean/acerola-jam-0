@@ -1,0 +1,111 @@
+[gd_scene load_steps=11 format=3 uid="uid://dxodjse6yt7cd"]
+
+[ext_resource type="Script" path="res://scripts/projector.gd" id="1_1a7v7"]
+[ext_resource type="Script" path="res://scripts/resources/cone_shape_3d.gd" id="1_2s65s"]
+[ext_resource type="Script" path="res://scripts/flickering_light.gd" id="2_4nl2w"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5dlr2"]
+height = 1.6
+radius = 0.418647
+
+[sub_resource type="BoxMesh" id="BoxMesh_i4had"]
+size = Vector3(0.05, 1.1, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r01ag"]
+size = Vector3(0.2, 0.3, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v14m2"]
+top_radius = 0.1
+bottom_radius = 0.05
+height = 0.2
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7wl7m"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.05
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6yd0w"]
+top_radius = 0.12
+bottom_radius = 0.12
+height = 0.05
+radial_segments = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_c1pjy"]
+points = PackedVector3Array(0.05, -2.5, 0, 2.9, 2.5, 0, 0.0353553, -2.5, 0.0353553, 2.05061, 2.5, 2.05061, 3.06152e-18, -2.5, 0.05, 1.77568e-16, 2.5, 2.9, -0.0353553, -2.5, 0.0353553, -2.05061, 2.5, 2.05061, -0.05, -2.5, 6.12303e-18, -2.9, 2.5, 3.55136e-16, -0.0353553, -2.5, -0.0353553, -2.05061, 2.5, -2.05061, -9.18455e-18, -2.5, -0.05, -5.32704e-16, 2.5, -2.9, 0.0353553, -2.5, -0.0353553, 2.05061, 2.5, -2.05061)
+script = ExtResource("1_2s65s")
+top_radius = 2.9
+bottom_radius = 0.05
+height = 5.0
+radial_segments = 8
+
+[node name="Projector" type="RigidBody3D" groups=["button", "grabbable"]]
+collision_layer = 21
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_1a7v7")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -0.05)
+shape = SubResource("CylinderShape3D_5dlr2")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.836516, -0.224144, 0.5, 0.258819, 0.965926, -3.8567e-09, -0.482963, 0.12941, 0.866025, 0.132352, 0.5, -0.0753061)
+mesh = SubResource("BoxMesh_i4had")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.836516, 0.224144, -0.5, -0.258819, 0.965926, 0, 0.482963, 0.12941, 0.866025, -0.132, 0.5, -0.075)
+mesh = SubResource("BoxMesh_i4had")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.5, 0.136656)
+mesh = SubResource("BoxMesh_i4had")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+mesh = SubResource("BoxMesh_r01ag")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.15, -0.316009)
+mesh = SubResource("CylinderMesh_v14m2")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="Wheel1" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-5.85032e-08, -1, -1.5027e-07, -0.995191, 4.35011e-08, 0.0979613, -0.0979613, 1.55278e-07, -0.995191, 0, 1.43353, -0.146686)
+mesh = SubResource("CylinderMesh_7wl7m")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="Wheel2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-5.85032e-08, -1, -1.5027e-07, -0.995191, 4.35011e-08, 0.0979613, -0.0979613, 1.55278e-07, -0.995191, 0, 1.40712, 0.142004)
+mesh = SubResource("CylinderMesh_6yd0w")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="Light" type="SpotLight3D" parent="Mesh"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.335235)
+light_energy = 0.839191
+shadow_enabled = true
+distance_fade_enabled = true
+spot_attenuation = 0.329878
+spot_angle = 30.0
+spot_angle_attenuation = 0.554785
+script = ExtResource("2_4nl2w")
+
+[node name="Hitbox" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.15639, -2.82427)
+shape = SubResource("ConvexPolygonShape3D_c1pjy")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]

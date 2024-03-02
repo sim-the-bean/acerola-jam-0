@@ -68,7 +68,7 @@ resource_local_to_scene = true
 material = SubResource("ShaderMaterial_scdig")
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="Glitched" type="RigidBody3D" groups=["grabbable"]]
+[node name="Glitched" type="RigidBody3D" groups=["glitched", "grabbable"]]
 collision_layer = 132
 collision_mask = 128
 physics_material_override = SubResource("PhysicsMaterial_dbufy")

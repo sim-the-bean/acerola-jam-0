@@ -1,11 +1,12 @@
 @tool
 extends RigidBody3D
+class_name Glitched
 
 signal glitched()
 signal unglitched()
 
 const layers_glitched := Layers.grabbable | Layers.glitched
-const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Layers.destructible
+const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Layers.destructible | Layers.glitched
 
 @export_category("Glitched")
 @export var is_glitched := true:
