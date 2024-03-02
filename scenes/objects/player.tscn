@@ -19,6 +19,7 @@ render_priority = 0
 shader = ExtResource("4_apbnp")
 shader_parameter/blur_radius = 10.0
 shader_parameter/sigma = 5.0
+shader_parameter/saturation = 0.5
 
 [sub_resource type="QuadMesh" id="QuadMesh_i4gvn"]
 material = SubResource("ShaderMaterial_afh3t")
