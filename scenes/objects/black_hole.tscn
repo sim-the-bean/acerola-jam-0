@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://5ry02ct650ae"]
+[gd_scene load_steps=15 format=3 uid="uid://5ry02ct650ae"]
 
 [ext_resource type="Shader" path="res://shaders/black_hole.gdshader" id="1_ex12r"]
 [ext_resource type="Shader" path="res://shaders/black_hole_accretion.gdshader" id="3_y0u5q"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s3njv"]
 radius = 5.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_we0ng"]
+radius = 0.8
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ediu1"]
 
@@ -26,7 +29,7 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_mcjut")
 material = SubResource("ShaderMaterial_ifi25")
 
 [sub_resource type="Gradient" id="Gradient_he0ka"]
-offsets = PackedFloat32Array(0, 0.0714286, 0.269841, 0.65873, 1)
+offsets = PackedFloat32Array(0, 0.0714286, 0.214286, 0.357143, 1)
 colors = PackedColorArray(1, 0.917647, 0.560784, 1, 0.94, 0.50008, 0.2632, 1, 0.841327, 0.402017, 0.245426, 1, 0.700364, 0.261928, 0.220035, 1, 0.58, 0.119867, 0.087, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_kb640"]
@@ -62,11 +65,25 @@ gravity = 32.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("SphereShape3D_s3njv")
 
+[node name="Killbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 8
+priority = 2
+gravity_space_override = 2
+gravity_point = true
+gravity_point_unit_distance = 1.0
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 32.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Killbox"]
+shape = SubResource("SphereShape3D_we0ng")
+
 [node name="Hole" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_bn7o0")
 
 [node name="Accretion" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.050553, -0.802356, 0.594701, 0, 0.595462, 0.803383, -0.998721, 0.0406135, -0.0301024, 0, 0.036, 0)
+transform = Transform3D(0.975909, 0.0842118, -0.201272, 0, 0.922509, 0.385976, 0.218179, -0.376677, 0.900285, 0, 0.036, 0)
 mesh = SubResource("SphereMesh_y4csp")
 script = ExtResource("4_t506u")
 angle = 0.174533
