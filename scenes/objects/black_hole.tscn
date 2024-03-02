@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://5ry02ct650ae"]
+[gd_scene load_steps=16 format=3 uid="uid://5ry02ct650ae"]
 
+[ext_resource type="Script" path="res://scripts/black_hole.gd" id="1_d0c6l"]
 [ext_resource type="Shader" path="res://shaders/black_hole.gdshader" id="1_ex12r"]
 [ext_resource type="Shader" path="res://shaders/black_hole_accretion.gdshader" id="3_y0u5q"]
 [ext_resource type="Script" path="res://scripts/accretion_disk.gd" id="4_t506u"]
@@ -8,7 +9,7 @@
 radius = 5.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_we0ng"]
-radius = 0.8
+radius = 0.3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ediu1"]
 
@@ -50,8 +51,10 @@ height = 0.1
 size = Vector3(0.5, 0.5, 0.5)
 
 [node name="BlackHole" type="Node3D"]
+script = ExtResource("1_d0c6l")
 
 [node name="Hitbox" type="Area3D" parent="."]
+unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 8
 priority = 2
@@ -66,6 +69,7 @@ gravity = 32.0
 shape = SubResource("SphereShape3D_s3njv")
 
 [node name="Killbox" type="Area3D" parent="."]
+unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 8
 priority = 2
@@ -80,10 +84,12 @@ gravity = 32.0
 shape = SubResource("SphereShape3D_we0ng")
 
 [node name="Hole" type="MeshInstance3D" parent="."]
+cast_shadow = 0
 mesh = SubResource("SphereMesh_bn7o0")
 
 [node name="Accretion" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.975909, 0.0842118, -0.201272, 0, 0.922509, 0.385976, 0.218179, -0.376677, 0.900285, 0, 0.036, 0)
+transform = Transform3D(0.975909, 0.0842117, -0.201272, 0, 0.922509, 0.385976, 0.218179, -0.376677, 0.900285, 0, 0.036, 0)
+cast_shadow = 0
 mesh = SubResource("SphereMesh_y4csp")
 script = ExtResource("4_t506u")
 angle = 0.174533
@@ -98,3 +104,7 @@ omni_attenuation = 1.68179
 transform = Transform3D(0.931158, 0, -0.364617, -0.281493, 0.635593, -0.718876, 0.231748, 0.772024, 0.591838, 0, 0.264288, -1.59791)
 visible = false
 mesh = SubResource("BoxMesh_q11f2")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="body_entered" from="Killbox" to="." method="_on_killbox_body_entered"]

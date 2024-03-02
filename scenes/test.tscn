@@ -1193,7 +1193,7 @@ physics_material_override = SubResource("PhysicsMaterial_yau84")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.74496, -12.4431)
 
 [node name="BlackHole" parent="." instance=ExtResource("15_4ho1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.96861, 0.965095, 2.52494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24289, 0.965095, 2.52494)
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]

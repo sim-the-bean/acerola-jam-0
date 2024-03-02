@@ -7,6 +7,8 @@ signal hover_left(node: Node3D)
 enum PositionState {
 	Normal,
 	Rotating,
+	BlackHole,
+	Killed,
 }
 
 @export_category("Player")
@@ -24,6 +26,7 @@ enum PositionState {
 @export var throw_strength := 10.0
 @export var grabbed_rotate_speed := 100.0
 @export var jump_buffer_duration := 0.2
+@export var killed_rotation_speed := 10.0
 
 @export_group("Controls")
 @export_range(0.0, 1.0) var mouse_look_sensitivity := 0.3
@@ -43,12 +46,13 @@ var controller_look_speed: float:
 @export var grab_damp := 10.0
 @export var grab_angular_damp := 15.0
 
-var gravity_direction: Vector3 = ProjectSettings.get_setting("physics/3d/default_gravity_vector").normalized():
+var gravity_direction: Vector3:
+	get: return _gravity_direction
 	set(value):
 		if position_state == PositionState.Normal:
 			var new_gravity = value.normalized()
 			var new_up = -new_gravity
-			var current_rotation = transform.basis.get_rotation_quaternion()
+			var current_rotation = rotation_quaternion
 			position_state = PositionState.Rotating
 			previous_rotation = current_rotation
 			target_rotation = current_rotation * Quaternion(up_direction, new_up)
@@ -60,10 +64,22 @@ var gravity_direction: Vector3 = ProjectSettings.get_setting("physics/3d/default
 			velocity -= velocity * up_direction.abs()
 			direction = Vector3.ZERO
 			
-			gravity_direction = new_gravity
-var gravity_strength: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+			_gravity_direction = new_gravity
+var _gravity_direction: Vector3
+var gravity_strength: float
 var gravity: Vector3:
 	get: return -up_direction * gravity_strength * gravity_scale
+	
+var gravity_point := false:
+	set(value):
+		gravity_point = value
+		position_state = PositionState.BlackHole if gravity_point else PositionState.Normal
+		if not gravity_point:
+			point_gravity_acc = Vector3.ZERO
+var gravity_point_unit_distance: float
+var gravity_point_center: Vector3
+var gravity_point_strength: float
+var point_gravity_acc: Vector3
 
 var position_state := PositionState.Normal:
 	set(value):
@@ -80,9 +96,11 @@ var target_up_direction := up_direction
 var rotation_axis := Vector3.ZERO
 var base_rotation := Quaternion.from_euler(rotation)
 var rotation_weight := 0.0
+var rotation_quaternion: Quaternion:
+	get: return transform.basis.orthonormalized().get_rotation_quaternion()
 
 var input_allowed := true
-var direction := transform.basis.get_rotation_quaternion() * Vector3.FORWARD
+var direction := rotation_quaternion * Vector3.FORWARD
 var speed := 0.0
 var acceleration: float:
 	get: return max_speed * acceleration_rate
@@ -100,6 +118,34 @@ var interactive: Node3D = null
 
 func _ready():
 	%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
+	
+	_gravity_direction = ProjectSettings.get_setting("physics/3d/default_gravity_vector").normalized()
+	gravity_strength = ProjectSettings.get_setting("physics/3d/default_gravity")
+	position_state = PositionState.Normal
+	gravity_field_counter = 0
+	
+	gravity_point = false
+	gravity_point_unit_distance = 0.0
+	gravity_point_center = Vector3.ZERO
+	gravity_point_strength = 0.0
+	point_gravity_acc = Vector3.ZERO
+
+	input_allowed = true
+	direction = rotation_quaternion * Vector3.FORWARD
+	speed = 0.0
+	jump_buffer = false
+	jump_buffer_time = 0.0
+
+	hovered = null
+	last_hovered = null
+	grabbed = null
+	interactive = null
+
+func on_killing():
+	position_state = PositionState.Killed
+
+func on_killed():
+	GameManager.instance.reset()
 
 func _physics_process(delta: float):
 	jump_buffer_time -= delta
@@ -118,10 +164,33 @@ func _physics_process(delta: float):
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
+		PositionState.BlackHole:
+			process_bh_physics(delta)
+			process_look(delta)
+			process_input(delta)
+			process_movement(delta)
+			process_raycast(delta)
+			process_grabbed(delta)
+		PositionState.Killed:
+			process_bh_killed(delta)
 
 func process_physics(delta: float):
 	if not is_on_floor():
 		velocity += gravity * delta
+
+func process_bh_physics(delta: float):
+	var center_of_gravity: Vector3 = %Collider.global_position
+	var distance := center_of_gravity.distance_to(gravity_point_center)
+	var falloff := gravity_point_unit_distance / distance
+	falloff *= falloff
+	var point_gravity := (gravity_point_center - center_of_gravity).normalized()
+	point_gravity *= gravity_point_strength * falloff
+	point_gravity_acc += point_gravity * delta
+
+func process_bh_killed(delta: float):
+	var offset := global_position - gravity_point_center
+	offset = offset.rotated(up_direction, killed_rotation_speed * delta)
+	global_position = gravity_point_center + offset
 
 func process_look(_delta: float):
 	var look := Vector2.ZERO
@@ -153,12 +222,12 @@ func process_input(delta: float):
 	
 	var raw_input := call_function(&"get_input_vector") as Vector2
 	var input_dir := raw_input if input_allowed else Vector2.ZERO
-	var input_direction := transform.basis.get_rotation_quaternion() * Vector3(input_dir.x, 0, input_dir.y)
+	var input_direction := rotation_quaternion * Vector3(input_dir.x, 0, input_dir.y)
 	input_direction = input_direction.limit_length()
 	var new_direction = direction
 	var new_speed = speed
 	if input_direction:
-		var angle := acos(input_direction.dot(transform.basis.get_rotation_quaternion() * Vector3.FORWARD))
+		var angle := acos(input_direction.dot(rotation_quaternion * Vector3.FORWARD))
 		var backwards := clampf((angle - (PI - backwards_angle)) / backwards_angle, 0.0, 1.0)
 		if backwards:
 			new_speed = move_toward(speed, lerpf(max_speed, backwards_speed, backwards), acceleration * delta)
@@ -174,7 +243,11 @@ func process_input(delta: float):
 	direction = direction.lerp(new_direction, 1.0 if is_on_floor() else air_control)
 	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
 	
-	velocity = velocity * up_direction.abs() + direction * speed
+	match position_state:
+		PositionState.BlackHole:
+			velocity = point_gravity_acc + direction * speed
+		_:
+			velocity = velocity * up_direction.abs() + direction * speed
 
 func process_movement(_delta: float):
 	move_and_slide()

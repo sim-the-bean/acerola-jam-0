@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf8tm3pqh5qqf"]
+
+[ext_resource type="Script" path="res://scripts/kill_component.gd" id="1_2cdaj"]
+
+[node name="KillComponent" type="Node"]
+script = ExtResource("1_2cdaj")

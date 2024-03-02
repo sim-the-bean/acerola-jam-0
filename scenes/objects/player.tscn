@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dju6tadl6ss46"]
+[gd_scene load_steps=11 format=3 uid="uid://dju6tadl6ss46"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
 [ext_resource type="Script" path="res://scripts/debug_mesh.gd" id="3_43qcu"]
 [ext_resource type="Shader" path="res://shaders/item_zoom.gdshader" id="4_apbnp"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="4_ftkig"]
+[ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="6_7g65a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peuui"]
 radius = 0.3
@@ -32,6 +33,7 @@ collision_layer = 73
 script = ExtResource("1_6168c")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("CapsuleShape3D_peuui")
 
@@ -58,6 +60,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerCamera/RayCast/GrabPoint"]
+cast_shadow = 0
 mesh = SubResource("SphereMesh_hqq2u")
 script = ExtResource("3_43qcu")
 
@@ -71,3 +74,12 @@ mesh = SubResource("QuadMesh_i4gvn")
 
 [node name="EffectComponent" parent="." instance=ExtResource("4_ftkig")]
 unique_name_in_owner = true
+
+[node name="KillComponent" parent="." instance=ExtResource("6_7g65a")]
+unique_name_in_owner = true
+killed_interval = 3.0
+free_on_killed = false
+unkillable_duration = 3.0
+
+[connection signal="killed" from="KillComponent" to="." method="on_killed"]
+[connection signal="killing" from="KillComponent" to="." method="on_killing"]
