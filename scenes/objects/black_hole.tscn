@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://5ry02ct650ae"]
+
+[ext_resource type="Shader" path="res://shaders/black_hole.gdshader" id="1_ex12r"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s3njv"]
+radius = 5.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ediu1"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mcjut"]
+height = 1
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_ediu1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ifi25"]
+render_priority = 0
+shader = ExtResource("1_ex12r")
+shader_parameter/flicker_frequency = 0.5
+shader_parameter/flicker_amplitude = 0.5
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_mcjut")
+
+[sub_resource type="SphereMesh" id="SphereMesh_bn7o0"]
+material = SubResource("ShaderMaterial_ifi25")
+
+[sub_resource type="BoxMesh" id="BoxMesh_q11f2"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="BlackHole" type="Node3D"]
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 8
+priority = 2
+gravity_space_override = 2
+gravity_point = true
+gravity_point_unit_distance = 1.0
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 32.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("SphereShape3D_s3njv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_bn7o0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.886275, 0.980392, 1, 1)
+light_energy = 2.0
+light_negative = true
+omni_attenuation = 1.68179
+
+[node name="DebugMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.931158, 0, -0.364617, -0.281493, 0.635593, -0.718876, 0.231748, 0.772024, 0.591838, 0, 0.264288, -1.59791)
+visible = false
+mesh = SubResource("BoxMesh_q11f2")

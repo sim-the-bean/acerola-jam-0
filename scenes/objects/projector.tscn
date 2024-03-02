@@ -79,19 +79,19 @@ mesh = SubResource("CylinderMesh_v14m2")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel1" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(5.21996e-08, -1, 1.16623e-07, 0.772357, -3.37608e-08, -0.63519, 0.63519, 1.23231e-07, 0.772357, 0, 1.43353, -0.146686)
+transform = Transform3D(2.67413e-08, -1, 1.33552e-07, 0.884476, -3.86616e-08, -0.466588, 0.466588, 1.30601e-07, 0.884476, 0, 1.43353, -0.146686)
 mesh = SubResource("CylinderMesh_7wl7m")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel2" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(5.21996e-08, -1, 1.16623e-07, 0.772357, -3.37608e-08, -0.63519, 0.63519, 1.23231e-07, 0.772357, 0, 1.40712, 0.142004)
+transform = Transform3D(2.67413e-08, -1, 1.33552e-07, 0.884476, -3.86616e-08, -0.466588, 0.466588, 1.30601e-07, 0.884476, 0, 1.40712, 0.142004)
 mesh = SubResource("CylinderMesh_6yd0w")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Light" type="SpotLight3D" parent="Mesh"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.335235)
-light_energy = 1.19984
+light_energy = 1.01954
 shadow_enabled = true
 distance_fade_enabled = true
 spot_attenuation = 0.329878
