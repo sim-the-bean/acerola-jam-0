@@ -13,14 +13,14 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 		is_glitched = value
 		gravity_scale = 0.0 if is_glitched else 1.0
 		if is_glitched:
-			%Mesh.mesh.material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
-			%Mesh.mesh.material.albedo_color.a = 0.5
+			%MeshGlitched.visible = true
+			%MeshOk.visible = false
 			collision_layer = layers_glitched | (Layers.destructible if can_destroy else 0)
 			collision_mask = Layers.glitched
 			emit_glitched()
 		else:
-			%Mesh.mesh.material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
-			%Mesh.mesh.material.albedo_color.a = 1.0
+			%MeshGlitched.visible = false
+			%MeshOk.visible = true
 			collision_layer = layers_unglitched
 			collision_mask = Layers.default
 			emit_unglitched()
@@ -31,6 +31,23 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 			collision_layer |= Layers.destructible
 		else:
 			collision_layer &= ~Layers.destructible
+@export_group("Visuals")
+@export_range(0.0, 10.0, 0.1, "or_greater") var glitchiness_amplitude := 1.0:
+	set(value):
+		glitchiness_amplitude = value
+		%Postprocess.mesh.material.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
+@export_range(0.0, 10.0, 0.1, "or_greater") var glitchiness_frequency := 1.0:
+	set(value):
+		glitchiness_frequency = value
+		%Postprocess.mesh.material.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
+@export var color := Color.WHITE:
+	set(value):
+		color = value
+		%MeshGlitched.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
+@export_range(0.0, 1.0) var alpha := 0.75:
+	set(value):
+		alpha = value
+		%MeshGlitched.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
 
 func set_glitched():
 	is_glitched = true

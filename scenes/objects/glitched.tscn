@@ -1,7 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1yldm36qcj08"]
+[gd_scene load_steps=23 format=3 uid="uid://d1yldm36qcj08"]
 
 [ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
+[ext_resource type="Script" path="res://scripts/follow_main_viewport.gd" id="2_57yvr"]
+[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_jp6qs"]
+[ext_resource type="Script" path="res://scripts/follow_main_camera.gd" id="2_yoayr"]
+[ext_resource type="Script" path="res://scripts/follow_viewport_parent.gd" id="3_mmq1g"]
+[ext_resource type="Shader" path="res://shaders/glitched_postprocess.gdshader" id="5_2q0jj"]
+[ext_resource type="Script" path="res://scripts/backlight.gd" id="6_4uv7s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dbufy"]
 resource_local_to_scene = true
@@ -11,14 +17,60 @@ bounce = 0.5
 resource_local_to_scene = true
 size = Vector3(0.5, 0.5, 0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7te7"]
-transparency = 4
-albedo_color = Color(1, 1, 1, 0.5)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0fv7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wqngw"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_f0fv7")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Environment" id="Environment_mrnwm"]
+ambient_light_source = 2
+ambient_light_color = Color(0.729412, 0.729412, 0.729412, 1)
+
+[sub_resource type="World3D" id="World3D_u450p"]
+environment = SubResource("Environment_mrnwm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6qomm"]
+render_priority = 0
+shader = ExtResource("2_jp6qs")
+shader_parameter/albedo_color = Color(1, 1, 1, 0.75)
 
 [sub_resource type="BoxMesh" id="BoxMesh_g153l"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_i7te7")
+material = SubResource("ShaderMaterial_6qomm")
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jwhv2"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_exc26"]
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_jwhv2")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_sxc0y"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqpxu"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("5_2q0jj")
+shader_parameter/chromatic_aberration_strength = Vector3(5, 5, 5)
+shader_parameter/red_offset = Vector2(0.707, 0.707)
+shader_parameter/green_offset = Vector2(-0.707, 0.707)
+shader_parameter/blue_offset = Vector2(0, -1)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/source_texture = SubResource("ViewportTexture_sxc0y")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_exc26")
+
+[sub_resource type="QuadMesh" id="QuadMesh_lqdb1"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_gqpxu")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8r4f0"]
 
 [node name="Glitched" type="RigidBody3D" groups=["grabbable"]]
 collision_layer = 132
@@ -32,8 +84,63 @@ script = ExtResource("1_atq5k")
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ormki")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="MeshOk" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+mesh = SubResource("BoxMesh_wqngw")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+world_3d = SubResource("World3D_u450p")
+transparent_bg = true
+size = Vector2i(1348, 536)
+script = ExtResource("2_57yvr")
+
+[node name="MeshGlitched" type="MeshInstance3D" parent="SubViewport"]
 unique_name_in_owner = true
 mesh = SubResource("BoxMesh_g153l")
+skeleton = NodePath("../..")
+script = ExtResource("3_mmq1g")
+node_path = NodePath("../../MeshOk")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(0.810098, -0.190435, 0.554504, 0, 0.945779, 0.324812, -0.586294, -0.26313, 0.766174, 1.12477, 0.776451, 1.6078)
+fov = 70.01
+script = ExtResource("2_yoayr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+light_energy = 2.0
+sky_mode = 1
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+light_energy = 0.5
+sky_mode = 1
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(-0.810098, -0.190435, -0.554504, 7.45058e-09, 0.945779, -0.324812, 0.586294, -0.26313, -0.766174, 0, 0, 0)
+visible = false
+sky_mode = 1
+script = ExtResource("6_4uv7s")
+
+[node name="SubViewport2" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1348, 536)
+script = ExtResource("2_57yvr")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport2"]
+transform = Transform3D(0.810098, -0.190435, 0.554504, 0, 0.945779, 0.324812, -0.586294, -0.26313, 0.766174, 1.12477, 0.776451, 1.6078)
+fov = 70.01
+script = ExtResource("2_yoayr")
+
+[node name="Postprocess" type="MeshInstance3D" parent="SubViewport2/Camera3D"]
+unique_name_in_owner = true
+mesh = SubResource("QuadMesh_lqdb1")
 
 [node name="EffectComponent" parent="." instance=ExtResource("1_b61yb")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375608, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_8r4f0")
