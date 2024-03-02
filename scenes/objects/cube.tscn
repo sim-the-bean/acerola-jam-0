@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bafri2b015t68"]
+[gd_scene load_steps=6 format=3 uid="uid://bafri2b015t68"]
 
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_o5qva"]
+[ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="2_itmiw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sxott"]
 resource_local_to_scene = true
@@ -27,3 +28,7 @@ shape = SubResource("BoxShape3D_4u758")
 mesh = SubResource("BoxMesh_ioba5")
 
 [node name="EffectComponent" parent="." instance=ExtResource("1_o5qva")]
+
+[node name="KillComponent" parent="." instance=ExtResource("2_itmiw")]
+scale_on_kill = true
+scale_target = NodePath("../MeshInstance3D")

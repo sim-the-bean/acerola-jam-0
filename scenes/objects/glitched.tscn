@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://d1yldm36qcj08"]
+[gd_scene load_steps=16 format=3 uid="uid://d1yldm36qcj08"]
 
 [ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
 [ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_jp6qs"]
 [ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_ipdrd"]
+[ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="5_7hngu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dbufy"]
 resource_local_to_scene = true
@@ -81,27 +82,34 @@ chromatic_aberration_strength = Vector3(0.5, 0.2, 0.2)
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ormki")
 
-[node name="MeshOk" type="MeshInstance3D" parent="."]
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="MeshOk" type="MeshInstance3D" parent="Mesh"]
 unique_name_in_owner = true
 visible = false
 mesh = SubResource("BoxMesh_y5oox")
+skeleton = NodePath("../..")
 
-[node name="MeshGlitched" type="Node3D" parent="."]
+[node name="MeshGlitched" type="Node3D" parent="Mesh"]
 unique_name_in_owner = true
 
-[node name="MeshRed" type="MeshInstance3D" parent="MeshGlitched"]
+[node name="MeshRed" type="MeshInstance3D" parent="Mesh/MeshGlitched"]
 unique_name_in_owner = true
 mesh = SubResource("BoxMesh_wqngw")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="MeshGreen" type="MeshInstance3D" parent="MeshGlitched"]
+[node name="MeshGreen" type="MeshInstance3D" parent="Mesh/MeshGlitched"]
 unique_name_in_owner = true
 mesh = SubResource("BoxMesh_v2q36")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="MeshBlue" type="MeshInstance3D" parent="MeshGlitched"]
+[node name="MeshBlue" type="MeshInstance3D" parent="Mesh/MeshGlitched"]
 unique_name_in_owner = true
 mesh = SubResource("BoxMesh_lf6yr")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
 [node name="EffectComponent" parent="." instance=ExtResource("1_b61yb")]
+
+[node name="KillComponent" parent="." instance=ExtResource("5_7hngu")]
+scale_on_kill = true
+scale_target = NodePath("../Mesh")

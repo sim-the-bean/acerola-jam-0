@@ -1,0 +1,110 @@
+[gd_scene load_steps=16 format=3 uid="uid://5ry02ct650ae"]
+
+[ext_resource type="Script" path="res://scripts/black_hole.gd" id="1_d0c6l"]
+[ext_resource type="Shader" path="res://shaders/black_hole.gdshader" id="1_ex12r"]
+[ext_resource type="Shader" path="res://shaders/black_hole_accretion.gdshader" id="3_y0u5q"]
+[ext_resource type="Script" path="res://scripts/accretion_disk.gd" id="4_t506u"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s3njv"]
+radius = 5.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_we0ng"]
+radius = 0.3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ediu1"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mcjut"]
+height = 1
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_ediu1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ifi25"]
+render_priority = 0
+shader = ExtResource("1_ex12r")
+shader_parameter/flicker_frequency = 0.5
+shader_parameter/flicker_amplitude = 0.5
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_mcjut")
+
+[sub_resource type="SphereMesh" id="SphereMesh_bn7o0"]
+material = SubResource("ShaderMaterial_ifi25")
+
+[sub_resource type="Gradient" id="Gradient_he0ka"]
+offsets = PackedFloat32Array(0, 0.0714286, 0.214286, 0.357143, 1)
+colors = PackedColorArray(1, 0.917647, 0.560784, 1, 0.94, 0.50008, 0.2632, 1, 0.841327, 0.402017, 0.245426, 1, 0.700364, 0.261928, 0.220035, 1, 0.58, 0.119867, 0.087, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kb640"]
+gradient = SubResource("Gradient_he0ka")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i6bk8"]
+render_priority = 0
+shader = ExtResource("3_y0u5q")
+shader_parameter/gradient = SubResource("GradientTexture1D_kb640")
+
+[sub_resource type="SphereMesh" id="SphereMesh_y4csp"]
+material = SubResource("ShaderMaterial_i6bk8")
+flip_faces = true
+radius = 0.8
+height = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_q11f2"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="BlackHole" type="Node3D"]
+script = ExtResource("1_d0c6l")
+
+[node name="Hitbox" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 8
+priority = 2
+gravity_space_override = 2
+gravity_point = true
+gravity_point_unit_distance = 1.0
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 32.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("SphereShape3D_s3njv")
+
+[node name="Killbox" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 8
+priority = 2
+gravity_space_override = 2
+gravity_point = true
+gravity_point_unit_distance = 1.0
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 32.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Killbox"]
+shape = SubResource("SphereShape3D_we0ng")
+
+[node name="Hole" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_bn7o0")
+
+[node name="Accretion" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.975909, 0.0842117, -0.201272, 0, 0.922509, 0.385976, 0.218179, -0.376677, 0.900285, 0, 0.036, 0)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_y4csp")
+script = ExtResource("4_t506u")
+angle = 0.174533
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.886275, 0.980392, 1, 1)
+light_energy = 2.0
+light_negative = true
+omni_attenuation = 1.68179
+
+[node name="DebugMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.931158, 0, -0.364617, -0.281493, 0.635593, -0.718876, 0.231748, 0.772024, 0.591838, 0, 0.264288, -1.59791)
+visible = false
+mesh = SubResource("BoxMesh_q11f2")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="body_entered" from="Killbox" to="." method="_on_killbox_body_entered"]

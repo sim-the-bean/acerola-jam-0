@@ -26,7 +26,6 @@ Layers="*res://scripts/layers.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/always_on_top=true
 window/vsync/vsync_mode=0
 
 [editor_plugins]

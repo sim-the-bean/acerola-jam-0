@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=70 format=3 uid="uid://cdxndeyjw01wi"]
 
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_cl8dn"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b7dr0xxom3w28" path="res://scenes/objects/destructible.tscn" id="12_qofgr"]
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="13_g7ryx"]
 [ext_resource type="PackedScene" uid="uid://dxodjse6yt7cd" path="res://scenes/objects/projector.tscn" id="14_hpc2g"]
+[ext_resource type="PackedScene" uid="uid://5ry02ct650ae" path="res://scenes/objects/black_hole.tscn" id="15_4ho1x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n17xh"]
 
@@ -909,7 +910,7 @@ bounce = 0.5
 environment = SubResource("Environment_b3w5c")
 
 [node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -9.42263, 0, -7.2153)
+transform = Transform3D(-1, 0, -1.17225e-07, 0, 1, 0, 1.17225e-07, 0, -1, 2.57644, 0, -9.49918)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999405, -0.0222603, 0.0263452, -0.0344697, -0.671156, 0.740514, 0.0011977, -0.740982, -0.671524, 0, 0, 0)
@@ -1190,6 +1191,9 @@ physics_material_override = SubResource("PhysicsMaterial_yau84")
 
 [node name="Projector" parent="." instance=ExtResource("14_hpc2g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.74496, -12.4431)
+
+[node name="BlackHole" parent="." instance=ExtResource("15_4ho1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24289, 0.965095, 2.52494)
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]
