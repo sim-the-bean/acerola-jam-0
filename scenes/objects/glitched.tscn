@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1yldm36qcj08"]
+
+[ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
+[ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dbufy"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ormki"]
+resource_local_to_scene = true
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7te7"]
+transparency = 4
+albedo_color = Color(1, 1, 1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g153l"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_i7te7")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Glitched" type="RigidBody3D" groups=["grabbable"]]
+collision_layer = 132
+collision_mask = 128
+physics_material_override = SubResource("PhysicsMaterial_dbufy")
+gravity_scale = 0.0
+linear_damp = 1.0
+angular_damp = 1.0
+script = ExtResource("1_atq5k")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ormki")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("BoxMesh_g153l")
+
+[node name="EffectComponent" parent="." instance=ExtResource("1_b61yb")]

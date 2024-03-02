@@ -20,6 +20,7 @@ config/icon="res://icon.png"
 CyclopsAutoload="*res://addons/cyclops_level_builder/cyclops_global_scene.tscn"
 Globals="*res://scripts/globals.gd"
 Utils="*res://scripts/utils.gd"
+Layers="*res://scripts/layers.gd"
 
 [display]
 
@@ -151,6 +152,7 @@ item_zoom_out={
 3d_physics/layer_5="Interactive"
 3d_physics/layer_6="Destructible"
 3d_physics/layer_7="Player"
+3d_physics/layer_8="Glitched"
 
 [rendering]
 
