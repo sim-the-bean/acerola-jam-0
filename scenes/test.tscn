@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=68 format=3 uid="uid://cdxndeyjw01wi"]
 
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_cl8dn"]
@@ -898,6 +898,10 @@ gravity_strength = 4.9
 resource_local_to_scene = true
 bounce = 0.5
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yau84"]
+resource_local_to_scene = true
+bounce = 0.5
+
 [node name="Test" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -1180,7 +1184,7 @@ physics_material_override = SubResource("PhysicsMaterial_5u8i6")
 
 [node name="Glitched2" parent="." instance=ExtResource("13_g7ryx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.93148, 2.07237, -12.8394)
-physics_material_override = SubResource("PhysicsMaterial_5u8i6")
+physics_material_override = SubResource("PhysicsMaterial_yau84")
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]

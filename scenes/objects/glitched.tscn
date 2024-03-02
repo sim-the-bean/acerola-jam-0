@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1yldm36qcj08"]
+[gd_scene load_steps=15 format=3 uid="uid://d1yldm36qcj08"]
 
 [ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
+[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_jp6qs"]
+[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_ipdrd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dbufy"]
 resource_local_to_scene = true
@@ -11,13 +13,59 @@ bounce = 0.5
 resource_local_to_scene = true
 size = Vector3(0.5, 0.5, 0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7te7"]
-transparency = 4
-albedo_color = Color(1, 1, 1, 0.5)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_g153l"]
+[sub_resource type="BoxMesh" id="BoxMesh_y5oox"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_i7te7")
+material = SubResource("StandardMaterial3D_v8vh0")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pryju"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_jp6qs")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_ipdrd")
+
+[sub_resource type="BoxMesh" id="BoxMesh_wqngw"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_pryju")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb3r6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_jp6qs")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_ipdrd")
+
+[sub_resource type="BoxMesh" id="BoxMesh_v2q36"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_eb3r6")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_scdig"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_jp6qs")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_ipdrd")
+
+[sub_resource type="BoxMesh" id="BoxMesh_lf6yr"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_scdig")
 size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Glitched" type="RigidBody3D" groups=["grabbable"]]
@@ -28,12 +76,32 @@ gravity_scale = 0.0
 linear_damp = 1.0
 angular_damp = 1.0
 script = ExtResource("1_atq5k")
+chromatic_aberration_strength = Vector3(0.5, 0.2, 0.2)
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ormki")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="MeshOk" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-mesh = SubResource("BoxMesh_g153l")
+visible = false
+mesh = SubResource("BoxMesh_y5oox")
+
+[node name="MeshGlitched" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="MeshRed" type="MeshInstance3D" parent="MeshGlitched"]
+unique_name_in_owner = true
+mesh = SubResource("BoxMesh_wqngw")
+skeleton = NodePath("../..")
+
+[node name="MeshGreen" type="MeshInstance3D" parent="MeshGlitched"]
+unique_name_in_owner = true
+mesh = SubResource("BoxMesh_v2q36")
+skeleton = NodePath("../..")
+
+[node name="MeshBlue" type="MeshInstance3D" parent="MeshGlitched"]
+unique_name_in_owner = true
+mesh = SubResource("BoxMesh_lf6yr")
+skeleton = NodePath("../..")
 
 [node name="EffectComponent" parent="." instance=ExtResource("1_b61yb")]
