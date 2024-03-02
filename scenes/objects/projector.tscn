@@ -47,10 +47,11 @@ axis_lock_angular_z = true
 script = ExtResource("1_1a7v7")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -0.05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388468, -0.05)
 shape = SubResource("CylinderShape3D_5dlr2")
 
 [node name="Mesh" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.761153, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(0.836516, -0.224144, 0.5, 0.258819, 0.965926, -3.8567e-09, -0.482963, 0.12941, 0.866025, 0.132352, 0.5, -0.0753061)
@@ -78,19 +79,19 @@ mesh = SubResource("CylinderMesh_v14m2")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel1" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(-5.85032e-08, -1, -1.5027e-07, -0.995191, 4.35011e-08, 0.0979613, -0.0979613, 1.55278e-07, -0.995191, 0, 1.43353, -0.146686)
+transform = Transform3D(5.21996e-08, -1, 1.16623e-07, 0.772357, -3.37608e-08, -0.63519, 0.63519, 1.23231e-07, 0.772357, 0, 1.43353, -0.146686)
 mesh = SubResource("CylinderMesh_7wl7m")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel2" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(-5.85032e-08, -1, -1.5027e-07, -0.995191, 4.35011e-08, 0.0979613, -0.0979613, 1.55278e-07, -0.995191, 0, 1.40712, 0.142004)
+transform = Transform3D(5.21996e-08, -1, 1.16623e-07, 0.772357, -3.37608e-08, -0.63519, 0.63519, 1.23231e-07, 0.772357, 0, 1.40712, 0.142004)
 mesh = SubResource("CylinderMesh_6yd0w")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Light" type="SpotLight3D" parent="Mesh"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.335235)
-light_energy = 0.839191
+light_energy = 1.19984
 shadow_enabled = true
 distance_fade_enabled = true
 spot_attenuation = 0.329878
@@ -100,11 +101,11 @@ script = ExtResource("2_4nl2w")
 
 [node name="Hitbox" type="Area3D" parent="."]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.394847, -2.824)
 collision_layer = 0
 collision_mask = 128
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.15639, -2.82427)
 shape = SubResource("ConvexPolygonShape3D_c1pjy")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

@@ -1189,7 +1189,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.93148, 2.07237, -12.8394)
 physics_material_override = SubResource("PhysicsMaterial_yau84")
 
 [node name="Projector" parent="." instance=ExtResource("14_hpc2g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -12.4431)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.74496, -12.4431)
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]
