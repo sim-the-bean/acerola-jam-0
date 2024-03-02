@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7dr0xxom3w28"]
+
+[ext_resource type="Script" path="res://scripts/destructible.gd" id="1_7m337"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4d3ja"]
+size = Vector3(1, 2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4c16b"]
+size = Vector3(1.1, 2.05, 0.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7wl5j"]
+size = Vector3(1, 2, 0.5)
+
+[node name="Destructible" type="StaticBody3D"]
+script = ExtResource("1_7m337")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_4d3ja")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.025, 0)
+shape = SubResource("BoxShape3D_4c16b")
+
+[node name="MeshOk" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_7wl5j")
+
+[node name="MeshBroken" type="CSGCombiner3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="MeshBroken"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+size = Vector3(1, 2, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="MeshBroken"]
+transform = Transform3D(0.535606, 0.844468, 0, -0.806515, 0.511534, -0.296425, -0.250321, 0.158767, 0.955056, 0.402981, 1.68175, 0)
+operation = 2
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="MeshBroken"]
+transform = Transform3D(0.746784, 0.49564, -0.443457, -0.644807, 0.70291, -0.300235, 0.162903, 0.510155, 0.844514, -0.201929, 2.05401, 0.0325798)
+operation = 2
+
+[connection signal="body_entered" from="Hurtbox" to="." method="destroy"]

@@ -21,7 +21,7 @@ enum PositionState {
 @export var jump_velocity := 4.5
 @export var air_control := 0.05
 @export var flip_speed := 1.5
-@export var throw_strength := 5.0
+@export var throw_strength := 10.0
 @export var jump_buffer_duration := 0.2
 
 @export_group("Controls")

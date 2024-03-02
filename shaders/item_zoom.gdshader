@@ -5,6 +5,7 @@ uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_ne
 
 uniform float blur_radius = 10.0;
 uniform float sigma = 5.0;
+uniform int blur_increment = 2;
 uniform float saturation = 1.0;
 
 void vertex() {
@@ -20,8 +21,8 @@ vec3 blur(ivec2 uv, float r, float s) {
 	float sum = 0.0;
 	
 	int radius = clamp(int(ceil(r)), 0, 50); // limit radius to 50 to prevent accidents
-	for (int y = -radius; y <= radius; y++) {
-		for (int x = -radius; x <= radius; x++) {
+	for (int y = -radius; y <= radius; y += blur_increment) {
+		for (int x = -radius; x <= radius; x += blur_increment) {
 			float g = gaussian(s, float(x), float(y));
 			col += texelFetch(screen_texture, uv + ivec2(x, y), 0).rgb * g;
 			sum += g;
