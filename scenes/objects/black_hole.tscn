@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://5ry02ct650ae"]
+[gd_scene load_steps=14 format=3 uid="uid://5ry02ct650ae"]
 
 [ext_resource type="Shader" path="res://shaders/black_hole.gdshader" id="1_ex12r"]
+[ext_resource type="Shader" path="res://shaders/black_hole_accretion.gdshader" id="3_y0u5q"]
+[ext_resource type="Script" path="res://scripts/accretion_disk.gd" id="4_t506u"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s3njv"]
 radius = 5.0
@@ -23,6 +25,24 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_mcjut")
 [sub_resource type="SphereMesh" id="SphereMesh_bn7o0"]
 material = SubResource("ShaderMaterial_ifi25")
 
+[sub_resource type="Gradient" id="Gradient_he0ka"]
+offsets = PackedFloat32Array(0, 0.0714286, 0.269841, 0.65873, 1)
+colors = PackedColorArray(1, 0.917647, 0.560784, 1, 0.94, 0.50008, 0.2632, 1, 0.841327, 0.402017, 0.245426, 1, 0.700364, 0.261928, 0.220035, 1, 0.58, 0.119867, 0.087, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kb640"]
+gradient = SubResource("Gradient_he0ka")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i6bk8"]
+render_priority = 0
+shader = ExtResource("3_y0u5q")
+shader_parameter/gradient = SubResource("GradientTexture1D_kb640")
+
+[sub_resource type="SphereMesh" id="SphereMesh_y4csp"]
+material = SubResource("ShaderMaterial_i6bk8")
+flip_faces = true
+radius = 0.8
+height = 0.1
+
 [sub_resource type="BoxMesh" id="BoxMesh_q11f2"]
 size = Vector3(0.5, 0.5, 0.5)
 
@@ -42,8 +62,14 @@ gravity = 32.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("SphereShape3D_s3njv")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Hole" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_bn7o0")
+
+[node name="Accretion" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.050553, -0.802356, 0.594701, 0, 0.595462, 0.803383, -0.998721, 0.0406135, -0.0301024, 0, 0.036, 0)
+mesh = SubResource("SphereMesh_y4csp")
+script = ExtResource("4_t506u")
+angle = 0.174533
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(0.886275, 0.980392, 1, 1)
