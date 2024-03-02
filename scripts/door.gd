@@ -6,6 +6,7 @@ signal opened()
 signal closing()
 signal closed()
 
+@export_category("Door")
 @export var is_open: bool = false:
 	get: return _is_open
 	set(value):
@@ -14,8 +15,10 @@ signal closed()
 		_is_open = value
 @export var can_be_opened := true
 @export var can_be_closed := true
-@export var duration := 0.5
 @export var trigger_count := 1
+
+@export_group("Animation")
+@export var duration := 0.5
 @export_range(0.0, 1.0, 0.1, "or_greater") var open_amount_right := 1.0
 @export_range(0.0, 1.0, 0.1, "or_greater") var open_amount_left := 1.0
 

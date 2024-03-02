@@ -3,6 +3,7 @@ extends StaticBody3D
 
 signal destroyed()
 
+@export_category("Destructible")
 @export var is_destroyed := false:
 	get: return _is_destroyed
 	set(value):

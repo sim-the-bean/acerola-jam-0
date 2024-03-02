@@ -3,8 +3,11 @@ extends StaticBody3D
 signal clicked()
 signal unclicked()
 
+@export_category("Button")
 @export var can_be_clicked := true
 @export var oneshot := false
+
+@export_group("Animation")
 @export var in_duration := 0.2
 @export var out_duration := 0.2
 @export var push_amount := 0.5
