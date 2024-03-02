@@ -15,6 +15,7 @@ signal closed()
 @export var can_be_opened := true
 @export var can_be_closed := true
 @export var duration := 0.5
+@export var trigger_count := 1
 @export_range(0.0, 1.0, 0.1, "or_greater") var open_amount_right := 1.0
 @export_range(0.0, 1.0, 0.1, "or_greater") var open_amount_left := 1.0
 
@@ -26,6 +27,7 @@ var is_opening := false
 var is_closing := false
 var is_moving: bool:
 	get: return is_opening or is_closing
+var trigger_counter := 0
 
 var tween: Tween
 
@@ -34,6 +36,7 @@ func _ready():
 		tween.kill()
 	is_opening = false
 	is_closing = false
+	trigger_counter = 0
 	tween = null
 	
 	reset_default_positions()
@@ -58,18 +61,6 @@ func reset_default_positions():
 		default_position_right = %RightHalf.position
 		default_position_left = %LeftHalf.position
 
-func emit_opening():
-	opening.emit()
-
-func emit_opened():
-	opened.emit()
-
-func emit_closing():
-	closing.emit()
-
-func emit_closed():
-	closed.emit()
-
 func toggle():
 	if _is_open:
 		close()
@@ -85,6 +76,11 @@ func force_toggle():
 func open():
 	if not can_be_opened:
 		return
+	
+	if not (_is_open or is_opening):
+		trigger_counter += 1
+		if trigger_counter < trigger_count:
+			return
 	
 	force_open()
 
@@ -129,5 +125,18 @@ func force_close():
 	tween.parallel().tween_property(%LeftHalf, "position", default_position_left, duration)
 	tween.finished.connect(func():
 		is_closing = false
-		_is_open = false)
+		_is_open = false
+		trigger_counter = 0)
 	tween.finished.connect(emit_closed)
+
+func emit_opening():
+	opening.emit()
+
+func emit_opened():
+	opened.emit()
+
+func emit_closing():
+	closing.emit()
+
+func emit_closed():
+	closed.emit()

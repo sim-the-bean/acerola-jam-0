@@ -4,6 +4,7 @@ signal clicked()
 signal unclicked()
 
 @export var can_be_clicked := true
+@export var oneshot := false
 @export var in_duration := 0.2
 @export var out_duration := 0.2
 @export var push_amount := 0.5
@@ -11,14 +12,16 @@ signal unclicked()
 @onready var default_position := position
 
 var is_clicked := false
+var was_clicked := false
 
 var tween: Tween
 
 func click():
-	if not can_be_clicked or is_clicked:
+	if not can_be_clicked or is_clicked or (oneshot and was_clicked):
 		return
 	
 	is_clicked = true
+	was_clicked = true
 	emit_clicked()
 	
 	tween = create_tween()
