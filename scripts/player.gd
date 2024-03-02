@@ -22,6 +22,7 @@ enum PositionState {
 @export var air_control := 0.05
 @export var flip_speed := 1.5
 @export var throw_strength := 10.0
+@export var grabbed_rotate_speed := 100.0
 @export var jump_buffer_duration := 0.2
 
 @export_group("Controls")
@@ -108,14 +109,14 @@ func _physics_process(delta: float):
 			process_look(delta)
 			process_input(delta)
 			process_movement(delta)
-			process_raycast()
+			process_raycast(delta)
 			process_grabbed(delta)
 		PositionState.Rotating:
 			process_rotation(delta)
 			process_physics(delta)
 			process_look(delta)
 			process_movement(delta)
-			process_raycast()
+			process_raycast(delta)
 			process_grabbed(delta)
 
 func process_physics(delta: float):
@@ -189,7 +190,7 @@ func process_rotation(delta: float):
 		base_rotation = Quaternion.from_euler(rotation)
 		rotation_weight += delta * flip_speed
 
-func process_raycast():
+func process_raycast(delta):
 	var collider = %PlayerCamera/RayCast.get_collider()
 	if collider != hovered:
 		if hovered != null:
@@ -202,7 +203,7 @@ func process_raycast():
 		%PlayerCamera/RayCast/GrabPoint.global_position = %PlayerCamera/RayCast.get_collision_point()
 	if hovered != null:
 		if hovered.is_in_group("grabbable"):
-			do_grab()
+			do_grab(delta)
 		if hovered.is_in_group("item"):
 			do_item()
 		if hovered.is_in_group("button"):
@@ -213,9 +214,9 @@ func process_raycast():
 			if Input.is_action_just_released(&"player_action_interact"):
 				button.unclick()
 	else:
-		do_grab()
+		do_grab(delta)
 
-func do_grab():
+func do_grab(delta):
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
 			grabbed.linear_damp = 1
@@ -232,6 +233,11 @@ func do_grab():
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
+	if grabbed != null:
+		var rotate := 0.0
+		rotate -= float(Input.is_action_pressed(&"player_action_rotate_left"))
+		rotate += float(Input.is_action_pressed(&"player_action_rotate_right"))
+		grabbed.apply_torque(Vector3(0.0, rotate * grabbed_rotate_speed, 0.0) * delta)
 
 func do_item():
 	if Input.is_action_just_released(&"player_action_interact"):
