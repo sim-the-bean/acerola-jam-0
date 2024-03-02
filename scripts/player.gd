@@ -1,6 +1,9 @@
 extends CharacterBody3D
 class_name Player
 
+signal hover_entered(node: Node3D)
+signal hover_left(node: Node3D)
+
 enum PositionState {
 	Normal,
 	Rotating,
@@ -89,6 +92,8 @@ var deceleration: float:
 var jump_buffer := false
 var jump_buffer_time := 0.0
 
+var hovered: Node3D = null
+var last_hovered: Node3D = null
 var grabbed: RigidBody3D = null
 var interactive: Node3D = null
 
@@ -186,22 +191,38 @@ func process_rotation(delta: float):
 
 func process_raycast():
 	var collider = %PlayerCamera/RayCast.get_collider()
+	if collider != hovered:
+		if hovered != null:
+			hover_left.emit(hovered)
+		hovered = collider
+		hover_entered.emit(hovered)
+		if hovered != null:
+			last_hovered = hovered
 	if grabbed == null and collider != null:
 		%PlayerCamera/RayCast/GrabPoint.global_position = %PlayerCamera/RayCast.get_collision_point()
-	if collider != null:
-		if collider.is_in_group("grabbable"):
-			do_grab(collider)
-		elif collider.is_in_group("interactive"):
-			do_interact(collider)
+	if hovered != null:
+		if hovered.is_in_group("grabbable"):
+			do_grab()
+		elif hovered.is_in_group("item"):
+			do_interact()
+		elif hovered.is_in_group("button"):
+			var button := hovered
+			if Input.is_action_just_pressed(&"player_action_interact"):
+				button.click()
+				hover_left.connect(func(_node): button.unclick(), CONNECT_ONE_SHOT)
+			if Input.is_action_just_released(&"player_action_interact"):
+				button.unclick()
+	else:
+		do_grab()
 
-func do_grab(collider: Node3D):
+func do_grab():
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
-		elif collider != null:
-			grabbed = collider
+		elif hovered != null:
+			grabbed = hovered
 			grabbed.linear_damp = grab_damp
 			grabbed.angular_damp = grab_angular_damp
 	if Input.is_action_just_pressed(&"player_action_throw"):
@@ -212,15 +233,15 @@ func do_grab(collider: Node3D):
 			grabbed.angular_damp = 1
 			grabbed = null
 
-func do_interact(collider: Node3D):
+func do_interact():
 	if Input.is_action_just_released(&"player_action_interact"):
 		if interactive == null:
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.global_transform = %PlayerCamera.global_transform
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = true
-			interactive = collider.duplicate()
+			interactive = hovered.duplicate()
 			interactive.transform = Transform3D.IDENTITY
 			ItemScene.instance.add_child(interactive)
-			interactive.tree_exiting.connect(func(): collider.queue_free())
+			interactive.tree_exiting.connect(func(): hovered.queue_free())
 			get_tree().paused = true
 		else:
 			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false

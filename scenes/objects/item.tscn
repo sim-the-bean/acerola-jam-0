@@ -8,7 +8,7 @@ size = Vector3(0.343, 0.48, 0.012)
 resource_local_to_scene = true
 size = Vector3(0.286, 0.4, 0.01)
 
-[node name="Interactive" type="StaticBody3D" groups=["interactive"]]
+[node name="Item" type="StaticBody3D" groups=["item"]]
 collision_layer = 17
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

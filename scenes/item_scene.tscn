@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://defxwayo8lx5k"]
 
 [ext_resource type="Script" path="res://scripts/item_scene.gd" id="1_ida3y"]
-[ext_resource type="PackedScene" uid="uid://c1kmeui3wfpvs" path="res://scenes/objects/interactive.tscn" id="2_r8fvg"]
+[ext_resource type="PackedScene" uid="uid://c1kmeui3wfpvs" path="res://scenes/objects/item.tscn" id="2_r8fvg"]
 
 [sub_resource type="Environment" id="Environment_brnrg"]
 ambient_light_source = 2
