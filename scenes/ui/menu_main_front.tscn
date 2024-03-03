@@ -1,31 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://d4hncbcyk7340"]
 
-[ext_resource type="Theme" uid="uid://m6f2pnni01p5" path="res://resources/ui/theme.tres" id="1_2vh6u"]
-[ext_resource type="Script" path="res://scripts/ui/menu_main.gd" id="2_ru3mg"]
+[ext_resource type="Theme" uid="uid://m6f2pnni01p5" path="res://resources/ui/theme.tres" id="1_l62sg"]
+[ext_resource type="Script" path="res://scripts/ui/menu_main.gd" id="2_2cqig"]
 
 [node name="MenuMain" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1000.0
 offset_bottom = 1400.0
-theme = ExtResource("1_2vh6u")
-script = ExtResource("2_ru3mg")
-
-[node name="Header" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -305.0
-offset_top = 28.0
-offset_right = 306.0
-offset_bottom = 98.0
-grow_horizontal = 2
-bbcode_enabled = true
-text = "[font_size=48][fill][b]THE POTATO PAPER[/b][/fill][/font_size]"
-scroll_active = false
+theme = ExtResource("1_l62sg")
+script = ExtResource("2_2cqig")
 
 [node name="Control" type="Control" parent="."]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,22 +24,34 @@ offset_bottom = -140.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Header" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -305.5
+offset_right = 305.5
+offset_bottom = 70.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[font_size=48][fill][b]THE POTATO PAPER[/b][/fill][/font_size]"
+scroll_active = false
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -186.0
+offset_top = 170.0
 offset_right = 186.0
-offset_bottom = 338.0
+offset_bottom = 508.0
 grow_horizontal = 2
 
 [node name="NewGame" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 48
 text = "New Game"
-flat = true
 
 [node name="Continue" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
@@ -69,7 +68,7 @@ text = "Settings
 [node name="Quit" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Quit"
+text = "Quit Game"
 
 [connection signal="pressed" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Continue" to="." method="_on_continue_pressed"]

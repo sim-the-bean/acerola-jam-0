@@ -1,5 +1,6 @@
 @tool
 extends Node3D
+class_name Newspaper
 
 @export_category("Newspaper")
 @export var page_index: int:

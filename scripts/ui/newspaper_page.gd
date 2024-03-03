@@ -23,10 +23,7 @@ signal closed()
 			open()
 		else:
 			close()
-@export var enabled := true:
-	set(value):
-		enabled = value
-		%Area.process_mode = Node.PROCESS_MODE_INHERIT if enabled else Node.PROCESS_MODE_DISABLED
+@export var enabled := true
 
 @onready var animation_player: AnimationPlayer = $Mesh/AnimationPlayer
 @onready var area_shape_size: Vector3 = %Area.get_node("Collider").shape.size
@@ -85,10 +82,12 @@ func _on_area_input_event(camera: Camera3D, event: InputEvent, mouse_position: V
 	if Engine.is_editor_hint():
 		return
 	
-	var is_mouse_event := event is InputEventMouseButton \
-		or event is InputEventMouseMotion \
-		or event is InputEventScreenDrag \
-		or event is InputEventScreenTouch
+	if not enabled:
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			get_parent().previous_page()
+		return
+	
+	var is_mouse_event := event is InputEventMouseButton or event is InputEventMouseMotion
 	
 	if is_mouse_event and (is_mouse_inside or is_mouse_held):
 		handle_mouse_event(camera, event, mouse_position, normal, shape_idx)
@@ -104,7 +103,6 @@ func handle_mouse_event(camera: Camera3D, event: InputEvent, mouse_position: Vec
 	var mouse_pos := Vector2(mouse_position.x, mouse_position.z) / Vector2(area_shape_size.x, area_shape_size.z)
 	mouse_pos = mouse_pos + Vector2(0.5, 0.5)
 	mouse_pos *= Vector2(%SubViewport.size)
-	print(mouse_pos)
 	
 	event.position = mouse_pos
 	event.global_position = mouse_pos
@@ -116,7 +114,6 @@ func handle_mouse_event(camera: Camera3D, event: InputEvent, mouse_position: Vec
 			event.relative = mouse_pos - last_mouse_pos
 	last_mouse_pos = mouse_pos
 	
-	print(mouse_pos)
 	%SubViewport.push_input(event)
 
 func _on_area_mouse_entered():

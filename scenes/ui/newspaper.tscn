@@ -1,15 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://x6vgsx8fif8s"]
+[gd_scene load_steps=2 format=3 uid="uid://x6vgsx8fif8s"]
 
 [ext_resource type="Script" path="res://scripts/ui/newspaper.gd" id="1_46yyr"]
-[ext_resource type="PackedScene" uid="uid://bkvrnykj3pxlj" path="res://scenes/ui/newspaper_page.tscn" id="2_v3wil"]
 
 [node name="Newspaper" type="Node3D"]
 script = ExtResource("1_46yyr")
-
-[node name="Page" parent="." instance=ExtResource("2_v3wil")]
-
-[node name="Page2" parent="." instance=ExtResource("2_v3wil")]
-transform = Transform3D(0.999391, 0.0348995, 0, -0.0348995, 0.999391, 0, 0, 0, 1, 0, -0.05, 0)
-
-[node name="Page3" parent="." instance=ExtResource("2_v3wil")]
-transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0, -0.1, 0)
