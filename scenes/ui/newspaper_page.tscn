@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://bkvrnykj3pxlj"]
+
+[ext_resource type="Script" path="res://scripts/ui/newspaper_page.gd" id="1_g1mcm"]
+[ext_resource type="PackedScene" uid="uid://d4hncbcyk7340" path="res://scenes/ui/menu_main.tscn" id="2_8tw6c"]
+[ext_resource type="PackedScene" uid="uid://but5o24bfwxyo" path="res://resources/models/newspaper/newspaper.blend" id="2_sh017"]
+[ext_resource type="Shader" path="res://shaders/newspaper_page.gdshader" id="4_emfaq"]
+[ext_resource type="Texture2D" uid="uid://cjdyjwwa53bht" path="res://resources/models/newspaper/Newspaper-albedo.png" id="5_iavdg"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qmgns"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ug1m"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("4_emfaq")
+shader_parameter/albedo_texture = ExtResource("5_iavdg")
+shader_parameter/canvas_texture = SubResource("ViewportTexture_qmgns")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5gwhw"]
+size = Vector3(2, 0.1, 2.8)
+
+[node name="Page" type="Node3D"]
+script = ExtResource("1_g1mcm")
+page = ExtResource("2_8tw6c")
+
+[node name="Mesh" parent="." instance=ExtResource("2_sh017")]
+
+[node name="Skeleton3D" parent="Mesh/Armature" index="0"]
+bones/0/rotation = Quaternion(1.61808e-07, 2.10841e-07, -0.650208, 0.759756)
+bones/5/rotation = Quaternion(-2.21086e-07, 9.36065e-08, 0.0950824, 0.99547)
+
+[node name="Page" parent="Mesh/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_2ug1m")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.15446, 0.987999, 1.09957e-07, -0.987999, 0.15446, -5.2005e-07, -5.30792e-07, -2.83112e-08, 1, -0.99957, -0.078151, 0)
+bone_name = "Page"
+bone_idx = 0
+
+[node name="Area" type="Area3D" parent="Mesh/Armature/Skeleton3D/BoneAttachment3D"]
+unique_name_in_owner = true
+transform = Transform3D(0.15446, -0.987999, -5.30793e-07, 0.987999, 0.15446, -2.83113e-08, 1.09957e-07, -5.2005e-07, 1, 0.07718, 0.999646, 6.92678e-08)
+input_capture_on_drag = true
+
+[node name="Collider" type="CollisionShape3D" parent="Mesh/Armature/Skeleton3D/BoneAttachment3D/Area"]
+transform = Transform3D(0.996362, -0.0852256, 0, 0.0852256, 0.996362, 0, 0, 0, 1, 0, 0.0225652, 0)
+shape = SubResource("BoxShape3D_5gwhw")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+unique_name_in_owner = true
+transparent_bg = true
+size = Vector2i(1024, 1434)
+
+[connection signal="input_event" from="Mesh/Armature/Skeleton3D/BoneAttachment3D/Area" to="." method="_on_area_input_event"]
+[connection signal="mouse_entered" from="Mesh/Armature/Skeleton3D/BoneAttachment3D/Area" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_exited" from="Mesh/Armature/Skeleton3D/BoneAttachment3D/Area" to="." method="_on_area_mouse_exited"]
+
+[editable path="Mesh"]

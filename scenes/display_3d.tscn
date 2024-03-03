@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwme2yveog37s"]
+[gd_scene load_steps=6 format=3 uid="uid://dwme2yveog37s"]
 
+[ext_resource type="Script" path="res://scripts/main_subviewport.gd" id="1_8eyva"]
 [ext_resource type="PackedScene" uid="uid://bnw2pjgtkurfm" path="res://scenes/main.tscn" id="1_j35vu"]
 [ext_resource type="Script" path="res://scripts/follow_main_viewport.gd" id="1_l468m"]
 [ext_resource type="PackedScene" uid="uid://defxwayo8lx5k" path="res://scenes/item_scene.tscn" id="2_pogdo"]
@@ -19,11 +20,12 @@ grow_vertical = 2
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_8eyva")
 
 [node name="MainViewport" type="SubViewport" parent="SubViewportContainer"]
 own_world_3d = true
 handle_input_locally = false
-size = Vector2i(1348, 536)
+size = Vector2i(1348, 840)
 render_target_update_mode = 4
 script = ExtResource("1_l468m")
 
@@ -32,7 +34,8 @@ script = ExtResource("1_l468m")
 [node name="ItemViewport" type="SubViewport" parent="."]
 own_world_3d = true
 transparent_bg = true
-size = Vector2i(1348, 536)
+gui_disable_input = true
+size = Vector2i(1348, 840)
 script = ExtResource("1_l468m")
 
 [node name="ItemScene" parent="ItemViewport" instance=ExtResource("2_pogdo")]

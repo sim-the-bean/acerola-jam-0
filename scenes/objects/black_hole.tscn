@@ -88,7 +88,7 @@ cast_shadow = 0
 mesh = SubResource("SphereMesh_bn7o0")
 
 [node name="Accretion" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.975909, 0.0842117, -0.201272, 0, 0.922509, 0.385976, 0.218179, -0.376677, 0.900285, 0, 0.036, 0)
+transform = Transform3D(0.999452, -0.000551626, 0.0331138, 0, 0.999861, 0.0166562, -0.0331184, -0.016647, 0.999313, 0, 0.036, 0)
 cast_shadow = 0
 mesh = SubResource("SphereMesh_y4csp")
 script = ExtResource("4_t506u")

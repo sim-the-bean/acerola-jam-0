@@ -910,10 +910,10 @@ bounce = 0.5
 environment = SubResource("Environment_b3w5c")
 
 [node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
-transform = Transform3D(-1, 0, -1.17225e-07, 0, 1, 0, 1.17225e-07, 0, -1, 2.57644, 0, -9.49918)
+transform = Transform3D(-1, 0, -1.17225e-07, 0, 1, 0, 1.17225e-07, 0, -1, -0.856514, 0, -7.84796)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.999405, -0.0222603, 0.0263452, -0.0344697, -0.671156, 0.740514, 0.0011977, -0.740982, -0.671524, 0, 0, 0)
+transform = Transform3D(0.818441, -0.444188, -0.364487, -0.0344697, -0.671156, 0.740514, -0.573555, -0.593504, -0.564613, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Cube" parent="." instance=ExtResource("1_60o4d")]
@@ -1193,7 +1193,7 @@ physics_material_override = SubResource("PhysicsMaterial_yau84")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.74496, -12.4431)
 
 [node name="BlackHole" parent="." instance=ExtResource("15_4ho1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24289, 0.965095, 2.52494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12897, 0.965095, -1.3044)
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]
