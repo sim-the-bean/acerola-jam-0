@@ -49,30 +49,47 @@ offset_bottom = 508.0
 grow_horizontal = 2
 
 [node name="Unpause" type="Button" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_bottom = NodePath("../SaveGame")
+focus_next = NodePath("../SaveGame")
 text = "Unpause"
 
 [node name="SaveGame" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
+focus_neighbor_top = NodePath("../Unpause")
+focus_neighbor_bottom = NodePath("../Settings")
+focus_next = NodePath("../Settings")
+focus_previous = NodePath("../Unpause")
 text = "Save Game"
 
 [node name="Settings" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../SaveGame")
+focus_neighbor_bottom = NodePath("../QuitMenu")
+focus_next = NodePath("../QuitMenu")
+focus_previous = NodePath("../SaveGame")
 text = "Settings
 "
 
 [node name="QuitMenu" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Settings")
 text = "Exit to menu"
 
 [node name="Quit" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../QuitMenu")
+focus_previous = NodePath("../QuitMenu")
 text = "Quit Game"
 
 [connection signal="pressed" from="Control/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]

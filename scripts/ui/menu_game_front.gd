@@ -1,5 +1,11 @@
 extends Control
 
+func _unhandled_input(event):
+	for child in find_children("*"):
+		if child.has_focus():
+			return
+	%Unpause.grab_focus()
+
 func _on_unpause_pressed():
 	GameManager.instance.unpause()
 

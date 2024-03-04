@@ -79,25 +79,21 @@ func switch_scene(scene: PackedScene, reset_player := false):
 	if active_scene_node != null:
 		active_scene_node.queue_free()
 	
+	if reset_player:
+		if player == null:
+			player = player_scene.instantiate()
+			%GameRoot.add_child(player)
+		else:
+			player._ready()
+	
 	active_scene = scene
 	active_scene_node = scene.instantiate()
 	%GameRoot.add_child(active_scene_node)
-	
-	var add_player_to_scene := false
-	if reset_player:
-		if player == null:
-			add_player_to_scene = true
-			player = player_scene.instantiate()
-		else:
-			player._ready()
 		
 	var player_marker: Node3D = get_tree().get_first_node_in_group(&"player_marker")
 	if player_marker != null:
 		player.transform = player_marker.transform
 		default_player_transform = player_marker.transform
-	
-	if add_player_to_scene:
-		%GameRoot.add_child(player)
 
 func reset():
 	switch_scene(active_scene, true)

@@ -5,11 +5,11 @@ signal hover_entered(node: Node3D)
 signal hover_left(node: Node3D)
 
 enum PositionState {
-	Normal,
-	Rotating,
-	BlackHole,
-	Killed,
-	ItemZoom,
+	NORMAL,
+	ROTATING,
+	BLACK_HOLE,
+	KILLED,
+	ITEM_ZOOM,
 }
 
 @export_category("Player")
@@ -49,11 +49,11 @@ var controller_look_speed: float:
 var gravity_direction: Vector3:
 	get: return _gravity_direction
 	set(value):
-		if position_state == PositionState.Normal:
+		if position_state == PositionState.NORMAL:
 			var new_gravity = value.normalized()
 			var new_up = -new_gravity
 			var current_rotation = rotation_quaternion
-			position_state = PositionState.Rotating
+			position_state = PositionState.ROTATING
 			previous_rotation = current_rotation
 			target_rotation = current_rotation * Quaternion(up_direction, new_up)
 			target_up_direction = new_up
@@ -73,7 +73,7 @@ var gravity: Vector3:
 var gravity_point := false:
 	set(value):
 		gravity_point = value
-		position_state = PositionState.BlackHole if gravity_point else PositionState.Normal
+		position_state = PositionState.BLACK_HOLE if gravity_point else PositionState.NORMAL
 		if not gravity_point:
 			point_gravity_acc = Vector3.ZERO
 var gravity_point_unit_distance: float
@@ -81,7 +81,7 @@ var gravity_point_center: Vector3
 var gravity_point_strength: float
 var point_gravity_acc: Vector3
 
-var position_state := PositionState.Normal:
+var position_state := PositionState.NORMAL:
 	set(value):
 		position_state = value
 		rotation_weight = 0.0
@@ -119,7 +119,7 @@ var interactive: Node3D = null
 func _ready():
 	_gravity_direction = ProjectSettings.get_setting("physics/3d/default_gravity_vector").normalized()
 	gravity_strength = ProjectSettings.get_setting("physics/3d/default_gravity")
-	position_state = PositionState.Normal
+	position_state = PositionState.NORMAL
 	gravity_field_counter = 0
 	
 	gravity_point = false
@@ -140,43 +140,48 @@ func _ready():
 	interactive = null
 	
 	Utils.mouse_focus = true
+	%HudQuad.visible = true
+	%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture())
 
 func on_killing():
-	position_state = PositionState.Killed
+	position_state = PositionState.KILLED
 
 func on_killed():
 	GameManager.instance.reset()
 
+func _unhandled_input(event: InputEvent):
+	%HudViewport.push_input(event)
+
 func _physics_process(delta: float):
 	jump_buffer_time -= delta
 	match position_state:
-		PositionState.Normal:
+		PositionState.NORMAL:
 			process_physics(delta)
 			process_look(delta)
 			process_input(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
-		PositionState.ItemZoom:
+		PositionState.ITEM_ZOOM:
 			process_physics(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_item(delta)
-		PositionState.Rotating:
+		PositionState.ROTATING:
 			process_rotation(delta)
 			process_physics(delta)
 			process_look(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
-		PositionState.BlackHole:
+		PositionState.BLACK_HOLE:
 			process_bh_physics(delta)
 			process_look(delta)
 			process_input(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
-		PositionState.Killed:
+		PositionState.KILLED:
 			process_bh_killed(delta)
 
 func process_physics(delta: float):
@@ -200,7 +205,7 @@ func process_bh_killed(delta: float):
 func process_look(_delta: float):
 	var look := get_look_vector()
 	
-	if position_state == PositionState.Rotating:
+	if position_state == PositionState.ROTATING:
 		look *= rotating_look_sensitivity
 	
 	%CameraPivot.rotate_x(look.y)
@@ -240,7 +245,7 @@ func process_input(delta: float):
 	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
 	
 	match position_state:
-		PositionState.BlackHole:
+		PositionState.BLACK_HOLE:
 			velocity = point_gravity_acc + direction * speed
 		_:
 			velocity = velocity * up_direction.abs() + direction * speed
@@ -251,7 +256,7 @@ func process_movement(_delta: float):
 func process_rotation(delta: float):
 	if rotation_weight >= 1.0:
 		up_direction = target_up_direction
-		position_state = PositionState.Normal
+		position_state = PositionState.NORMAL
 	else:
 		var angle := previous_rotation.angle_to(target_rotation) * delta * flip_speed
 		rotate(rotation_axis, angle)
@@ -261,12 +266,16 @@ func process_rotation(delta: float):
 
 func process_raycast(delta):
 	var collider = %RayCast.get_collider()
-	if collider != hovered:
+	if grabbed == null and collider != hovered:
 		if hovered != null:
+			if hovered.has_node("HoverComponent"):
+				hovered.get_node("HoverComponent").emit_hover_exited()
 			hover_left.emit(hovered)
 		hovered = collider
-		hover_entered.emit(hovered)
 		if hovered != null:
+			if hovered.has_node("HoverComponent"):
+				hovered.get_node("HoverComponent").emit_hover_entered()
+			hover_entered.emit(hovered)
 			last_hovered = hovered
 	if grabbed == null and collider != null:
 		%GrabPoint.global_position = %RayCast.get_collision_point()
@@ -295,6 +304,8 @@ func process_item(_delta: float):
 func do_grab(delta):
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
+			if grabbed.has_node("GrabComponent"):
+				grabbed.get_node("GrabComponent").emit_grab_end()
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
@@ -302,8 +313,12 @@ func do_grab(delta):
 			grabbed = hovered
 			grabbed.linear_damp = grab_damp
 			grabbed.angular_damp = grab_angular_damp
+			if grabbed.has_node("GrabComponent"):
+				grabbed.get_node("GrabComponent").emit_grab_begin()
 	if Input.is_action_just_pressed(&"player_action_throw"):
 		if grabbed != null:
+			if grabbed.has_node("GrabComponent"):
+				grabbed.get_node("GrabComponent").emit_grab_end()
 			var throw_direction = %CameraPivot.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
 			grabbed.apply_impulse(throw_direction * throw_strength)
 			grabbed.linear_damp = 1
@@ -323,11 +338,11 @@ func do_item():
 			var tween = create_tween()
 			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_speed)
 			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_speed)
-			position_state = PositionState.ItemZoom
+			position_state = PositionState.ITEM_ZOOM
 		else:
 			interactive.queue_free()
 			interactive = null
-			position_state = PositionState.Normal
+			position_state = PositionState.NORMAL
 
 func process_grabbed(delta: float):
 	if grabbed != null:
@@ -342,6 +357,16 @@ func process_grabbed(delta: float):
 
 func get_hold_menu_point() -> Node3D:
 	return %HoldMenuPoint
+
+func hud_show_hint(hint_type: UiHintComponent.HintType, hud_type: UiHintComponent.HudType, hint: String):
+	match hud_type:
+		UiHintComponent.HudType.CURSOR_3D: pass
+		_: return %Hud.show_hint(hint_type, hud_type, hint)
+
+func hud_hide_hint(hud_type: UiHintComponent.HudType, node: Control):
+	match hud_type:
+		UiHintComponent.HudType.CURSOR_3D: pass
+		_: return %Hud.hide_hint(hud_type, node)
 
 func quaternion_from_to(pivot: Node3D, from: Node3D, to: Node3D) -> Quaternion:
 	var pos_a = from.global_position - pivot.global_position

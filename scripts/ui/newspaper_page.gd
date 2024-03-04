@@ -23,7 +23,9 @@ signal closed()
 			open()
 		else:
 			close()
-@export var enabled := true
+@export var enabled := true:
+	set(value):
+		enabled = true
 
 @onready var animation_player: AnimationPlayer = $Mesh/AnimationPlayer
 @onready var area_shape_size: Vector3 = %Area.get_node("Collider").shape.size
@@ -77,6 +79,22 @@ func close():
 		_is_open = false
 		is_closing = false,
 		CONNECT_ONE_SHOT)
+
+func _unhandled_input(event):
+	if Engine.is_editor_hint():
+		return
+	
+	if not enabled:
+		return
+	
+	if event is InputEventJoypadButton and event.is_action_pressed(&"game_cancel"):
+		get_parent().previous_page()
+		return
+	
+	var is_mouse_event := event is InputEventMouseButton or event is InputEventMouseMotion
+	
+	if not is_mouse_event:
+		%SubViewport.push_input(event)
 
 func _on_area_input_event(camera: Camera3D, event: InputEvent, mouse_position: Vector3, normal: Vector3, shape_idx: int):
 	if Engine.is_editor_hint():

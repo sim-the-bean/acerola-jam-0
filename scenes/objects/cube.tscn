@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bafri2b015t68"]
+[gd_scene load_steps=9 format=3 uid="uid://bafri2b015t68"]
 
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_o5qva"]
 [ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="2_itmiw"]
+[ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="3_36tyh"]
+[ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="4_ttlls"]
+[ext_resource type="PackedScene" uid="uid://d0e8xg2vjvj2m" path="res://scenes/components/grab_component.tscn" id="5_o7h71"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sxott"]
 resource_local_to_scene = true
@@ -32,3 +35,25 @@ mesh = SubResource("BoxMesh_ioba5")
 [node name="KillComponent" parent="." instance=ExtResource("2_itmiw")]
 scale_on_kill = true
 scale_target = NodePath("../MeshInstance3D")
+
+[node name="HoverComponent" parent="." instance=ExtResource("3_36tyh")]
+
+[node name="UiHintComponentGrab" parent="." instance=ExtResource("4_ttlls")]
+hint_type = 2
+hud_type = 1
+hint = "Grab"
+show = false
+
+[node name="GrabComponent" parent="." instance=ExtResource("5_o7h71")]
+
+[node name="UiHintComponentThrow" parent="." instance=ExtResource("4_ttlls")]
+hint_type = 3
+hud_type = 1
+hint = "Throw"
+show = false
+
+[connection signal="hover_entered" from="HoverComponent" to="UiHintComponentGrab" method="set_show"]
+[connection signal="hover_exited" from="HoverComponent" to="UiHintComponentGrab" method="set_hide"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentGrab" method="set_hide"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]

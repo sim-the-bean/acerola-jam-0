@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1kmeui3wfpvs"]
+[gd_scene load_steps=5 format=3 uid="uid://c1kmeui3wfpvs"]
+
+[ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="1_a44ji"]
+[ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="2_rxant"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d0402"]
 resource_local_to_scene = true
@@ -17,3 +20,14 @@ shape = SubResource("BoxShape3D_d0402")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_j6rrn")
+
+[node name="HoverComponent" parent="." instance=ExtResource("1_a44ji")]
+
+[node name="UiHintComponent" parent="." instance=ExtResource("2_rxant")]
+hint_type = 1
+hud_type = 1
+hint = "Read"
+show = false
+
+[connection signal="hover_entered" from="HoverComponent" to="UiHintComponent" method="set_show"]
+[connection signal="hover_exited" from="HoverComponent" to="UiHintComponent" method="set_hide"]

@@ -2,7 +2,7 @@ extends Control
 
 func _ready():
 	%MouseSensitivitySlider.value = GameSettings.mouse_look_sensitivity * 10
-	%ControllerSensitivitySlider.value = GameSettings.controller_look_sensitivity
+	%ControllerSensitivitySlider.value = GameSettings.controller_look_sensitivity * 10
 	%InvertCameraXCheck.button_pressed = GameSettings.look_invert_x
 	%InvertCameraYCheck.button_pressed = GameSettings.look_invert_y
 

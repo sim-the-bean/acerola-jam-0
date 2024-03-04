@@ -1,10 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://d1yldm36qcj08"]
+[gd_scene load_steps=19 format=3 uid="uid://d1yldm36qcj08"]
 
 [ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
 [ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_jp6qs"]
 [ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_ipdrd"]
 [ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="5_7hngu"]
+[ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="6_67b7w"]
+[ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="7_0sivp"]
+[ext_resource type="PackedScene" uid="uid://d0e8xg2vjvj2m" path="res://scenes/components/grab_component.tscn" id="8_vhty1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dbufy"]
 resource_local_to_scene = true
@@ -113,3 +116,25 @@ skeleton = NodePath("../../..")
 [node name="KillComponent" parent="." instance=ExtResource("5_7hngu")]
 scale_on_kill = true
 scale_target = NodePath("../Mesh")
+
+[node name="HoverComponent" parent="." instance=ExtResource("6_67b7w")]
+
+[node name="UiHintComponentGrab" parent="." instance=ExtResource("7_0sivp")]
+hint_type = 2
+hud_type = 1
+hint = "Grab"
+show = false
+
+[node name="GrabComponent" parent="." instance=ExtResource("8_vhty1")]
+
+[node name="UiHintComponentThrow" parent="." instance=ExtResource("7_0sivp")]
+hint_type = 3
+hud_type = 1
+hint = "Throw"
+show = false
+
+[connection signal="hover_entered" from="HoverComponent" to="UiHintComponentGrab" method="set_show"]
+[connection signal="hover_exited" from="HoverComponent" to="UiHintComponentGrab" method="set_hide"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentGrab" method="set_hide"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]

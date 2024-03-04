@@ -1,5 +1,11 @@
 extends Control
 
+func _unhandled_input(event):
+	for child in find_children("*"):
+		if child.has_focus():
+			return
+	%NewGame.grab_focus()
+
 func _on_new_game_pressed():
 	GameManager.instance.new_game()
 
