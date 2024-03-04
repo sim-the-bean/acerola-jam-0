@@ -23,9 +23,7 @@ signal closed()
 			open()
 		else:
 			close()
-@export var enabled := true:
-	set(value):
-		enabled = true
+@export var enabled := true
 
 @onready var animation_player: AnimationPlayer = $Mesh/AnimationPlayer
 @onready var area_shape_size: Vector3 = %Area.get_node("Collider").shape.size

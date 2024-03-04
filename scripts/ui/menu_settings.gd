@@ -6,6 +6,12 @@ func _ready():
 	%InvertCameraXCheck.button_pressed = GameSettings.look_invert_x
 	%InvertCameraYCheck.button_pressed = GameSettings.look_invert_y
 
+func _unhandled_input(event):
+	for child in find_children("*"):
+		if child.has_focus():
+			return
+	%MouseSensitivitySlider.grab_focus()
+
 func _on_mouse_sensitivity_slider_value_changed(value):
 	GameSettings.mouse_look_sensitivity = value * 0.1
 

@@ -18,7 +18,10 @@ var current_page: NewspaperPage:
 func _ready():
 	for child in get_children():
 		if child is NewspaperPage:
+			child.enabled = false
 			pages.append(child)
+	if not pages.is_empty():
+		current_page.enabled = true
 	if not child_entered_tree.is_connected(add_page):
 		child_entered_tree.connect(add_page)
 	if not child_exiting_tree.is_connected(remove_page):
@@ -38,8 +41,10 @@ func last_page():
 
 func flip_to(index: int):
 	if index == current_page_index:
-		pass
-	elif index > current_page_index:
+		return
+		
+	current_page.enabled = false
+	if index > current_page_index:
 		var previous_page: NewspaperPage = null
 		for i in range(current_page_index, index):
 			if previous_page == null:

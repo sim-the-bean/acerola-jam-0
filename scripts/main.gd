@@ -91,7 +91,7 @@ func switch_scene(scene: PackedScene, reset_player := false):
 	%GameRoot.add_child(active_scene_node)
 		
 	var player_marker: Node3D = get_tree().get_first_node_in_group(&"player_marker")
-	if player_marker != null:
+	if player != null and player_marker != null:
 		player.transform = player_marker.transform
 		default_player_transform = player_marker.transform
 
