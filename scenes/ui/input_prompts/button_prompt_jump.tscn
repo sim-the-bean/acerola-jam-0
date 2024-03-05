@@ -1,0 +1,14 @@
+[gd_scene load_steps=6 format=3 uid="uid://cljlqgu0agdw0"]
+
+[ext_resource type="PackedScene" uid="uid://csr06dmjrfnpb" path="res://scenes/ui/input_prompts/button_prompt.tscn" id="1_r8rh6"]
+[ext_resource type="Texture2D" uid="uid://guocp5x5l06f" path="res://resources/ui/icons/input_prompts/Keyboard & Mouse/Light/Space_Key_Light.png" id="2_ix2nj"]
+[ext_resource type="Texture2D" uid="uid://03gejg8i53f0" path="res://resources/ui/icons/input_prompts/Others/Positional Prompts/Positional_Prompts_Down.png" id="3_vufd7"]
+[ext_resource type="Texture2D" uid="uid://bgx7um8fc7vnb" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_A.png" id="4_mqihw"]
+[ext_resource type="Texture2D" uid="uid://ci482iypkckwv" path="res://resources/ui/icons/input_prompts/PS5/PS5_Cross.png" id="5_yc0tm"]
+
+[node name="ButtonPrompt" instance=ExtResource("1_r8rh6")]
+texture = ExtResource("2_ix2nj")
+mouse_and_keyboard_icon = ExtResource("2_ix2nj")
+controller_icon = ExtResource("3_vufd7")
+xbox_icon = ExtResource("4_mqihw")
+ps_icon = ExtResource("5_yc0tm")

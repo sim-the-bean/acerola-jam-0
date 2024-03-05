@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://da2fhw2qo812p"]
+
+[ext_resource type="Theme" uid="uid://m6f2pnni01p5" path="res://resources/ui/theme.tres" id="1_rak2l"]
+[ext_resource type="Script" path="res://scripts/ui/menu_game_front.gd" id="2_q1xi0"]
+
+[node name="MenuGame" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1000.0
+offset_bottom = 1400.0
+theme = ExtResource("1_rak2l")
+script = ExtResource("2_q1xi0")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 140.0
+offset_right = -100.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -305.5
+offset_right = 305.5
+offset_bottom = 70.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[font_size=48][fill][b]THE POTATO PAPER[/b][/fill][/font_size]"
+scroll_active = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -186.0
+offset_top = 170.0
+offset_right = 186.0
+offset_bottom = 508.0
+grow_horizontal = 2
+
+[node name="Unpause" type="Button" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+focus_neighbor_bottom = NodePath("../SaveGame")
+focus_next = NodePath("../SaveGame")
+text = "Unpause"
+
+[node name="SaveGame" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../Unpause")
+focus_neighbor_bottom = NodePath("../Settings")
+focus_next = NodePath("../Settings")
+focus_previous = NodePath("../Unpause")
+text = "Save Game"
+
+[node name="Settings" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../SaveGame")
+focus_neighbor_bottom = NodePath("../QuitMenu")
+focus_next = NodePath("../QuitMenu")
+focus_previous = NodePath("../SaveGame")
+text = "Settings
+"
+
+[node name="QuitMenu" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Settings")
+text = "Exit to menu"
+
+[node name="Quit" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../QuitMenu")
+focus_previous = NodePath("../QuitMenu")
+text = "Quit Game"
+
+[connection signal="pressed" from="Control/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/SaveGame" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/QuitMenu" to="." method="_on_quit_menu_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

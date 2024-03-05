@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dx562v4dvc3mh"]
+[gd_scene load_steps=6 format=3 uid="uid://dx562v4dvc3mh"]
 
 [ext_resource type="Script" path="res://scripts/button.gd" id="1_u4155"]
+[ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="2_6gw6a"]
+[ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="3_7s8rn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u7cgp"]
 size = Vector3(0.4, 0.2, 0.1)
@@ -18,3 +20,15 @@ shape = SubResource("BoxShape3D_u7cgp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_6g4ox")
+
+[node name="HoverComponent" parent="." instance=ExtResource("2_6gw6a")]
+
+[node name="UiHintComponent" parent="." instance=ExtResource("3_7s8rn")]
+hint_type = 1
+hud_type = 1
+hint = "Use"
+show = false
+
+[connection signal="clicked" from="." to="UiHintComponent" method="set_hide"]
+[connection signal="hover_entered" from="HoverComponent" to="UiHintComponent" method="set_show"]
+[connection signal="hover_exited" from="HoverComponent" to="UiHintComponent" method="set_hide"]

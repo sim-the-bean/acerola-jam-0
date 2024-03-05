@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://mq05dcn7se8o"]
+
+[ext_resource type="Script" path="res://scripts/ui_hint_component.gd" id="1_qmxh3"]
+
+[node name="UiHintComponent" type="Node"]
+script = ExtResource("1_qmxh3")

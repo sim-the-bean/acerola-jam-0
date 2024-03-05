@@ -5,10 +5,11 @@ signal hover_entered(node: Node3D)
 signal hover_left(node: Node3D)
 
 enum PositionState {
-	Normal,
-	Rotating,
-	BlackHole,
-	Killed,
+	NORMAL,
+	ROTATING,
+	BLACK_HOLE,
+	KILLED,
+	ITEM_ZOOM,
 }
 
 @export_category("Player")
@@ -27,14 +28,13 @@ enum PositionState {
 @export var grabbed_rotate_speed := 100.0
 @export var jump_buffer_duration := 0.2
 @export var killed_rotation_speed := 10.0
+@export var item_zoom_speed := 1.0
 
 @export_group("Controls")
-@export_range(0.0, 1.0) var mouse_look_sensitivity := 0.3
 var mouse_look_speed: float:
-	get: return mouse_look_sensitivity * 0.0001
-@export_range(0.0, 1.0) var controller_look_sensitivity := 0.6
+	get: return GameSettings.mouse_look_sensitivity * 0.0001
 var controller_look_speed: float:
-	get: return controller_look_sensitivity * 0.1
+	get: return GameSettings.controller_look_sensitivity * 0.1
 @export_range(0.0, 1.0) var rotating_look_sensitivity := 0.2
 
 @export_group("Physics")
@@ -49,11 +49,11 @@ var controller_look_speed: float:
 var gravity_direction: Vector3:
 	get: return _gravity_direction
 	set(value):
-		if position_state == PositionState.Normal:
+		if position_state == PositionState.NORMAL:
 			var new_gravity = value.normalized()
 			var new_up = -new_gravity
 			var current_rotation = rotation_quaternion
-			position_state = PositionState.Rotating
+			position_state = PositionState.ROTATING
 			previous_rotation = current_rotation
 			target_rotation = current_rotation * Quaternion(up_direction, new_up)
 			target_up_direction = new_up
@@ -73,7 +73,7 @@ var gravity: Vector3:
 var gravity_point := false:
 	set(value):
 		gravity_point = value
-		position_state = PositionState.BlackHole if gravity_point else PositionState.Normal
+		position_state = PositionState.BLACK_HOLE if gravity_point else PositionState.NORMAL
 		if not gravity_point:
 			point_gravity_acc = Vector3.ZERO
 var gravity_point_unit_distance: float
@@ -81,7 +81,7 @@ var gravity_point_center: Vector3
 var gravity_point_strength: float
 var point_gravity_acc: Vector3
 
-var position_state := PositionState.Normal:
+var position_state := PositionState.NORMAL:
 	set(value):
 		position_state = value
 		rotation_weight = 0.0
@@ -117,11 +117,9 @@ var grabbed: RigidBody3D = null
 var interactive: Node3D = null
 
 func _ready():
-	%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
-	
 	_gravity_direction = ProjectSettings.get_setting("physics/3d/default_gravity_vector").normalized()
 	gravity_strength = ProjectSettings.get_setting("physics/3d/default_gravity")
-	position_state = PositionState.Normal
+	position_state = PositionState.NORMAL
 	gravity_field_counter = 0
 	
 	gravity_point = false
@@ -140,38 +138,50 @@ func _ready():
 	last_hovered = null
 	grabbed = null
 	interactive = null
+	
+	Utils.mouse_focus = true
+	%HudQuad.visible = true
+	%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture())
 
 func on_killing():
-	position_state = PositionState.Killed
+	position_state = PositionState.KILLED
 
 func on_killed():
 	GameManager.instance.reset()
 
+func _unhandled_input(event: InputEvent):
+	%HudViewport.push_input(event)
+
 func _physics_process(delta: float):
 	jump_buffer_time -= delta
 	match position_state:
-		PositionState.Normal:
+		PositionState.NORMAL:
 			process_physics(delta)
 			process_look(delta)
 			process_input(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
-		PositionState.Rotating:
+		PositionState.ITEM_ZOOM:
+			process_physics(delta)
+			process_movement(delta)
+			process_raycast(delta)
+			process_item(delta)
+		PositionState.ROTATING:
 			process_rotation(delta)
 			process_physics(delta)
 			process_look(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
-		PositionState.BlackHole:
+		PositionState.BLACK_HOLE:
 			process_bh_physics(delta)
 			process_look(delta)
 			process_input(delta)
 			process_movement(delta)
 			process_raycast(delta)
 			process_grabbed(delta)
-		PositionState.Killed:
+		PositionState.KILLED:
 			process_bh_killed(delta)
 
 func process_physics(delta: float):
@@ -193,16 +203,13 @@ func process_bh_killed(delta: float):
 	global_position = gravity_point_center + offset
 
 func process_look(_delta: float):
-	var look := Vector2.ZERO
-	if Utils.mouse_focus:
-		look += -Input.get_last_mouse_velocity() * mouse_look_speed
-	look += Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * controller_look_speed
+	var look := get_look_vector()
 	
-	if position_state == PositionState.Rotating:
+	if position_state == PositionState.ROTATING:
 		look *= rotating_look_sensitivity
 	
-	%PlayerCamera.rotate_x(look.y)
-	%PlayerCamera.rotation.x = clampf(%PlayerCamera.rotation.x, -PI * 0.5, PI * 0.5)
+	%CameraPivot.rotate_x(look.y)
+	%CameraPivot.rotation.x = clampf(%CameraPivot.rotation.x, -PI * 0.5, PI * 0.5)
 	rotate(up_direction, look.x)
 
 func process_input(delta: float):
@@ -213,12 +220,6 @@ func process_input(delta: float):
 		elif not jump_buffer:
 			jump_buffer = true
 			jump_buffer_time = jump_buffer_duration
-	
-	if not Utils.mouse_focus and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		Utils.mouse_focus = true
-	
-	if Input.is_action_just_pressed(&"ui_cancel"):
-		Utils.mouse_focus = false
 	
 	var raw_input := call_function(&"get_input_vector") as Vector2
 	var input_dir := raw_input if input_allowed else Vector2.ZERO
@@ -244,7 +245,7 @@ func process_input(delta: float):
 	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
 	
 	match position_state:
-		PositionState.BlackHole:
+		PositionState.BLACK_HOLE:
 			velocity = point_gravity_acc + direction * speed
 		_:
 			velocity = velocity * up_direction.abs() + direction * speed
@@ -255,7 +256,7 @@ func process_movement(_delta: float):
 func process_rotation(delta: float):
 	if rotation_weight >= 1.0:
 		up_direction = target_up_direction
-		position_state = PositionState.Normal
+		position_state = PositionState.NORMAL
 	else:
 		var angle := previous_rotation.angle_to(target_rotation) * delta * flip_speed
 		rotate(rotation_axis, angle)
@@ -264,16 +265,20 @@ func process_rotation(delta: float):
 		rotation_weight += delta * flip_speed
 
 func process_raycast(delta):
-	var collider = %PlayerCamera/RayCast.get_collider()
-	if collider != hovered:
+	var collider = %RayCast.get_collider()
+	if grabbed == null and collider != hovered:
 		if hovered != null:
+			if hovered.has_node("HoverComponent"):
+				hovered.get_node("HoverComponent").emit_hover_exited()
 			hover_left.emit(hovered)
 		hovered = collider
-		hover_entered.emit(hovered)
 		if hovered != null:
+			if hovered.has_node("HoverComponent"):
+				hovered.get_node("HoverComponent").emit_hover_entered()
+			hover_entered.emit(hovered)
 			last_hovered = hovered
 	if grabbed == null and collider != null:
-		%PlayerCamera/RayCast/GrabPoint.global_position = %PlayerCamera/RayCast.get_collision_point()
+		%GrabPoint.global_position = %RayCast.get_collision_point()
 	if hovered != null:
 		if hovered.is_in_group("grabbable"):
 			do_grab(delta)
@@ -288,10 +293,19 @@ func process_raycast(delta):
 				button.unclick()
 	else:
 		do_grab(delta)
+		do_item()
+
+func process_item(_delta: float):
+	var look := get_look_vector()
+	
+	%HoldItemPoint.rotate_y(look.x)
+	%HoldItemPoint.rotate_x(look.y)
 
 func do_grab(delta):
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
+			if grabbed.has_node("GrabComponent"):
+				grabbed.get_node("GrabComponent").emit_grab_end()
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
 			grabbed = null
@@ -299,9 +313,13 @@ func do_grab(delta):
 			grabbed = hovered
 			grabbed.linear_damp = grab_damp
 			grabbed.angular_damp = grab_angular_damp
+			if grabbed.has_node("GrabComponent"):
+				grabbed.get_node("GrabComponent").emit_grab_begin()
 	if Input.is_action_just_pressed(&"player_action_throw"):
 		if grabbed != null:
-			var throw_direction = %PlayerCamera.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
+			if grabbed.has_node("GrabComponent"):
+				grabbed.get_node("GrabComponent").emit_grab_end()
+			var throw_direction = %CameraPivot.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
 			grabbed.apply_impulse(throw_direction * throw_strength)
 			grabbed.linear_damp = 1
 			grabbed.angular_damp = 1
@@ -314,29 +332,41 @@ func do_grab(delta):
 
 func do_item():
 	if Input.is_action_just_released(&"player_action_interact"):
-		if interactive == null:
-			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.global_transform = %PlayerCamera.global_transform
-			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = true
-			interactive = hovered.duplicate()
-			interactive.transform = Transform3D.IDENTITY
-			ItemScene.instance.add_child(interactive)
-			interactive.tree_exiting.connect(func(): hovered.queue_free())
-			get_tree().paused = true
+		if interactive == null and hovered != null:
+			interactive = hovered
+			interactive.reparent(%HoldItemPoint)
+			var tween = create_tween()
+			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_speed)
+			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_speed)
+			position_state = PositionState.ITEM_ZOOM
 		else:
-			%PlayerCamera/ItemZoomViewport/ItemZoomPostProcess.visible = false
 			interactive.queue_free()
 			interactive = null
+			position_state = PositionState.NORMAL
 
 func process_grabbed(delta: float):
 	if grabbed != null:
-		var rot_diff = quaternion_from_to(%PlayerCamera, grabbed, %PlayerCamera/RayCast/GrabPoint)
+		var rot_diff = quaternion_from_to(%CameraPivot, grabbed, %GrabPoint)
 		if rot_diff:
 			var torque = rot_diff.get_euler() * Vector3(0, 1, 0)
 			grabbed.apply_torque(torque * grab_angular_speed * delta)
 		
-		var pos_diff: Vector3 = %PlayerCamera/RayCast/GrabPoint.global_position - grabbed.global_position
+		var pos_diff: Vector3 = %GrabPoint.global_position - grabbed.global_position
 		if pos_diff:
 			grabbed.apply_force(pos_diff * grab_speed * delta)
+
+func get_hold_menu_point() -> Node3D:
+	return %HoldMenuPoint
+
+func hud_show_hint(hint_type: UiHintComponent.HintType, hud_type: UiHintComponent.HudType, hint: String):
+	match hud_type:
+		UiHintComponent.HudType.CURSOR_3D: pass
+		_: return %Hud.show_hint(hint_type, hud_type, hint)
+
+func hud_hide_hint(hud_type: UiHintComponent.HudType, node: Control):
+	match hud_type:
+		UiHintComponent.HudType.CURSOR_3D: pass
+		_: return %Hud.hide_hint(hud_type, node)
 
 func quaternion_from_to(pivot: Node3D, from: Node3D, to: Node3D) -> Quaternion:
 	var pos_a = from.global_position - pivot.global_position
@@ -345,6 +375,15 @@ func quaternion_from_to(pivot: Node3D, from: Node3D, to: Node3D) -> Quaternion:
 
 func get_input_vector() -> Vector2:
 	return Input.get_vector(&"player_move_left", &"player_move_right", &"player_move_forward", &"player_move_back")
+
+func get_look_vector() -> Vector2:
+	var look := Vector2.ZERO
+	if Utils.mouse_focus:
+		look += -Input.get_last_mouse_velocity() * mouse_look_speed
+	look += Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * controller_look_speed
+	
+	look *= GameSettings.look_invert
+	return look
 
 func get_effect_component() -> EffectComponent:
 	return %EffectComponent

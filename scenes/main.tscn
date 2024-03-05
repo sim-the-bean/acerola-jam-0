@@ -2,18 +2,29 @@
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_jtluw"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5qpj4"]
-[ext_resource type="PackedScene" uid="uid://dju6tadl6ss46" path="res://scenes/objects/player.tscn" id="3_nk73m"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="3_oqmtt"]
 
 [node name="Main" type="Node3D"]
-process_mode = 1
+process_mode = 3
 script = ExtResource("1_jtluw")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-fov = 74.8269
 
 [node name="PhantomCameraHost" type="Node" parent="Camera3D"]
 script = ExtResource("2_5qpj4")
 
-[node name="Player" parent="." instance=ExtResource("3_nk73m")]
+[node name="GameRoot" type="Node3D" parent="."]
 unique_name_in_owner = true
+process_mode = 1
+
+[node name="DummyCamera" type="Node3D" parent="GameRoot"]
+visible = false
+script = ExtResource("3_oqmtt")
+priority_override = false
+priority = 0
+follow_mode = 0
+look_at_mode = 0
+tween_parameters = null
+tween_on_load = false
+inactive_update_mode = 0
+camera_3D_resource = null
