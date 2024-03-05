@@ -13,7 +13,7 @@ signal destroyed()
 			else:
 				force_undestroy()
 		_is_destroyed = value
-@export var minimum_momentum := 7.0
+@export var minimum_momentum := 0.0
 
 var _is_destroyed := false
 
@@ -24,6 +24,9 @@ func destroy(node: Node3D = null):
 	if node != null and node is RigidBody3D:
 		if node.linear_velocity.length() * node.mass < minimum_momentum:
 			return
+	
+	if node.has_method("destroy"):
+		node.destroy()
 	
 	force_destroy()
 

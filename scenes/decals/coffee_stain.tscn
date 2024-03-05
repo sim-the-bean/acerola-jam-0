@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://r1s62a1l1x0j"]
+
+[ext_resource type="Texture2D" uid="uid://brfh6x3bdfr52" path="res://resources/textures/CoffeeStain.png" id="1_pc3ea"]
+
+[sub_resource type="Gradient" id="Gradient_o022s"]
+colors = PackedColorArray(0, 0.627451, 0, 1, 0, 0.784314, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qoisr"]
+gradient = SubResource("Gradient_o022s")
+fill = 1
+fill_from = Vector2(0.645631, 0.713592)
+fill_to = Vector2(0, 0)
+
+[node name="CoffeeStain" type="Decal"]
+size = Vector3(0.3, 0.1, 0.3)
+texture_albedo = ExtResource("1_pc3ea")
+texture_orm = SubResource("GradientTexture2D_qoisr")

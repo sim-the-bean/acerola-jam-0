@@ -1,0 +1,111 @@
+[gd_scene load_steps=18 format=3 uid="uid://ct1n67eh6krmx"]
+
+[ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_s1eaj"]
+[ext_resource type="Script" path="res://scripts/coffee_mug.gd" id="2_4mpcn"]
+[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_77m3q"]
+[ext_resource type="PackedScene" uid="uid://k822ewk0uvyu" path="res://scenes/objects/coffee_ball.tscn" id="3_28mwc"]
+[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_oakr2"]
+[ext_resource type="Material" uid="uid://cia41w5gd7dnl" path="res://resources/materials/coffee.tres" id="4_qloi0"]
+[ext_resource type="PackedScene" uid="uid://bkf8vtbjhd4lk" path="res://resources/models/mug/CoffeeMug.blend" id="5_6rndy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mx7dt"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_646st"]
+resource_local_to_scene = true
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2c3bm"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_v8vh0")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
+render_priority = 0
+shader = ExtResource("2_77m3q")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_oakr2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l8s"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_4pnlg")
+shader = ExtResource("2_77m3q")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_oakr2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4q4d4"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("2_77m3q")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_oakr2")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2x4xh"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_4q4d4")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vt4g6"]
+resource_local_to_scene = true
+size = Vector3(0.12, 0.11, 0.12)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i2usj"]
+material = ExtResource("4_qloi0")
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.07
+radial_segments = 16
+
+[node name="CoffeeMug" groups=["coffee_mug"] instance=ExtResource("1_s1eaj")]
+physics_material_override = SubResource("PhysicsMaterial_mx7dt")
+script = ExtResource("2_4mpcn")
+coffee_ball_scene = ExtResource("3_28mwc")
+can_be_glitched = false
+alpha = 1.0
+
+[node name="Collider" parent="." index="0"]
+shape = SubResource("BoxShape3D_646st")
+
+[node name="MeshOk" parent="." index="1"]
+visible = false
+mesh = SubResource("BoxMesh_2c3bm")
+
+[node name="MeshGlitched" parent="." index="2"]
+mesh = SubResource("BoxMesh_2x4xh")
+
+[node name="KillBox" parent="." index="3"]
+monitoring = false
+
+[node name="CollisionShape3D" parent="KillBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017, 0, 0)
+shape = SubResource("BoxShape3D_vt4g6")
+
+[node name="KillComponent" parent="." index="6"]
+scale_target = NodePath("../Mug")
+
+[node name="Mug" parent="." index="9" instance=ExtResource("5_6rndy")]
+
+[node name="Coffee" type="MeshInstance3D" parent="." index="10"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00574904, 0)
+mesh = SubResource("CylinderMesh_i2usj")
+
+[node name="GrabComponent" parent="." index="11"]
+angular_damp = 100.0
+rotate_axis = Vector3(0, 0, 1)

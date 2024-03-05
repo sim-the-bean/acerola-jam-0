@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://k822ewk0uvyu"]
+
+[ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_wixsq"]
+[ext_resource type="PackedScene" uid="uid://r1s62a1l1x0j" path="res://scenes/decals/coffee_stain.tscn" id="2_dumfv"]
+[ext_resource type="Material" uid="uid://cia41w5gd7dnl" path="res://resources/materials/coffee.tres" id="2_lql23"]
+[ext_resource type="Script" path="res://scripts/coffee_ball.gd" id="2_peiaa"]
+[ext_resource type="Material" uid="uid://bif0vwujua2ba" path="res://resources/materials/glitched.tres" id="3_33h6d"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f0qnx"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1vhrd"]
+radius = 0.035
+
+[sub_resource type="SphereMesh" id="SphereMesh_cgxer"]
+material = ExtResource("2_lql23")
+radius = 0.035
+height = 0.08
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereMesh" id="SphereMesh_khnd6"]
+material = ExtResource("3_33h6d")
+radius = 0.035
+height = 0.08
+radial_segments = 16
+rings = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g08aa"]
+resource_local_to_scene = true
+size = Vector3(0.075, 0.085, 0.075)
+
+[node name="CoffeeBall" instance=ExtResource("1_wixsq")]
+physics_material_override = SubResource("PhysicsMaterial_f0qnx")
+script = ExtResource("2_peiaa")
+can_be_glitched = false
+can_destroy = true
+break_on_impact = true
+decal_scene = ExtResource("2_dumfv")
+
+[node name="Collider" parent="." index="0"]
+shape = SubResource("SphereShape3D_1vhrd")
+
+[node name="MeshOk" parent="." index="1"]
+mesh = SubResource("SphereMesh_cgxer")
+
+[node name="MeshGlitched" parent="." index="2"]
+mesh = SubResource("SphereMesh_khnd6")
+
+[node name="CollisionShape3D" parent="KillBox" index="0"]
+shape = SubResource("BoxShape3D_g08aa")
+
+[node name="GrabComponent" parent="." index="9"]
+enabled = false
+
+[connection signal="body_exited" from="KillBox" to="." method="_on_kill_box_body_exited"]

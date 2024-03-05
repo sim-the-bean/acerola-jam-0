@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d1yldm36qcj08"]
+[gd_scene load_steps=18 format=3 uid="uid://d1yldm36qcj08"]
 
 [ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
@@ -62,7 +62,11 @@ resource_local_to_scene = true
 material = SubResource("ShaderMaterial_pryju")
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="Glitched" type="RigidBody3D" groups=["glitched", "grabbable"]]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ulw2b"]
+resource_local_to_scene = true
+size = Vector3(0.51, 0.51, 0.51)
+
+[node name="Object" type="RigidBody3D" groups=["glitched", "grabbable"]]
 collision_layer = 173
 physics_material_override = SubResource("PhysicsMaterial_dbufy")
 linear_damp = 1.0
@@ -74,7 +78,6 @@ chromatic_aberration_strength = Vector3(0.5, 0.2, 0.2)
 [node name="Collider" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
 shape = SubResource("BoxShape3D_ormki")
-disabled = true
 
 [node name="MeshOk" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
@@ -84,6 +87,17 @@ mesh = SubResource("BoxMesh_y5oox")
 unique_name_in_owner = true
 visible = false
 mesh = SubResource("BoxMesh_wqngw")
+
+[node name="KillBox" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 35
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KillBox"]
+shape = SubResource("BoxShape3D_ulw2b")
+
+[node name="RayCast" type="RayCast3D" parent="."]
+unique_name_in_owner = true
 
 [node name="EffectComponent" parent="." instance=ExtResource("1_b61yb")]
 
@@ -109,6 +123,7 @@ show = false
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
+[connection signal="body_entered" from="KillBox" to="." method="_on_kill_box_body_entered"]
 [connection signal="hover_entered" from="HoverComponent" to="UiHintComponentGrab" method="set_show"]
 [connection signal="hover_exited" from="HoverComponent" to="UiHintComponentGrab" method="set_hide"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentGrab" method="set_hide"]

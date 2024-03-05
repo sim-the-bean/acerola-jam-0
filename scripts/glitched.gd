@@ -38,6 +38,11 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 			collision_layer |= Layers.destructible
 		else:
 			collision_layer &= ~Layers.destructible
+@export var break_on_impact := false:
+	set(value):
+		break_on_impact = value
+		%KillBox.monitoring = break_on_impact
+@export var decal_scene: PackedScene = null
 @export_group("Glitched visuals")
 @export var chromatic_aberration_strength := Vector3(0.2, 0.2, 0.2):
 	set(value):
@@ -87,6 +92,24 @@ func set_glitched():
 func set_unglitched():
 	is_glitched = false
 
+func _physics_process(delta):
+	if linear_velocity:
+		%RayCast.target_position = linear_velocity.normalized()
+
+func _on_kill_box_body_entered(body):
+	destroy()
+
+func destroy():
+	if break_on_impact:
+		if decal_scene != null:
+			var decal_position := position
+			if %RayCast.is_colliding():
+				decal_position = %RayCast.get_collision_point()
+			var decal = decal_scene.instantiate()
+			decal.translate(decal_position)
+			get_parent_node_3d().add_child(decal)
+		queue_free()
+
 func emit_glitched():
 	glitched.emit()
 
@@ -102,12 +125,12 @@ func _on_child_entered_tree(node: Node):
 	if node is Node3D:
 		if node is MeshInstance3D and node != %MeshOk and node != %MeshGlitched:
 			mesh_node = node
-		if node is CollisionShape3D and node != %Collider:
+		if node is CollisionShape3D and node != %Collider and node.get_parent() != %KillBox:
 			col_node = node
 		for child in node.find_children("*"):
 			if mesh_node == null and child is MeshInstance3D:
 				mesh_node = child
-			if col_node == null and child is CollisionShape3D:
+			if col_node == null and child is CollisionShape3D and child.get_parent() != %KillBox:
 				col_node = child
 			if mesh_node != null and col_node != null:
 				break
@@ -134,7 +157,7 @@ func _on_child_entered_tree(node: Node):
 		%Collider.disabled = true
 
 func _on_child_exiting_tree(node):
-	if custom_mesh and node == mesh_ok_node:
+	if custom_mesh and node == mesh_ok_node and node != %MeshOk and node != %MeshGlitched:
 		mesh_glitched_node.queue_free()
 		mesh_ok_node = %MeshOk
 		mesh_glitched_node = %MeshGlitched
@@ -142,7 +165,7 @@ func _on_child_exiting_tree(node):
 		mesh_glitched_node.visible = is_glitched
 		custom_mesh = false
 		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
-	if node is CollisionShape3D and node != %Collider:
+	if node is CollisionShape3D and node != %Collider and node.get_parent() != %KillBox:
 		%Collider.disabled = false
 
 func _validate_property(property):

@@ -42,9 +42,6 @@ var controller_look_speed: float:
 
 @export_group("Internals")
 @export var grab_speed := 5000.0
-@export var grab_angular_speed := 200.0
-@export var grab_damp := 10.0
-@export var grab_angular_damp := 15.0
 
 var gravity_direction: Vector3:
 	get: return _gravity_direction
@@ -305,30 +302,19 @@ func do_grab(delta):
 	if Input.is_action_just_pressed(&"player_action_grab"):
 		if grabbed != null:
 			if grabbed.has_node("GrabComponent"):
-				grabbed.get_node("GrabComponent").emit_grab_end()
-			grabbed.linear_damp = 1
-			grabbed.angular_damp = 1
-			grabbed = null
+				if grabbed.get_node("GrabComponent").ungrab():
+					grabbed = null
 		elif hovered != null:
-			grabbed = hovered
-			grabbed.linear_damp = grab_damp
-			grabbed.angular_damp = grab_angular_damp
-			if grabbed.has_node("GrabComponent"):
-				grabbed.get_node("GrabComponent").emit_grab_begin()
+			if hovered.has_node("GrabComponent"):
+				if hovered.get_node("GrabComponent").grab():
+					grabbed = hovered
 	if Input.is_action_just_pressed(&"player_action_throw"):
 		if grabbed != null:
 			if grabbed.has_node("GrabComponent"):
-				grabbed.get_node("GrabComponent").emit_grab_end()
-			var throw_direction = %CameraPivot.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
-			grabbed.apply_impulse(throw_direction * throw_strength)
-			grabbed.linear_damp = 1
-			grabbed.angular_damp = 1
-			grabbed = null
-	if grabbed != null:
-		var rotate := 0.0
-		rotate -= float(Input.is_action_pressed(&"player_action_rotate_left"))
-		rotate += float(Input.is_action_pressed(&"player_action_rotate_right"))
-		grabbed.apply_torque(Vector3(0.0, rotate * grabbed_rotate_speed, 0.0) * delta)
+				if grabbed.get_node("GrabComponent").ungrab():
+					var throw_direction = %CameraPivot.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
+					grabbed.apply_impulse(throw_direction * throw_strength)
+					grabbed = null
 
 func do_item():
 	if Input.is_action_just_released(&"player_action_interact"):
@@ -348,14 +334,17 @@ func do_item():
 
 func process_grabbed(delta: float):
 	if grabbed != null:
-		var rot_diff = quaternion_from_to(%CameraPivot, grabbed, %GrabPoint)
-		if rot_diff:
-			var torque = rot_diff.get_euler() * Vector3(0, 1, 0)
-			grabbed.apply_torque(torque * grab_angular_speed * delta)
-		
 		var pos_diff: Vector3 = %GrabPoint.global_position - grabbed.global_position
 		if pos_diff:
 			grabbed.apply_force(pos_diff * grab_speed * delta)
+		
+		var rotate_axis := Vector3.UP
+		if grabbed.has_node("GrabComponent"):
+			rotate_axis = grabbed.get_node("GrabComponent").rotate_axis
+		var rotate := 0.0
+		rotate -= float(Input.is_action_pressed(&"player_action_rotate_left"))
+		rotate += float(Input.is_action_pressed(&"player_action_rotate_right"))
+		grabbed.apply_torque(rotate_axis * rotate * grabbed_rotate_speed * delta)
 
 func get_hold_menu_point() -> Node3D:
 	return %HoldMenuPoint
