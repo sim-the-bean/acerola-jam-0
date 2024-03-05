@@ -9,21 +9,25 @@ const layers_glitched := Layers.grabbable | Layers.glitched
 const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Layers.destructible | Layers.glitched
 
 @export_category("Glitched")
-@export var is_glitched := true:
+@export var can_be_glitched := false:
 	set(value):
-		is_glitched = value
+		can_be_glitched = value
+		if not can_be_glitched: is_glitched = false
+@export var is_glitched := false:
+	set(value):
+		is_glitched = value and can_be_glitched
 		gravity_scale = 0.0 if is_glitched else 1.0
 		if is_glitched:
 			if is_inside_tree():
-				%MeshGlitched.visible = true
-				%MeshOk.visible = false
+				mesh_glitched_node.visible = true
+				mesh_ok_node.visible = false
 			collision_layer = layers_glitched | (Layers.destructible if can_destroy else 0)
 			collision_mask = Layers.glitched
 			emit_glitched()
 		else:
 			if is_inside_tree():
-				%MeshGlitched.visible = false
-				%MeshOk.visible = true
+				mesh_glitched_node.visible = false
+				mesh_ok_node.visible = true
 			collision_layer = layers_unglitched
 			collision_mask = Layers.default
 			emit_unglitched()
@@ -34,42 +38,48 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 			collision_layer |= Layers.destructible
 		else:
 			collision_layer &= ~Layers.destructible
-@export_group("Visuals")
+@export_group("Glitched visuals")
 @export var chromatic_aberration_strength := Vector3(0.2, 0.2, 0.2):
 	set(value):
 		chromatic_aberration_strength = value
 		if is_inside_tree():
-			%MeshRed.mesh.material.set_shader_parameter("chromatic_aberration_strength", chromatic_aberration_strength * 0.1)
-			%MeshGreen.mesh.material.set_shader_parameter("chromatic_aberration_strength", chromatic_aberration_strength * 0.1)
-			%MeshBlue.mesh.material.set_shader_parameter("chromatic_aberration_strength", chromatic_aberration_strength * 0.1)
+			glitched_material.set_shader_parameter("chromatic_aberration_strength", chromatic_aberration_strength * 0.1)
+			glitched_material.next_pass.set_shader_parameter("chromatic_aberration_strength", chromatic_aberration_strength * 0.1)
+			glitched_material.next_pass.next_pass.set_shader_parameter("chromatic_aberration_strength", chromatic_aberration_strength * 0.1)
 @export_range(0.0, 10.0, 0.1, "or_greater") var glitchiness_amplitude := 1.0:
 	set(value):
 		glitchiness_amplitude = value
 		if is_inside_tree():
-			%MeshRed.mesh.material.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
-			%MeshGreen.mesh.material.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
-			%MeshBlue.mesh.material.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
+			glitched_material.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
+			glitched_material.next_pass.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
+			glitched_material.next_pass.next_pass.set_shader_parameter("glitchiness_amplitude", glitchiness_amplitude)
 @export_range(0.0, 10.0, 0.1, "or_greater") var glitchiness_frequency := 1.0:
 	set(value):
 		glitchiness_frequency = value
 		if is_inside_tree():
-			%MeshRed.mesh.material.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
-			%MeshGreen.mesh.material.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
-			%MeshBlue.mesh.material.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
+			glitched_material.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
+			glitched_material.next_pass.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
+			glitched_material.next_pass.next_pass.set_shader_parameter("glitchiness_frequency", glitchiness_frequency)
 @export_color_no_alpha var color := Color.WHITE:
 	set(value):
 		color = value
 		if is_inside_tree():
-			%MeshRed.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
-			%MeshGreen.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
-			%MeshBlue.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
+			glitched_material.set_shader_parameter("albedo_color", Color(color, alpha))
+			glitched_material.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
+			glitched_material.next_pass.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
 @export_range(0.0, 1.0) var alpha := 0.75:
 	set(value):
 		alpha = value
 		if is_inside_tree():
-			%MeshRed.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
-			%MeshGreen.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
-			%MeshBlue.mesh.material.set_shader_parameter("albedo_color", Color(color, alpha))
+			glitched_material.set_shader_parameter("albedo_color", Color(color, alpha))
+			glitched_material.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
+			glitched_material.next_pass.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
+
+@onready var mesh_ok_node: Node3D = %MeshOk
+@onready var mesh_glitched_node: MeshInstance3D = %MeshGlitched
+var glitched_material: ShaderMaterial:
+	get: return mesh_glitched_node.get_surface_override_material(0) if custom_mesh else %MeshGlitched.mesh.material
+var custom_mesh := false
 
 func set_glitched():
 	is_glitched = true
@@ -83,3 +93,63 @@ func emit_glitched():
 func emit_unglitched():
 	unglitched.emit()
 
+func _on_child_entered_tree(node: Node):
+	if custom_mesh:
+		return
+	
+	var mesh_node: MeshInstance3D = null
+	var col_node: CollisionShape3D = null
+	if node is Node3D:
+		if node is MeshInstance3D and node != %MeshOk and node != %MeshGlitched:
+			mesh_node = node
+		if node is CollisionShape3D and node != %Collider:
+			col_node = node
+		for child in node.find_children("*"):
+			if mesh_node == null and child is MeshInstance3D:
+				mesh_node = child
+			if col_node == null and child is CollisionShape3D:
+				col_node = child
+			if mesh_node != null and col_node != null:
+				break
+		if col_node != null and col_node != node:
+			var reparent_col = func(): 
+				col_node.reparent(self)
+				for child in node.find_children("*", "CollisionObject3D"):
+					child.queue_free()
+			reparent_col.call_deferred()
+	
+	if mesh_node != null:
+		custom_mesh = true
+		mesh_ok_node = node
+		mesh_glitched_node = MeshInstance3D.new()
+		mesh_glitched_node.mesh = mesh_node.mesh.duplicate()
+		mesh_glitched_node.set_surface_override_material(0, %MeshGlitched.mesh.material)
+		add_child.call_deferred(mesh_glitched_node)
+		mesh_ok_node.visible = not is_glitched
+		mesh_glitched_node.visible = is_glitched
+		%MeshOk.visible = false
+		%MeshGlitched.visible = false
+		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
+	if col_node != null:
+		%Collider.disabled = true
+
+func _on_child_exiting_tree(node):
+	if custom_mesh and node == mesh_ok_node:
+		mesh_glitched_node.queue_free()
+		mesh_ok_node = %MeshOk
+		mesh_glitched_node = %MeshGlitched
+		mesh_ok_node.visible = not is_glitched
+		mesh_glitched_node.visible = is_glitched
+		custom_mesh = false
+		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
+	if node is CollisionShape3D and node != %Collider:
+		%Collider.disabled = false
+
+func _validate_property(property):
+	if property.name == "can_be_glitched":
+		property.usage |= PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
+	if not can_be_glitched:
+		match property.name:
+			"is_glitched", "chromatic_aberration_strength", "chromatic_aberration_strength", \
+				"glitchiness_amplitude", "glitchiness_frequency", "color", "alpha":
+					property.usage &= ~PROPERTY_USAGE_EDITOR

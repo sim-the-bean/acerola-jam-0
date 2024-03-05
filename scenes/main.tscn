@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_351ue"]
 script = ExtResource("2_qtdwm")
-title = "Historian"
+title = "Best day ever!"
 description = "Find all lore items"
 id = "collect_all_items"
 steps = 1

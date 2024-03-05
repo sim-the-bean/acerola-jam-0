@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=72 format=3 uid="uid://cdxndeyjw01wi"]
 
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_cl8dn"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="13_g7ryx"]
 [ext_resource type="PackedScene" uid="uid://dxodjse6yt7cd" path="res://scenes/objects/projector.tscn" id="14_hpc2g"]
 [ext_resource type="PackedScene" uid="uid://5ry02ct650ae" path="res://scenes/objects/black_hole.tscn" id="15_4ho1x"]
+[ext_resource type="PackedScene" uid="uid://bkf8vtbjhd4lk" path="res://resources/models/mug/CoffeeMug.blend" id="16_8oq7m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n17xh"]
 
@@ -904,6 +905,10 @@ bounce = 0.5
 resource_local_to_scene = true
 bounce = 0.5
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eva0g"]
+resource_local_to_scene = true
+bounce = 0.5
+
 [node name="Test" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -917,7 +922,7 @@ transform = Transform3D(0.818441, -0.444188, -0.364487, -0.0344697, -0.671156, 0
 shadow_enabled = true
 
 [node name="Cube" parent="." instance=ExtResource("1_60o4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91245, -5.38937)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625341, -5.38937)
 physics_material_override = SubResource("PhysicsMaterial_mrcce")
 
 [node name="Cube2" parent="." instance=ExtResource("1_60o4d")]
@@ -1183,17 +1188,31 @@ minimum_momentum = 5.0
 
 [node name="Glitched" parent="." instance=ExtResource("13_g7ryx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4921, 1.33185, -20.4815)
+collision_layer = 132
+collision_mask = 128
 physics_material_override = SubResource("PhysicsMaterial_5u8i6")
+gravity_scale = 0.0
+is_glitched = true
 
 [node name="Glitched2" parent="." instance=ExtResource("13_g7ryx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.93148, 2.07237, -12.8394)
+collision_layer = 132
+collision_mask = 128
 physics_material_override = SubResource("PhysicsMaterial_yau84")
+gravity_scale = 0.0
+is_glitched = true
 
 [node name="Projector" parent="." instance=ExtResource("14_hpc2g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.74496, -12.4431)
 
 [node name="BlackHole" parent="." instance=ExtResource("15_4ho1x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12897, 0.965095, -1.3044)
+
+[node name="Glitched3" parent="." instance=ExtResource("13_g7ryx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.960196, -5.47965)
+physics_material_override = SubResource("PhysicsMaterial_eva0g")
+
+[node name="CoffeeMug" parent="Glitched3" instance=ExtResource("16_8oq7m")]
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]
