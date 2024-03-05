@@ -8,6 +8,19 @@ extends Control
 @export var button_prompt_zoom_out: PackedScene
 @export var button_prompt_rotate_left: PackedScene
 @export var button_prompt_rotate_right: PackedScene
+@export var achievement_scene: PackedScene = preload("res://scenes/ui/achievement.tscn")
+
+func _ready():
+	if not Engine.is_editor_hint():
+		GameManager.instance.achievement_got.connect(show_achievement)
+
+func show_achievement(achievement: Achievement):
+	var node: UiAchievement = achievement_scene.instantiate()
+	node.title = achievement.title
+	node.description = achievement.description
+	node.progress = achievement.counter
+	node.steps = achievement.steps
+	%Achievements.add_child(node)
 
 func show_hint(hint_type: UiHintComponent.HintType, hud_type: UiHintComponent.HudType, hint: String):
 	var label := Label.new()

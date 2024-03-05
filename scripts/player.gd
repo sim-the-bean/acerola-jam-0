@@ -266,7 +266,7 @@ func process_rotation(delta: float):
 
 func process_raycast(delta):
 	var collider = %RayCast.get_collider()
-	if grabbed == null and collider != hovered:
+	if grabbed == null and interactive == null and collider != hovered:
 		if hovered != null:
 			if hovered.has_node("HoverComponent"):
 				hovered.get_node("HoverComponent").emit_hover_exited()
@@ -334,12 +334,14 @@ func do_item():
 	if Input.is_action_just_released(&"player_action_interact"):
 		if interactive == null and hovered != null:
 			interactive = hovered
+			interactive.view()
 			interactive.reparent(%HoldItemPoint)
 			var tween = create_tween()
 			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_speed)
 			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_speed)
 			position_state = PositionState.ITEM_ZOOM
 		elif interactive != null:
+			interactive.collect()
 			interactive.queue_free()
 			interactive = null
 			position_state = PositionState.NORMAL

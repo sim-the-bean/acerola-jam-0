@@ -1,12 +1,15 @@
 extends Node3D
 class_name GameManager
 
+signal achievement_got(achievement: Achievement)
+
 static var instance: GameManager
 
 @export var player_scene: PackedScene = preload("res://scenes/objects/player.tscn")
 @export var main_menu_scene: PackedScene = preload("res://scenes/main_menu.tscn")
 @export var game_menu_scene: PackedScene = preload("res://scenes/game_menu.tscn")
 @export var first_scene: PackedScene = preload("res://scenes/test.tscn")
+@export var achievements: Array[Achievement]
 
 var menu: Newspaper = null
 var player: Player = null
@@ -97,3 +100,10 @@ func switch_scene(scene: PackedScene, reset_player := false):
 
 func reset():
 	switch_scene(active_scene, true)
+
+func trigger_achievement(id: String):
+	for achievement in achievements:
+		if achievement.id == id:
+			achievement.counter += 1
+			achievement_got.emit(achievement)
+			return
