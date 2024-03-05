@@ -339,7 +339,7 @@ func do_item():
 			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_speed)
 			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_speed)
 			position_state = PositionState.ITEM_ZOOM
-		else:
+		elif interactive != null:
 			interactive.queue_free()
 			interactive = null
 			position_state = PositionState.NORMAL
