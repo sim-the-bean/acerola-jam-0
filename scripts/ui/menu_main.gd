@@ -15,5 +15,8 @@ func _on_continue_pressed():
 func _on_settings_pressed():
 	GameManager.instance.menu.page_index = 1
 
+func _on_credits_pressed():
+	GameManager.instance.menu.page_index = 2
+
 func _on_quit_pressed():
 	GameManager.instance.quit()

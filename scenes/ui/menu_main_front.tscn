@@ -66,6 +66,12 @@ size_flags_horizontal = 0
 text = "Settings
 "
 
+[node name="Credits" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Credits
+"
+
 [node name="Quit" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -74,4 +80,5 @@ text = "Quit Game"
 [connection signal="pressed" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

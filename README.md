@@ -4,7 +4,7 @@
 
 - [Phantom Camera](https://github.com/ramokz/phantom-camera)
     - A plugin to control the movement and dynamically tween 2D & 3D cameras. 
-- [Cyclops Level Build](https://github.com/blackears/cyclopsLevelBuilder)
+- [Cyclops Level Builder](https://github.com/blackears/cyclopsLevelBuilder)
     - A Godot plugin to let you block in levels inside the Godot editor. 
 - [Splash Screen Wizard](https://github.com/ThePat02/SplashScreenWizard)
     - A simple plugin for the Godot Game Engine that allows you to create a custom splash screen for your game. 

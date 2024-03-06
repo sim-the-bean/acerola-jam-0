@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkvrnykj3pxlj"]
+[gd_scene load_steps=8 format=3 uid="uid://bkvrnykj3pxlj"]
 
 [ext_resource type="Script" path="res://scripts/ui/newspaper_page.gd" id="1_g1mcm"]
 [ext_resource type="PackedScene" uid="uid://but5o24bfwxyo" path="res://resources/models/newspaper/newspaper.blend" id="2_sh017"]
-[ext_resource type="PackedScene" uid="uid://d4hncbcyk7340" path="res://scenes/ui/menu_main_front.tscn" id="2_vx26v"]
 [ext_resource type="Shader" path="res://shaders/newspaper_page.gdshader" id="4_emfaq"]
 [ext_resource type="Texture2D" uid="uid://cjdyjwwa53bht" path="res://resources/models/newspaper/Newspaper-albedo.png" id="5_iavdg"]
 
@@ -21,7 +20,8 @@ size = Vector3(0.2, 0.01, 0.28)
 
 [node name="Page" type="Node3D"]
 script = ExtResource("1_g1mcm")
-page = ExtResource("2_vx26v")
+signal_time_scale = 0.25
+go_back_enabled = null
 
 [node name="Mesh" parent="." instance=ExtResource("2_sh017")]
 

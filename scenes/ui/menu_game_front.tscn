@@ -54,7 +54,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 focus_neighbor_bottom = NodePath("../SaveGame")
 focus_next = NodePath("../SaveGame")
-text = "Unpause"
+text = "Resume"
 
 [node name="SaveGame" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2

@@ -16,6 +16,7 @@ signal closed()
 			page_node = page.instantiate()
 			%SubViewport.add_child(page_node)
 @export var animation_name := &"TurnPage"
+@export var signal_time_scale := 0.5
 @export var is_open := false:
 	get: return _is_open
 	set(value):
@@ -24,6 +25,7 @@ signal closed()
 		else:
 			close()
 @export var enabled := true
+@export var go_back_enabled := false
 
 @onready var animation_player: AnimationPlayer = $Mesh/AnimationPlayer
 @onready var area_shape_size: Vector3 = %Area.get_node("Collider").shape.size
@@ -58,8 +60,10 @@ func open():
 	
 	emit_opening()
 	animation_player.play(animation_name)
-	animation_player.animation_finished.connect(emit_opened.unbind(1), CONNECT_ONE_SHOT)
-	animation_player.animation_finished.connect(func(_name):
+	var time := animation_player.current_animation_length * signal_time_scale
+	var timer := get_tree().create_timer(time)
+	timer.timeout.connect(emit_opened)
+	timer.timeout.connect(func():
 		_is_open = true
 		is_opening = false,
 		CONNECT_ONE_SHOT)
@@ -72,8 +76,10 @@ func close():
 	
 	emit_closing()
 	animation_player.play_backwards(animation_name)
-	animation_player.animation_finished.connect(emit_closed.unbind(1), CONNECT_ONE_SHOT)
-	animation_player.animation_finished.connect(func(_name):
+	var time := animation_player.current_animation_length * signal_time_scale
+	var timer := get_tree().create_timer(time)
+	timer.timeout.connect(emit_closed)
+	timer.timeout.connect(func():
 		_is_open = false
 		is_closing = false,
 		CONNECT_ONE_SHOT)
@@ -98,7 +104,7 @@ func _on_area_input_event(camera: Camera3D, event: InputEvent, mouse_position: V
 	if Engine.is_editor_hint():
 		return
 	
-	if not enabled:
+	if go_back_enabled:
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			get_parent().previous_page()
 		return
