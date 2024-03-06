@@ -3,6 +3,7 @@ extends Glitched
 class_name CoffeeMug
 
 @export var coffee_ball_scene: PackedScene = preload("res://scenes/objects/coffee_ball.tscn")
+@export var infinite_coffee := false
 
 var flipped := false
 
@@ -14,4 +15,8 @@ func _process(_delta):
 		var coffee_ball := coffee_ball_scene.instantiate()
 		coffee_ball.translate(global_position)
 		get_parent_node_3d().add_child(coffee_ball)
-		%Coffee.visible = false
+		if not infinite_coffee:
+			%Coffee.visible = false
+	if infinite_coffee:
+		if flipped and acos((quaternion * Vector3.UP).dot(Vector3.DOWN)) > deg_to_rad(30):
+			flipped = false

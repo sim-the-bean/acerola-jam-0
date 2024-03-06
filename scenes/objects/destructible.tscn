@@ -1,50 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7dr0xxom3w28"]
+[gd_scene load_steps=7 format=3 uid="uid://b7dr0xxom3w28"]
 
 [ext_resource type="Script" path="res://scripts/destructible.gd" id="1_7m337"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4d3ja"]
-size = Vector3(1, 2, 0.5)
+[ext_resource type="PackedScene" uid="uid://dy6mv6w70gmxv" path="res://resources/models/control_panel/ControlPanel.blend" id="2_c4m44"]
+[ext_resource type="Material" uid="uid://cpe1ubw7c0kmb" path="res://resources/materials/glowing_button_red.tres" id="3_lg2pp"]
+[ext_resource type="Material" uid="uid://1kx5argwqwyg" path="res://resources/materials/glowing_button_green.tres" id="4_l1rt2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4c16b"]
-size = Vector3(1.1, 2.05, 0.6)
+size = Vector3(1.13118, 0.428833, 0.542712)
 
-[sub_resource type="BoxMesh" id="BoxMesh_7wl5j"]
-size = Vector3(1, 2, 0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8j1f"]
+size = Vector3(0.856729, 0.428833, 0.544646)
 
-[node name="Destructible" type="StaticBody3D"]
+[node name="Destructible" type="Node3D"]
 script = ExtResource("1_7m337")
-
-[node name="Collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_4d3ja")
 
 [node name="Hurtbox" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.025, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0155883, 0.997009, -0.10755)
 shape = SubResource("BoxShape3D_4c16b")
 
-[node name="MeshOk" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("BoxMesh_7wl5j")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(0.938788, 0, 0.344495, 0, 1, 0, -0.344495, 0, 0.938788, -0.858909, 0.997009, 0.0272669)
+shape = SubResource("BoxShape3D_u8j1f")
 
-[node name="MeshBroken" type="CSGCombiner3D" parent="."]
-unique_name_in_owner = true
-visible = false
+[node name="ControlPanel2" parent="." instance=ExtResource("2_c4m44")]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="MeshBroken"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-size = Vector3(1, 2, 0.5)
+[node name="Buttons" parent="ControlPanel2/ControlPanel" index="0"]
+surface_material_override/0 = ExtResource("3_lg2pp")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="MeshBroken"]
-transform = Transform3D(0.535606, 0.844468, 0, -0.806515, 0.511534, -0.296425, -0.250321, 0.158767, 0.955056, 0.402981, 1.68175, 0)
-operation = 2
+[node name="Buttons_001" parent="ControlPanel2/ControlPanel" index="1"]
+surface_material_override/0 = ExtResource("4_l1rt2")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="MeshBroken"]
-transform = Transform3D(0.746784, 0.49564, -0.443457, -0.644807, 0.70291, -0.300235, 0.162903, 0.510155, 0.844514, -0.201929, 2.05401, 0.0325798)
-operation = 2
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 
-[connection signal="body_entered" from="Hurtbox" to="." method="destroy"]
+[editable path="ControlPanel2"]

@@ -10,7 +10,6 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mx7dt"]
 resource_local_to_scene = true
-bounce = 0.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_646st"]
 resource_local_to_scene = true
@@ -76,6 +75,7 @@ radial_segments = 16
 physics_material_override = SubResource("PhysicsMaterial_mx7dt")
 script = ExtResource("2_4mpcn")
 coffee_ball_scene = ExtResource("3_28mwc")
+infinite_coffee = false
 can_be_glitched = false
 alpha = 1.0
 
@@ -90,6 +90,7 @@ mesh = SubResource("BoxMesh_2c3bm")
 mesh = SubResource("BoxMesh_2x4xh")
 
 [node name="KillBox" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0502902, 0)
 monitoring = false
 
 [node name="CollisionShape3D" parent="KillBox" index="0"]
@@ -97,15 +98,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017, 0, 0)
 shape = SubResource("BoxShape3D_vt4g6")
 
 [node name="KillComponent" parent="." index="6"]
-scale_target = NodePath("../Mug")
+scale_target = NodePath("../CoffeeMug")
 
-[node name="Mug" parent="." index="9" instance=ExtResource("5_6rndy")]
-
-[node name="Coffee" type="MeshInstance3D" parent="." index="10"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00574904, 0)
-mesh = SubResource("CylinderMesh_i2usj")
-
-[node name="GrabComponent" parent="." index="11"]
-angular_damp = 100.0
+[node name="GrabComponent" parent="." index="9"]
+angular_damp = 1000.0
 rotate_axis = Vector3(0, 0, 1)
+
+[node name="CoffeeMug" parent="." index="11" instance=ExtResource("5_6rndy")]
+
+[node name="Coffee" type="MeshInstance3D" parent="." index="12"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0453752, 0)
+mesh = SubResource("CylinderMesh_i2usj")

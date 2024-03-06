@@ -155,6 +155,7 @@ func _on_child_entered_tree(node: Node):
 		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
 	if col_node != null:
 		%Collider.disabled = true
+		%Collider.visible = false
 
 func _on_child_exiting_tree(node):
 	if custom_mesh and node == mesh_ok_node and node != %MeshOk and node != %MeshGlitched:
@@ -167,6 +168,7 @@ func _on_child_exiting_tree(node):
 		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
 	if node is CollisionShape3D and node != %Collider and node.get_parent() != %KillBox:
 		%Collider.disabled = false
+		%Collider.visible = true
 
 func _validate_property(property):
 	if property.name == "can_be_glitched":
