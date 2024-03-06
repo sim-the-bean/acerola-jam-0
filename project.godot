@@ -24,10 +24,15 @@ Layers="*res://scripts/layers.gd"
 GameSettings="*res://scripts/settings.gd"
 GameControllerDb="*res://scripts/game_controller_db.gd"
 
+[debug]
+
+settings/stdout/print_fps=true
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=3
 window/vsync/vsync_mode=0
 
 [editor_plugins]
@@ -217,5 +222,5 @@ game_cancel={
 
 [rendering]
 
-renderer/rendering_method="mobile"
-anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/msaa_3d=2
+anti_aliasing/quality/use_debanding=true

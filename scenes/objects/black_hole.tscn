@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/accretion_disk.gd" id="4_t506u"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s3njv"]
+resource_local_to_scene = true
 radius = 5.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_we0ng"]
@@ -88,13 +89,14 @@ cast_shadow = 0
 mesh = SubResource("SphereMesh_bn7o0")
 
 [node name="Accretion" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.999452, -0.000551626, 0.0331138, 0, 0.999861, 0.0166562, -0.0331184, -0.016647, 0.999313, 0, 0.036, 0)
+transform = Transform3D(0.999703, -0.00711376, 0.0233346, 0, 0.956537, 0.29161, -0.0243948, -0.291523, 0.956253, 0, 0.036, 0)
 cast_shadow = 0
 mesh = SubResource("SphereMesh_y4csp")
 script = ExtResource("4_t506u")
 angle = 0.174533
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
+visible = false
 light_color = Color(0.886275, 0.980392, 1, 1)
 light_energy = 2.0
 light_negative = true

@@ -36,12 +36,13 @@ flip_faces = true
 size = Vector2(2, 2)
 
 [sub_resource type="SphereMesh" id="SphereMesh_hqq2u"]
-radius = 0.05
-height = 0.1
+radius = 0.01
+height = 0.02
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 73
 script = ExtResource("1_6168c")
+air_control = 1.0
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true

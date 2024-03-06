@@ -18,6 +18,7 @@ var active_scene_node: Node3D = null
 var default_player_transform: Transform3D
 var game_menu_node: Node3D = null
 var in_main_menu := false
+var environment: WorldEnvironment
 
 func _init():
 	instance = self
@@ -92,11 +93,13 @@ func switch_scene(scene: PackedScene, reset_player := false):
 	active_scene = scene
 	active_scene_node = scene.instantiate()
 	%GameRoot.add_child(active_scene_node)
+	environment = active_scene_node.get_node_or_null("WorldEnvironment")
 		
 	var player_marker: Node3D = get_tree().get_first_node_in_group(&"player_marker")
 	if player != null and player_marker != null:
 		player.transform = player_marker.transform
 		default_player_transform = player_marker.transform
+	get_tree().paused = false
 
 func reset():
 	switch_scene(active_scene, true)
