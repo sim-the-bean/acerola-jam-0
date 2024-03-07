@@ -84,25 +84,27 @@ mesh = SubResource("CylinderMesh_v14m2")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel1" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(-4.14754e-08, -1, -1.47113e-07, -0.974285, 7.35564e-08, -0.225321, 0.225321, 1.33985e-07, -0.974285, 0, 1.43353, -0.146686)
+transform = Transform3D(-1.26481e-07, -1, 1.42128e-07, 0.941274, -7.10642e-08, 0.337643, -0.337643, 1.76487e-07, 0.941274, 0, 1.43353, -0.146686)
 mesh = SubResource("CylinderMesh_7wl7m")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel2" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(-4.14754e-08, -1, -1.47113e-07, -0.974285, 7.35564e-08, -0.225321, 0.225321, 1.33985e-07, -0.974285, 0, 1.40712, 0.142004)
+transform = Transform3D(-1.26481e-07, -1, 1.42128e-07, 0.941274, -7.10642e-08, 0.337643, -0.337643, 1.76487e-07, 0.941274, 0, 1.40712, 0.142004)
 mesh = SubResource("CylinderMesh_6yd0w")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Light" type="SpotLight3D" parent="Mesh"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.335235)
-light_energy = 1.15137
+light_energy = 0.939419
 shadow_enabled = true
 distance_fade_enabled = true
 spot_attenuation = 0.329878
 spot_angle = 30.0
 spot_angle_attenuation = 0.554785
 script = ExtResource("2_4nl2w")
+octaves = 2
+lacunarity = 3.0
 
 [node name="Hitbox" type="Area3D" parent="."]
 unique_name_in_owner = true

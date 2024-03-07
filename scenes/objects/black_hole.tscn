@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5ry02ct650ae"]
+[gd_scene load_steps=17 format=3 uid="uid://5ry02ct650ae"]
 
 [ext_resource type="Script" path="res://scripts/black_hole.gd" id="1_d0c6l"]
 [ext_resource type="Shader" path="res://shaders/black_hole.gdshader" id="1_ex12r"]
@@ -48,6 +48,10 @@ flip_faces = true
 radius = 0.8
 height = 0.1
 
+[sub_resource type="SphereMesh" id="SphereMesh_nh6hl"]
+radius = 0.75
+height = 1.5
+
 [sub_resource type="BoxMesh" id="BoxMesh_q11f2"]
 size = Vector3(0.5, 0.5, 0.5)
 
@@ -89,11 +93,15 @@ cast_shadow = 0
 mesh = SubResource("SphereMesh_bn7o0")
 
 [node name="Accretion" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.999703, -0.00711376, 0.0233346, 0, 0.956537, 0.29161, -0.0243948, -0.291523, 0.956253, 0, 0.036, 0)
+transform = Transform3D(0.243652, -0.657775, 0.712717, 0, 0.734863, 0.678215, -0.969863, -0.165248, 0.179051, 0, 0.036, 0)
 cast_shadow = 0
 mesh = SubResource("SphereMesh_y4csp")
 script = ExtResource("4_t506u")
 angle = 0.174533
+
+[node name="ShadowMesh" type="MeshInstance3D" parent="."]
+cast_shadow = 3
+mesh = SubResource("SphereMesh_nh6hl")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 visible = false

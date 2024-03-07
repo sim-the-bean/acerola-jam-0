@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode unshaded, skip_vertex_transform;
+render_mode unshaded, skip_vertex_transform, shadows_disabled;
 
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 uniform sampler2D noise_texture : repeat_enable, filter_linear;

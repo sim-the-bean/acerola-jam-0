@@ -27,6 +27,6 @@ void vertex() {
 void fragment() {
 	vec3 col = albedo[color] * albedo_color.rgb;
 	ALBEDO = col;
-	ALPHA = albedo_color.a * max(max(col.r, col.g), col.b);
+	ALPHA = albedo_color.a;
 }
 

@@ -2,6 +2,9 @@ extends Node3D
 
 const black_hole_scene := preload("res://scenes/objects/black_hole.tscn")
 
+func _ready():
+	$LevelGeometry/CyclopsBlocks/Ceilings.visible = true
+
 func _on_big_red_button_clicked():
 	%ReactorSpotLight.light_energy = 0.3
 	var timer = create_tween()

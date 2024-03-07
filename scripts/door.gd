@@ -114,6 +114,12 @@ func force_open():
 		$RightHalf/OpenFastSound.play()
 		$LeftHalf/OpenFastSound.play()
 
+func close_and_lock():
+	if not can_be_closed:
+		return
+	close()
+	can_be_opened = false
+
 func close():
 	if not can_be_closed:
 		return
@@ -165,3 +171,4 @@ func emit_closing():
 
 func emit_closed():
 	closed.emit()
+

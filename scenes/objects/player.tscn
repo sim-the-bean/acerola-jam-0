@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dju6tadl6ss46"]
+[gd_scene load_steps=27 format=3 uid="uid://dju6tadl6ss46"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
@@ -6,8 +6,10 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_77h2n"]
 [ext_resource type="Shader" path="res://shaders/hud.gdshader" id="4_8egmf"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="4_ftkig"]
+[ext_resource type="Shader" path="res://shaders/cursor.gdshader" id="5_6l0cb"]
 [ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="6_7g65a"]
 [ext_resource type="PackedScene" uid="uid://8ib6xi3owdyw" path="res://scenes/ui/hud.tscn" id="7_mnk68"]
+[ext_resource type="PackedScene" uid="uid://lwemmy8vn3ol" path="res://scenes/components/push_down_component.tscn" id="8_ctknv"]
 [ext_resource type="Script" path="res://scripts/follow_main_viewport.gd" id="8_i8mnh"]
 [ext_resource type="AudioStream" uid="uid://dnxvtfj0xmq74" path="res://resources/sounds/step_1.wav" id="10_6nteo"]
 [ext_resource type="AudioStream" uid="uid://qm1r4ficasl8" path="res://resources/sounds/step_2.wav" id="11_nda4m"]
@@ -41,7 +43,12 @@ material = SubResource("ShaderMaterial_4x8y4")
 flip_faces = true
 size = Vector2(2, 2)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uselv"]
+render_priority = 0
+shader = ExtResource("5_6l0cb")
+
 [sub_resource type="SphereMesh" id="SphereMesh_hqq2u"]
+material = SubResource("ShaderMaterial_uselv")
 radius = 0.01
 height = 0.02
 
@@ -129,11 +136,13 @@ killed_interval = 3.0
 free_on_killed = false
 unkillable_duration = 3.0
 
+[node name="PushDownComponent" parent="." instance=ExtResource("8_ctknv")]
+
 [node name="HudViewport" type="SubViewport" parent="."]
 unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1348, 840)
+size = Vector2i(1348, 536)
 script = ExtResource("8_i8mnh")
 
 [node name="Hud" parent="HudViewport" instance=ExtResource("7_mnk68")]
