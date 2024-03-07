@@ -13,7 +13,6 @@ size = Vector3(0.3, 0.3, 0.1)
 albedo_color = Color(1, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
-emission_energy_multiplier = 0.05
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_wvrf8"]
 material = SubResource("StandardMaterial3D_j78ti")
@@ -41,16 +40,18 @@ mesh = SubResource("CylinderMesh_wvrf8")
 [node name="UiHintComponent" parent="." instance=ExtResource("3_7s8rn")]
 hint_type = 1
 hud_type = 1
-hint = "Use"
+hint = "Press"
 show = false
 
 [node name="SoundOk" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("4_e2efx")
+volume_db = 5.0
 
 [node name="SoundBroken" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("5_fpyly")
+volume_db = -5.0
 
 [connection signal="clicked" from="." to="UiHintComponent" method="set_hide"]
 [connection signal="hover_entered" from="HoverComponent" to="UiHintComponent" method="set_show"]

@@ -109,6 +109,8 @@ var jump_buffer := false
 var jump_buffer_time := 0.0
 var is_walking := false
 var was_walking := false
+var is_grounded := true
+var was_grounded := false
 
 var hovered: Node3D = null
 var last_hovered: Node3D = null
@@ -194,8 +196,14 @@ func _physics_process(delta: float):
 			process_bh_killed(delta)
 
 func process_physics(delta: float):
+	is_grounded = is_on_floor()
 	if not is_on_floor():
 		velocity += gravity * delta
+	
+	if not was_grounded and is_grounded:
+		%StepSound.play()
+	
+	was_grounded = is_grounded
 
 func process_bh_physics(delta: float):
 	var center_of_gravity: Vector3 = %Collider.global_position
