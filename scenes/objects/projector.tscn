@@ -84,19 +84,19 @@ mesh = SubResource("CylinderMesh_v14m2")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel1" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(6.9321e-08, -1, 4.27461e-08, 0.283094, -2.1373e-08, -0.959092, 0.959092, 7.85864e-08, 0.283094, 0, 1.43353, -0.146686)
+transform = Transform3D(-4.14754e-08, -1, -1.47113e-07, -0.974285, 7.35564e-08, -0.225321, 0.225321, 1.33985e-07, -0.974285, 0, 1.43353, -0.146686)
 mesh = SubResource("CylinderMesh_7wl7m")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Wheel2" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(6.9321e-08, -1, 4.27461e-08, 0.283094, -2.1373e-08, -0.959092, 0.959092, 7.85864e-08, 0.283094, 0, 1.40712, 0.142004)
+transform = Transform3D(-4.14754e-08, -1, -1.47113e-07, -0.974285, 7.35564e-08, -0.225321, 0.225321, 1.33985e-07, -0.974285, 0, 1.40712, 0.142004)
 mesh = SubResource("CylinderMesh_6yd0w")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="Light" type="SpotLight3D" parent="Mesh"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.335235)
-light_energy = 1.17165
+light_energy = 1.15137
 shadow_enabled = true
 distance_fade_enabled = true
 spot_attenuation = 0.329878
@@ -135,6 +135,18 @@ hud_type = 1
 hint = "Throw"
 show = false
 
+[node name="UiHintComponentRotateLeft" parent="." instance=ExtResource("5_bq60w")]
+hint_type = 6
+hud_type = 1
+hint = "Rotate Left"
+show = false
+
+[node name="UiHintComponentRotateRight" parent="." instance=ExtResource("5_bq60w")]
+hint_type = 7
+hud_type = 1
+hint = "Rotate Right"
+show = false
+
 [node name="SoundOn" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("7_4vfih")
@@ -151,4 +163,8 @@ stream = ExtResource("8_rfpyu")
 [connection signal="hover_exited" from="HoverComponent" to="UiHintComponentUse" method="set_hide"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentGrab" method="set_hide"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_show"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateRight" method="set_show"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_hide"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateRight" method="set_hide"]

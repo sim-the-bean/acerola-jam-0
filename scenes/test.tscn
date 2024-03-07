@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=72 format=3 uid="uid://cdxndeyjw01wi"]
 
 [ext_resource type="Environment" uid="uid://bq13qqooshnc1" path="res://resources/environment_test.tres" id="1_3muin"]
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_f7s6k"]
 [ext_resource type="CameraAttributesPractical" uid="uid://bby3mqcjclj1e" path="res://resources/camera_attributes.tres" id="2_v65or"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/convex_block_data.gd" id="2_x5lny"]
+[ext_resource type="Script" path="res://scripts/world_environment.gd" id="3_wds68"]
 [ext_resource type="PackedScene" uid="uid://dnnmxd7d8ekff" path="res://scenes/zones/base_zone.tscn" id="5_swip5"]
 [ext_resource type="Script" path="res://scripts/effect_gravity_scale.gd" id="6_g85xc"]
 [ext_resource type="Script" path="res://scripts/effect_invert_controls.gd" id="7_osl30"]
@@ -905,6 +906,7 @@ bounce = 0.5
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_3muin")
 camera_attributes = ExtResource("2_v65or")
+script = ExtResource("3_wds68")
 
 [node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
 transform = Transform3D(-1, 0, -1.17225e-07, 0, 1, 0, 1.17225e-07, 0, -1, -0.856514, 0, -7.84796)
