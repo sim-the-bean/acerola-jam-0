@@ -1,8 +1,10 @@
-[gd_scene load_steps=72 format=3 uid="uid://cdxndeyjw01wi"]
+[gd_scene load_steps=71 format=3 uid="uid://cdxndeyjw01wi"]
 
+[ext_resource type="Environment" uid="uid://bq13qqooshnc1" path="res://resources/environment_test.tres" id="1_3muin"]
 [ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="1_60o4d"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_cl8dn"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_f7s6k"]
+[ext_resource type="CameraAttributesPractical" uid="uid://bby3mqcjclj1e" path="res://resources/camera_attributes.tres" id="2_v65or"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/convex_block_data.gd" id="2_x5lny"]
 [ext_resource type="PackedScene" uid="uid://dnnmxd7d8ekff" path="res://scenes/zones/base_zone.tscn" id="5_swip5"]
 [ext_resource type="Script" path="res://scripts/effect_gravity_scale.gd" id="6_g85xc"]
@@ -16,17 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://dxodjse6yt7cd" path="res://scenes/objects/projector.tscn" id="14_hpc2g"]
 [ext_resource type="PackedScene" uid="uid://5ry02ct650ae" path="res://scenes/objects/black_hole.tscn" id="15_4ho1x"]
 [ext_resource type="PackedScene" uid="uid://ct1n67eh6krmx" path="res://scenes/objects/coffee_mug.tscn" id="16_5uhyx"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n17xh"]
-
-[sub_resource type="Sky" id="Sky_g52w6"]
-sky_material = SubResource("ProceduralSkyMaterial_n17xh")
-
-[sub_resource type="Environment" id="Environment_b3w5c"]
-background_mode = 2
-sky = SubResource("Sky_g52w6")
-ambient_light_source = 3
-tonemap_mode = 3
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mrcce"]
 resource_local_to_scene = true
@@ -912,7 +903,8 @@ bounce = 0.5
 [node name="Test" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_b3w5c")
+environment = ExtResource("1_3muin")
+camera_attributes = ExtResource("2_v65or")
 
 [node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
 transform = Transform3D(-1, 0, -1.17225e-07, 0, 1, 0, 1.17225e-07, 0, -1, -0.856514, 0, -7.84796)
@@ -1244,7 +1236,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12897, 0.965095, -1.3044)
 [node name="CoffeeMug" parent="." instance=ExtResource("16_5uhyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.556844, -5.44311)
 physics_material_override = SubResource("PhysicsMaterial_l6335")
-infinite_coffee = null
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]

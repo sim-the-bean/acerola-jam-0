@@ -42,6 +42,13 @@ var controller_look_speed: float:
 
 @export_group("Internals")
 @export var grab_speed := 5000.0
+@export var bob_side_frequency := 6.0
+@export var bob_side_amplitude := 0.05
+@export var bob_updown_frequency := 12.0
+@export var bob_up_amplitude := 0.02
+@export var bob_down_amplitude := 0.05
+@export var step_delay := 0.25
+@export var step_frequency = 0.5
 
 var gravity_direction: Vector3:
 	get: return _gravity_direction
@@ -109,6 +116,9 @@ var jump_buffer := false
 var jump_buffer_time := 0.0
 var is_walking := false
 var was_walking := false
+var walk_speed := 0.0
+var bob_side_t := 0.0
+var bob_updown_t := 0.0
 var is_grounded := true
 var was_grounded := false
 
@@ -147,11 +157,12 @@ func _ready():
 	%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture())
 	
 	if not Engine.is_editor_hint():
+		# TODO: match speed to bob
 		step_sound_tween = create_tween()
 		step_sound_tween.set_loops()
-		step_sound_tween.tween_interval(0.2)
+		step_sound_tween.tween_interval(step_delay)
 		step_sound_tween.tween_callback(%StepSound.play)
-		step_sound_tween.tween_interval(0.3)
+		step_sound_tween.tween_interval(step_frequency - step_delay)
 		step_sound_tween.pause()
 
 func on_killing():
@@ -202,6 +213,11 @@ func process_physics(delta: float):
 	
 	if not was_grounded and is_grounded:
 		%StepSound.play()
+	elif was_grounded and not is_grounded:
+		var tween = create_tween()
+		tween.tween_property(%PlayerCamera, "position", Vector3.ZERO, 0.2)
+		bob_side_t = 0
+		bob_updown_t = 0
 	
 	was_grounded = is_grounded
 
@@ -232,9 +248,9 @@ func process_look(_delta: float):
 func process_input(delta: float):
 	if Input.is_action_just_pressed(&"player_jump") or (jump_buffer and jump_buffer_time >= 0.0):
 		if is_on_floor():
-			%JumpSound.play()
 			velocity = up_direction * jump_velocity
 			jump_buffer = false
+			%JumpSound.play()
 		elif not jump_buffer:
 			jump_buffer = true
 			jump_buffer_time = jump_buffer_duration
@@ -256,7 +272,6 @@ func process_input(delta: float):
 			new_speed = move_toward(speed, super_speed, super_acceleration * delta)
 		new_direction = input_direction
 		is_walking = is_on_floor()
-		step_sound_tween.set_speed_scale(new_speed / max_speed * 2.0)
 	else:
 		if not input_allowed and not raw_input:
 			input_allowed = true
@@ -264,11 +279,26 @@ func process_input(delta: float):
 		is_walking = false
 	direction = direction.lerp(new_direction, 1.0 if is_on_floor() else air_control)
 	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
+	walk_speed = speed / max_speed * 2.0
+	step_sound_tween.set_speed_scale(walk_speed)
+	if is_walking and GameSettings.bobbing_enabled:
+		bob_side_t += delta * bob_side_frequency * walk_speed
+		bob_updown_t += delta * bob_updown_frequency * walk_speed
+		
+		var bob_side := sin(bob_side_t) * bob_side_amplitude
+		var bob_updown := sin(bob_updown_t)
+		bob_updown = bob_updown * bob_up_amplitude if bob_updown > 0.0 else bob_updown * bob_down_amplitude
+		%PlayerCamera.position.x = bob_side
+		%PlayerCamera.position.y = bob_updown
 	
 	if is_walking and not was_walking:
 		step_sound_tween.play()
 	elif not is_walking and was_walking:
 		step_sound_tween.stop()
+		var tween = create_tween()
+		tween.tween_property(%PlayerCamera, "position", Vector3.ZERO, 0.2)
+		bob_side_t = 0
+		bob_updown_t = 0
 	
 	match position_state:
 		PositionState.BLACK_HOLE:

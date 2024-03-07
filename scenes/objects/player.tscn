@@ -133,7 +133,7 @@ unkillable_duration = 3.0
 unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1348, 628)
+size = Vector2i(1348, 840)
 script = ExtResource("8_i8mnh")
 
 [node name="Hud" parent="HudViewport" instance=ExtResource("7_mnk68")]

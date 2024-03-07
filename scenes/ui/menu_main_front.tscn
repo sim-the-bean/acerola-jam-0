@@ -54,6 +54,12 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "New Game"
 
+[node name="TestScene" type="Button" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Play Test"
+
 [node name="Continue" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -78,6 +84,7 @@ size_flags_horizontal = 0
 text = "Quit Game"
 
 [connection signal="pressed" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/TestScene" to="." method="_on_test_scene_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Credits" to="." method="_on_credits_pressed"]

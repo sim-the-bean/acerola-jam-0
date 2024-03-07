@@ -118,7 +118,47 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 10
 
+[node name="ViewBobbing" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/ViewBobbing"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "View Bobbing"
+
+[node name="ViewBobbingCheck" type="CheckButton" parent="Control/VBoxContainer/ViewBobbing"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Graphics" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/Graphics"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Graphics"
+
+[node name="GraphicsSlider" type="HSlider" parent="Control/VBoxContainer/Graphics"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+max_value = 2.0
+value = 2.0
+rounded = true
+tick_count = 3
+ticks_on_borders = true
+
 [connection signal="value_changed" from="Control/VBoxContainer/MouseSensitivity/MouseSensitivitySlider" to="." method="_on_mouse_sensitivity_slider_value_changed"]
 [connection signal="value_changed" from="Control/VBoxContainer/ControllerSensitivity/ControllerSensitivitySlider" to="." method="_on_controller_sensitivity_slider_value_changed"]
 [connection signal="toggled" from="Control/VBoxContainer/InvertCameraX/InvertCameraXCheck" to="." method="_on_invert_camera_x_check_toggled"]
 [connection signal="toggled" from="Control/VBoxContainer/InvertCameraY/InvertCameraYCheck" to="." method="_on_invert_camera_y_check_toggled"]
+[connection signal="toggled" from="Control/VBoxContainer/ViewBobbing/ViewBobbingCheck" to="." method="_on_view_bobbing_check_toggled"]
+[connection signal="value_changed" from="Control/VBoxContainer/Graphics/GraphicsSlider" to="." method="_on_graphics_slider_value_changed"]

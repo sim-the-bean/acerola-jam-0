@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bx0kd3f3enic"
-path="res://.godot/imported/broken_button.wav-8eec1efeac93c52f23405a2b0e963063.sample"
+path="res://.godot/imported/button_broken.wav-c2b34872bb61eedd93d92c1b0e75d190.sample"
 
 [deps]
 
-source_file="res://resources/sounds/broken_button.wav"
-dest_files=["res://.godot/imported/broken_button.wav-8eec1efeac93c52f23405a2b0e963063.sample"]
+source_file="res://resources/sounds/button_broken.wav"
+dest_files=["res://.godot/imported/button_broken.wav-c2b34872bb61eedd93d92c1b0e75d190.sample"]
 
 [params]
 

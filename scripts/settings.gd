@@ -43,6 +43,12 @@ var look_invert_y := false:
 		save_settings()
 var look_invert: Vector2:
 	get: return Vector2(-1.0 if look_invert_x else 1.0, -1.0 if look_invert_y else 1.0)
+var bobbing_enabled := true:
+	set(value):
+		bobbing_enabled = value
+		setting_changed.emit("bobbing_enabled", bobbing_enabled)
+		config.set_value("Settings", "bobbing_enabled", value)
+		save_settings()
 var graphics := Graphics.PRETTY if OS.is_debug_build() else Graphics.FAST:
 	set(value):
 		graphics = value

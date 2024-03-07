@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnw2pjgtkurfm"]
+[gd_scene load_steps=6 format=3 uid="uid://bnw2pjgtkurfm"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_jtluw"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5qpj4"]
-[ext_resource type="PackedScene" uid="uid://cc62bao6lnwbg" path="res://scenes/levels/basement.tscn" id="2_jshkf"]
 [ext_resource type="Script" path="res://scripts/resources/achievement.gd" id="2_qtdwm"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="3_oqmtt"]
 
@@ -16,7 +15,6 @@ steps = 1
 [node name="Main" type="Node3D"]
 process_mode = 3
 script = ExtResource("1_jtluw")
-first_scene = ExtResource("2_jshkf")
 achievements = Array[ExtResource("2_qtdwm")]([SubResource("Resource_351ue")])
 
 [node name="Camera3D" type="Camera3D" parent="."]

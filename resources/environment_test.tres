@@ -1,0 +1,20 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://bq13qqooshnc1"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qe787"]
+
+[sub_resource type="Sky" id="Sky_3bk4u"]
+sky_material = SubResource("PhysicalSkyMaterial_qe787")
+
+[resource]
+resource_local_to_scene = true
+background_mode = 2
+sky = SubResource("Sky_3bk4u")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 3
+ssr_enabled = true
+ssil_enabled = true
+ssil_intensity = 0.1
+sdfgi_enabled = true
+glow_enabled = true
+volumetric_fog_density = 0.01
