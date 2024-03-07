@@ -1,0 +1,12 @@
+[gd_scene load_steps=5 format=3 uid="uid://voohdvsim6ud"]
+
+[ext_resource type="PackedScene" uid="uid://csr06dmjrfnpb" path="res://scenes/ui/input_prompts/button_prompt.tscn" id="1_25x6g"]
+[ext_resource type="Texture2D" uid="uid://b6xthurlvu5pe" path="res://resources/ui/icons/input_prompts/Keyboard & Mouse/Light/R_Key_Light.png" id="2_vnpy2"]
+[ext_resource type="Texture2D" uid="uid://ds37paugf3ays" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_RT.png" id="3_v57e8"]
+[ext_resource type="Texture2D" uid="uid://v3hoqlh6mh5i" path="res://resources/ui/icons/input_prompts/PS5/PS5_R2.png" id="4_gqbmi"]
+
+[node name="ButtonPrompt" instance=ExtResource("1_25x6g")]
+texture = ExtResource("2_vnpy2")
+mouse_and_keyboard_icon = ExtResource("2_vnpy2")
+xbox_icon = ExtResource("3_v57e8")
+ps_icon = ExtResource("4_gqbmi")

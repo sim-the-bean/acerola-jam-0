@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://f18i6k6bex44"]
+
+[ext_resource type="Script" path="res://scripts/ui/splash.gd" id="1_1vv33"]
+[ext_resource type="Script" path="res://addons/splash_screen_wizard/splash_screen.gd" id="1_cxrg5"]
+[ext_resource type="Script" path="res://addons/splash_screen_wizard/splash_screen_slide.gd" id="2_24kp4"]
+[ext_resource type="PackedScene" uid="uid://dk4b80gijiif4" path="res://scenes/ui/splash_controls.tscn" id="3_gwsw4"]
+
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1vv33")
+
+[node name="SplashScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cxrg5")
+skip_input_action = &"ui_accept"
+delete_after_finished = false
+
+[node name="NewSlide" type="Control" parent="SplashScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_24kp4")
+duration = 5.0
+skippable = true
+
+[node name="SplashControls" parent="SplashScreen/NewSlide" instance=ExtResource("3_gwsw4")]
+layout_mode = 1
+
+[connection signal="finished" from="SplashScreen" to="." method="_on_splash_screen_finished"]

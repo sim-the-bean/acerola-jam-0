@@ -1,0 +1,122 @@
+[gd_scene load_steps=8 format=3 uid="uid://dk4b80gijiif4"]
+
+[ext_resource type="Texture2D" uid="uid://eb8v7vbuco3c" path="res://resources/ui/icons/WASD_Key_Light.png" id="1_0y3hx"]
+[ext_resource type="Texture2D" uid="uid://drgwv0qa7q8xk" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_Right_Stick.png" id="2_dwyih"]
+[ext_resource type="Texture2D" uid="uid://b5ilt876qc7p2" path="res://resources/ui/icons/input_prompts/Keyboard & Mouse/Blanks/Blank_White_Mouse.png" id="3_cvk3g"]
+[ext_resource type="Texture2D" uid="uid://0n1yux4ntflg" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_Left_Stick.png" id="4_6p285"]
+[ext_resource type="Texture2D" uid="uid://guocp5x5l06f" path="res://resources/ui/icons/input_prompts/Keyboard & Mouse/Light/Space_Key_Light.png" id="5_1lmfk"]
+[ext_resource type="Texture2D" uid="uid://03gejg8i53f0" path="res://resources/ui/icons/input_prompts/Others/Positional Prompts/Positional_Prompts_Down.png" id="6_0nhid"]
+
+[sub_resource type="Theme" id="Theme_rk6or"]
+Label/font_sizes/font_size = 32
+
+[node name="SplashControls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rk6or")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 80
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_0y3hx")
+expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 30
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer/MarginContainer"]
+layout_mode = 2
+text = "Move"
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_dwyih")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_cvk3g")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 30
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer/MarginContainer2"]
+layout_mode = 2
+text = "Look"
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_6p285")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="TextureRect5" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_1lmfk")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 30
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer/MarginContainer3"]
+layout_mode = 2
+text = "Jump"
+
+[node name="TextureRect6" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_0nhid")
+expand_mode = 3
+stretch_mode = 4

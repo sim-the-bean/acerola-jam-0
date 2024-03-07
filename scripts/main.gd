@@ -8,6 +8,7 @@ static var instance: GameManager
 @export var player_scene: PackedScene = preload("res://scenes/objects/player.tscn")
 @export var main_menu_scene: PackedScene = preload("res://scenes/main_menu.tscn")
 @export var game_menu_scene: PackedScene = preload("res://scenes/game_menu.tscn")
+@export var ui_scene: PackedScene = preload("res://scenes/ui/splash_controls.tscn")
 @export var test_scene: PackedScene = preload("res://scenes/test.tscn")
 @export var first_scene: PackedScene = preload("res://scenes/levels/basement.tscn")
 @export var achievements: Array[Achievement]
@@ -43,8 +44,11 @@ func switch_to_main_menu():
 	in_main_menu = true
 
 func new_game():
-	switch_scene(first_scene, true)
+	switch_scene(ui_scene, false)
 	in_main_menu = false
+
+func start_game():
+	switch_scene(first_scene, false)
 
 func play_test():
 	switch_scene(test_scene, true)
