@@ -4,10 +4,9 @@ extends Control
 @export var button_prompt_grab: PackedScene = preload("res://scenes/ui/input_prompts/button_prompt_grab.tscn")
 @export var button_prompt_throw: PackedScene = preload("res://scenes/ui/input_prompts/button_prompt_throw.tscn")
 @export var button_prompt_jump: PackedScene = preload("res://scenes/ui/input_prompts/button_prompt_jump.tscn")
-@export var button_prompt_zoom_in: PackedScene
-@export var button_prompt_zoom_out: PackedScene
-@export var button_prompt_rotate_left: PackedScene
-@export var button_prompt_rotate_right: PackedScene
+@export var button_prompt_zoom: PackedScene = preload("res://scenes/ui/input_prompts/button_prompt_zoom.tscn")
+@export var button_prompt_rotate_left: PackedScene = preload("res://scenes/ui/input_prompts/button_prompt_rotate_left.tscn")
+@export var button_prompt_rotate_right: PackedScene = preload("res://scenes/ui/input_prompts/button_prompt_rotate_right.tscn")
 @export var achievement_scene: PackedScene = preload("res://scenes/ui/achievement.tscn")
 
 func _ready():
@@ -32,8 +31,7 @@ func show_hint(hint_type: UiHintComponent.HintType, hud_type: UiHintComponent.Hu
 		UiHintComponent.HintType.GRAB: button_prompt = button_prompt_grab.instantiate()
 		UiHintComponent.HintType.THROW: button_prompt = button_prompt_throw.instantiate()
 		UiHintComponent.HintType.JUMP: button_prompt = button_prompt_jump.instantiate()
-		UiHintComponent.HintType.ZOOM_IN: button_prompt = button_prompt_zoom_in.instantiate()
-		UiHintComponent.HintType.ZOOM_OUT: button_prompt = button_prompt_zoom_out.instantiate()
+		UiHintComponent.HintType.ZOOM: button_prompt = button_prompt_zoom.instantiate()
 		UiHintComponent.HintType.ROTATE_LEFT: button_prompt = button_prompt_rotate_left.instantiate()
 		UiHintComponent.HintType.ROTATE_RIGHT: button_prompt = button_prompt_rotate_right.instantiate()
 	match hud_type:

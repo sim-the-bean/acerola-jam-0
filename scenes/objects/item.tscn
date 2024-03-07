@@ -39,8 +39,16 @@ hud_type = 1
 hint = "Collect"
 show = false
 
+[node name="UiHintComponentZoom" parent="." instance=ExtResource("2_rxant")]
+hint_type = 5
+hud_type = 1
+hint = "Zoom"
+show = false
+
 [connection signal="collected" from="." to="UiHintComponentCollect" method="set_hide"]
+[connection signal="collected" from="." to="UiHintComponentZoom" method="set_hide"]
 [connection signal="viewed" from="." to="UiHintComponentRead" method="set_hide"]
 [connection signal="viewed" from="." to="UiHintComponentCollect" method="set_show"]
+[connection signal="viewed" from="." to="UiHintComponentZoom" method="set_show"]
 [connection signal="hover_entered" from="HoverComponent" to="UiHintComponentRead" method="set_show"]
 [connection signal="hover_exited" from="HoverComponent" to="UiHintComponentRead" method="set_hide"]

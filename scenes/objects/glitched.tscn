@@ -121,6 +121,18 @@ hud_type = 1
 hint = "Throw"
 show = false
 
+[node name="UiHintComponentRotateLeft" parent="." instance=ExtResource("7_0sivp")]
+hint_type = 6
+hud_type = 1
+hint = "Rotate Left"
+show = false
+
+[node name="UiHintComponentRotateRight" parent="." instance=ExtResource("7_0sivp")]
+hint_type = 7
+hud_type = 1
+hint = "Rotate Right"
+show = false
+
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="body_entered" from="KillBox" to="." method="_on_kill_box_body_entered"]
@@ -128,4 +140,8 @@ show = false
 [connection signal="hover_exited" from="HoverComponent" to="UiHintComponentGrab" method="set_hide"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentGrab" method="set_hide"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_show"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateRight" method="set_show"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_hide"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateRight" method="set_hide"]

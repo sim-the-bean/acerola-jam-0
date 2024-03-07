@@ -8,8 +8,7 @@ enum HintType {
 	GRAB,
 	THROW,
 	JUMP,
-	ZOOM_IN,
-	ZOOM_OUT,
+	ZOOM,
 	ROTATE_LEFT,
 	ROTATE_RIGHT,
 }

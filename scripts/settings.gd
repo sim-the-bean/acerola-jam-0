@@ -62,6 +62,7 @@ var anti_aliasing := AntiAliasing.FXAA:
 		setting_changed.emit("anti_aliasing", anti_aliasing)
 		config.set_value("Settings", "anti_aliasing", anti_aliasing)
 		save_settings()
+var xinput_type := ControllerType.InputType.OTHER
 
 var config := ConfigFile.new()
 var save_to_file := false

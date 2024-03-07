@@ -1,9 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://f18i6k6bex44"]
+[gd_scene load_steps=8 format=3 uid="uid://f18i6k6bex44"]
 
 [ext_resource type="Script" path="res://scripts/ui/splash.gd" id="1_1vv33"]
 [ext_resource type="Script" path="res://addons/splash_screen_wizard/splash_screen.gd" id="1_cxrg5"]
 [ext_resource type="Script" path="res://addons/splash_screen_wizard/splash_screen_slide.gd" id="2_24kp4"]
 [ext_resource type="PackedScene" uid="uid://dk4b80gijiif4" path="res://scenes/ui/splash_controls.tscn" id="3_gwsw4"]
+[ext_resource type="Script" path="res://addons/splash_screen_wizard/transitions/slide_transition_fade.gd" id="4_5qfpt"]
+
+[sub_resource type="Resource" id="Resource_ocsjp"]
+script = ExtResource("4_5qfpt")
+fade_type = 0
+duration = 0.5
+transition_type = 1
+
+[sub_resource type="Resource" id="Resource_fixm4"]
+script = ExtResource("4_5qfpt")
+fade_type = 1
+duration = 0.5
+transition_type = 1
 
 [node name="Splash" type="Control"]
 layout_mode = 3
@@ -33,6 +46,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_24kp4")
+transition_in = SubResource("Resource_ocsjp")
+transition_out = SubResource("Resource_fixm4")
 duration = 5.0
 skippable = true
 

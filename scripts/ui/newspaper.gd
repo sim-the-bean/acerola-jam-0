@@ -42,25 +42,25 @@ func flip_to(index: int):
 		return
 	
 	if index > current_page_index:
-		var previous_page: NewspaperPage = null
+		var prev_page: NewspaperPage = null
 		for i in range(current_page_index, index):
 			pages[i].go_back_enabled = false
 			pages[i].enabled = false
-			if previous_page == null:
+			if prev_page == null:
 				pages[i].open()
 			else:
-				previous_page.opened.connect(func(): pages[i].open(), CONNECT_ONE_SHOT)
-			previous_page = pages[i]
+				prev_page.opened.connect(func(): pages[i].open(), CONNECT_ONE_SHOT)
+			prev_page = pages[i]
 	else:
-		var previous_page: NewspaperPage = null
+		var prev_page: NewspaperPage = null
 		for i in range(current_page_index - 1, index - 1, -1):
 			pages[i].go_back_enabled = false
 			pages[i].enabled = false
-			if previous_page == null:
+			if prev_page == null:
 				pages[i].close()
 			else:
-				previous_page.closed.connect(func(): pages[i].close(), CONNECT_ONE_SHOT)
-			previous_page = pages[i]
+				prev_page.closed.connect(func(): pages[i].close(), CONNECT_ONE_SHOT)
+			prev_page = pages[i]
 	previous_page_index = current_page_index
 	_page_index = index
 	current_page_index = index

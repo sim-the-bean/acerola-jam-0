@@ -9,8 +9,6 @@ enum Mode {
 	PS,
 }
 
-static var global_last_mode := Mode.MOUSE_AND_KEYBOARD
-
 @export_category("Button Prompt")
 @export var default_mode := Mode.MOUSE_AND_KEYBOARD:
 	set(value):
@@ -42,7 +40,9 @@ var mode := Mode.MOUSE_AND_KEYBOARD:
 			update_mode()
 
 func _ready():
-	mode = global_last_mode
+	if not Engine.is_editor_hint():
+		_on_input_type_changed(ControllerType.input_type)
+		ControllerType.input_type_changed.connect(_on_input_type_changed)
 	update_mode()
 
 func update_mode():
@@ -52,35 +52,30 @@ func update_mode():
 		Mode.XBOX: texture = xbox_icon
 		Mode.PS: texture = ps_icon
 
-func _unhandled_input(event: InputEvent):
-	if Engine.is_editor_hint():
-		return
-	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
-		var type := GameControllerDb.get_type_by_name(event.device)
-		match type:
-			GameControllerDb.GameControllerType.XBOX:
-				if xbox_icon != null:
-					mode = Mode.XBOX
-				elif controller_icon != null:
-					mode = Mode.CONTROLLER
-				else:
-					mode = Mode.MOUSE_AND_KEYBOARD
-			GameControllerDb.GameControllerType.PLAYSTATION:
-				if ps_icon != null:
-					mode = Mode.PS
-				elif controller_icon != null:
-					mode = Mode.CONTROLLER
-				else:
-					mode = Mode.MOUSE_AND_KEYBOARD
-			_:
-				if controller_icon != null:
-					mode = Mode.CONTROLLER
-				elif xbox_icon != null:
-					mode = Mode.XBOX
-				elif ps_icon != null:
-					mode = Mode.PS
-				else:
-					mode = Mode.MOUSE_AND_KEYBOARD
-	elif event is InputEventMouse or event is InputEventKey:
-		mode = Mode.MOUSE_AND_KEYBOARD
-	global_last_mode = mode
+func _on_input_type_changed(input_type: ControllerType.InputType):
+	match input_type:
+		ControllerType.InputType.XBOX:
+			if xbox_icon != null:
+				mode = Mode.XBOX
+			elif controller_icon != null:
+				mode = Mode.CONTROLLER
+			else:
+				mode = Mode.MOUSE_AND_KEYBOARD
+		ControllerType.InputType.PLAYSTATION:
+			if ps_icon != null:
+				mode = Mode.PS
+			elif controller_icon != null:
+				mode = Mode.CONTROLLER
+			else:
+				mode = Mode.MOUSE_AND_KEYBOARD
+		ControllerType.InputType.MOUSE_AND_KEYBOARD:
+			mode = Mode.MOUSE_AND_KEYBOARD
+		_:
+			if controller_icon != null:
+				mode = Mode.CONTROLLER
+			elif xbox_icon != null:
+				mode = Mode.XBOX
+			elif ps_icon != null:
+				mode = Mode.PS
+			else:
+				mode = Mode.MOUSE_AND_KEYBOARD

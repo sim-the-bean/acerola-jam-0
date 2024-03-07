@@ -1,8 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dk4b80gijiif4"]
+[gd_scene load_steps=11 format=3 uid="uid://dk4b80gijiif4"]
 
 [ext_resource type="Texture2D" uid="uid://eb8v7vbuco3c" path="res://resources/ui/icons/WASD_Key_Light.png" id="1_0y3hx"]
+[ext_resource type="Script" path="res://scripts/ui/splash_controls.gd" id="1_6a5s6"]
+[ext_resource type="Texture2D" uid="uid://bgx7um8fc7vnb" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_A.png" id="2_35lc5"]
 [ext_resource type="Texture2D" uid="uid://drgwv0qa7q8xk" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_Right_Stick.png" id="2_dwyih"]
 [ext_resource type="Texture2D" uid="uid://b5ilt876qc7p2" path="res://resources/ui/icons/input_prompts/Keyboard & Mouse/Blanks/Blank_White_Mouse.png" id="3_cvk3g"]
+[ext_resource type="Texture2D" uid="uid://ci482iypkckwv" path="res://resources/ui/icons/input_prompts/PS5/PS5_Cross.png" id="3_jm643"]
 [ext_resource type="Texture2D" uid="uid://0n1yux4ntflg" path="res://resources/ui/icons/input_prompts/Xbox Series/XboxSeriesX_Left_Stick.png" id="4_6p285"]
 [ext_resource type="Texture2D" uid="uid://guocp5x5l06f" path="res://resources/ui/icons/input_prompts/Keyboard & Mouse/Light/Space_Key_Light.png" id="5_1lmfk"]
 [ext_resource type="Texture2D" uid="uid://03gejg8i53f0" path="res://resources/ui/icons/input_prompts/Others/Positional Prompts/Positional_Prompts_Down.png" id="6_0nhid"]
@@ -10,7 +13,7 @@
 [sub_resource type="Theme" id="Theme_rk6or"]
 Label/font_sizes/font_size = 32
 
-[node name="SplashControls" type="Control"]
+[node name="SplashControls" type="Control" node_paths=PackedStringArray("jump_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +21,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_rk6or")
+script = ExtResource("1_6a5s6")
+jump_button = NodePath("MarginContainer/HBoxContainer/MarginContainer/GridContainer/TextureRect6")
+xbox_button_jump = ExtResource("2_35lc5")
+ps_button_jump = ExtResource("3_jm643")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

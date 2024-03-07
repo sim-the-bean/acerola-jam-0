@@ -401,10 +401,10 @@ func process_grabbed(delta: float):
 		var rotate_axis := Vector3.UP
 		if grabbed.has_node("GrabComponent"):
 			rotate_axis = grabbed.get_node("GrabComponent").rotate_axis
-		var rotate := 0.0
-		rotate -= float(Input.is_action_pressed(&"player_action_rotate_left"))
-		rotate += float(Input.is_action_pressed(&"player_action_rotate_right"))
-		grabbed.apply_torque(rotate_axis * rotate * grabbed_rotate_speed * delta)
+		var grabbed_rotation := 0.0
+		grabbed_rotation -= float(Input.is_action_pressed(&"player_action_rotate_left"))
+		grabbed_rotation += float(Input.is_action_pressed(&"player_action_rotate_right"))
+		grabbed.apply_torque(rotate_axis * grabbed_rotation * grabbed_rotate_speed * delta)
 
 func get_hold_menu_point() -> Node3D:
 	return %HoldMenuPoint
