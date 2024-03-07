@@ -1,14 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj42oov4huy3s"]
+[gd_scene load_steps=10 format=3 uid="uid://cj42oov4huy3s"]
 
 [ext_resource type="Script" path="res://scripts/door.gd" id="1_imt6t"]
+[ext_resource type="AudioStream" uid="uid://cj2jt2eylpv6n" path="res://resources/sounds/door_fast.wav" id="2_mjbmq"]
+[ext_resource type="AudioStream" uid="uid://bkqw83aakjikr" path="res://resources/sounds/door_slow.wav" id="3_nhaqy"]
+[ext_resource type="AudioStream" uid="uid://bl2c2ux6xov4n" path="res://resources/sounds/door_locked.wav" id="4_hqrih"]
+[ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="5_g8cwc"]
+[ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="6_swlqh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhnij"]
 size = Vector3(1, 2, 0.1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knr12"]
+metallic = 1.0
+roughness = 0.72
+
 [sub_resource type="BoxMesh" id="BoxMesh_adpim"]
+material = SubResource("StandardMaterial3D_knr12")
 size = Vector3(1, 2, 0.1)
 
-[node name="Door" type="StaticBody3D"]
+[node name="Door" type="StaticBody3D" groups=["button"]]
+collision_layer = 17
 script = ExtResource("1_imt6t")
 
 [node name="RightHalf" type="CollisionShape3D" parent="."]
@@ -20,6 +31,14 @@ shape = SubResource("BoxShape3D_lhnij")
 mesh = SubResource("BoxMesh_adpim")
 skeleton = NodePath("../..")
 
+[node name="OpenFastSound" type="AudioStreamPlayer3D" parent="RightHalf"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+stream = ExtResource("2_mjbmq")
+
+[node name="OpenSlowSound" type="AudioStreamPlayer3D" parent="RightHalf"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+stream = ExtResource("3_nhaqy")
+
 [node name="LeftHalf" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 0)
@@ -28,3 +47,26 @@ shape = SubResource("BoxShape3D_lhnij")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHalf"]
 mesh = SubResource("BoxMesh_adpim")
 skeleton = NodePath("../..")
+
+[node name="OpenFastSound" type="AudioStreamPlayer3D" parent="LeftHalf"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+stream = ExtResource("2_mjbmq")
+
+[node name="OpenSlowSound" type="AudioStreamPlayer3D" parent="LeftHalf"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+stream = ExtResource("3_nhaqy")
+
+[node name="LockedSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_hqrih")
+
+[node name="HoverComponent" parent="." instance=ExtResource("5_g8cwc")]
+
+[node name="UiHintComponent" parent="." instance=ExtResource("6_swlqh")]
+hint_type = 1
+hud_type = 1
+hint = "Open"
+show = false
+
+[connection signal="hover_entered" from="HoverComponent" to="UiHintComponent" method="set_show"]
+[connection signal="hover_exited" from="HoverComponent" to="UiHintComponent" method="set_hide"]

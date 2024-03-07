@@ -99,12 +99,20 @@ func force_open():
 	emit_opening()
 	
 	tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(%RightHalf, "position", default_position_right + Vector3(%RightHalf.shape.size.x * open_amount_right, 0.0, 0.0), duration)
 	tween.parallel().tween_property(%LeftHalf, "position", default_position_left - Vector3(%LeftHalf.shape.size.x * open_amount_left, 0.0, 0.0), duration)
 	tween.finished.connect(func():
 		is_opening = false
 		_is_open = true)
 	tween.finished.connect(emit_opened)
+	
+	if duration > 0.6:
+		$RightHalf/OpenSlowSound.play()
+		$LeftHalf/OpenSlowSound.play()
+	else:
+		$RightHalf/OpenFastSound.play()
+		$LeftHalf/OpenFastSound.play()
 
 func close():
 	if not can_be_closed:
@@ -124,6 +132,7 @@ func force_close():
 	emit_closing()
 	
 	tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(%RightHalf, "position", default_position_right, duration)
 	tween.parallel().tween_property(%LeftHalf, "position", default_position_left, duration)
 	tween.finished.connect(func():
@@ -131,6 +140,19 @@ func force_close():
 		_is_open = false
 		trigger_counter = 0)
 	tween.finished.connect(emit_closed)
+	
+	if duration > 0.6:
+		$RightHalf/OpenSlowSound.play()
+		$LeftHalf/OpenSlowSound.play()
+	else:
+		$RightHalf/OpenFastSound.play()
+		$LeftHalf/OpenFastSound.play()
+
+func click():
+	%LockedSound.play()
+
+func unclick():
+	pass
 
 func emit_opening():
 	opening.emit()

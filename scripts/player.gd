@@ -107,11 +107,15 @@ var deceleration: float:
 	get: return max_speed * deceleration_rate
 var jump_buffer := false
 var jump_buffer_time := 0.0
+var is_walking := false
+var was_walking := false
 
 var hovered: Node3D = null
 var last_hovered: Node3D = null
 var grabbed: RigidBody3D = null
 var interactive: Node3D = null
+
+var step_sound_tween: Tween
 
 func _ready():
 	_gravity_direction = ProjectSettings.get_setting("physics/3d/default_gravity_vector").normalized()
@@ -139,6 +143,14 @@ func _ready():
 	Utils.mouse_focus = true
 	%HudQuad.visible = true
 	%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture())
+	
+	if not Engine.is_editor_hint():
+		step_sound_tween = create_tween()
+		step_sound_tween.set_loops()
+		step_sound_tween.tween_interval(0.2)
+		step_sound_tween.tween_callback(%StepSound.play)
+		step_sound_tween.tween_interval(0.3)
+		step_sound_tween.pause()
 
 func on_killing():
 	position_state = PositionState.KILLED
@@ -212,6 +224,7 @@ func process_look(_delta: float):
 func process_input(delta: float):
 	if Input.is_action_just_pressed(&"player_jump") or (jump_buffer and jump_buffer_time >= 0.0):
 		if is_on_floor():
+			%JumpSound.play()
 			velocity = up_direction * jump_velocity
 			jump_buffer = false
 		elif not jump_buffer:
@@ -234,18 +247,27 @@ func process_input(delta: float):
 		else:
 			new_speed = move_toward(speed, super_speed, super_acceleration * delta)
 		new_direction = input_direction
+		is_walking = is_on_floor()
+		step_sound_tween.set_speed_scale(new_speed / max_speed * 2.0)
 	else:
 		if not input_allowed and not raw_input:
 			input_allowed = true
 		new_speed = move_toward(speed, 0, deceleration * delta)
+		is_walking = false
 	direction = direction.lerp(new_direction, 1.0 if is_on_floor() else air_control)
 	speed = lerpf(speed, new_speed, 1.0 if is_on_floor() else air_control)
+	
+	if is_walking and not was_walking:
+		step_sound_tween.play()
+	elif not is_walking and was_walking:
+		step_sound_tween.stop()
 	
 	match position_state:
 		PositionState.BLACK_HOLE:
 			velocity = point_gravity_acc + direction * speed
 		_:
 			velocity = velocity * up_direction.abs() + direction * speed
+	was_walking = is_walking
 
 func process_movement(_delta: float):
 	move_and_slide()

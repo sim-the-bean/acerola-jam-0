@@ -82,7 +82,10 @@ func unclick():
 		switch_off()
 
 func switch_on():
-	if not can_be_clicked or is_clicked or (oneshot and was_clicked):
+	if is_clicked:
+		return
+	if not can_be_clicked or (oneshot and was_clicked):
+		%SoundBroken.play()
 		return
 	
 	is_clicked = true
@@ -91,6 +94,8 @@ func switch_on():
 	
 	tween = create_tween()
 	tween.tween_property(self, "position", default_position - quaternion * Vector3(0.0, 0.0, %Shape.shape.size.z * push_amount), in_duration)
+	
+	%SoundOk.play()
 
 func switch_off():
 	if not can_be_clicked or not is_clicked:

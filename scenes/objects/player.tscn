@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dju6tadl6ss46"]
+[gd_scene load_steps=24 format=3 uid="uid://dju6tadl6ss46"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
@@ -9,6 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="6_7g65a"]
 [ext_resource type="PackedScene" uid="uid://8ib6xi3owdyw" path="res://scenes/ui/hud.tscn" id="7_mnk68"]
 [ext_resource type="Script" path="res://scripts/follow_main_viewport.gd" id="8_i8mnh"]
+[ext_resource type="AudioStream" uid="uid://dnxvtfj0xmq74" path="res://resources/sounds/step_1.wav" id="10_6nteo"]
+[ext_resource type="AudioStream" uid="uid://qm1r4ficasl8" path="res://resources/sounds/step_2.wav" id="11_nda4m"]
+[ext_resource type="AudioStream" uid="uid://cfv6ud57c52i7" path="res://resources/sounds/step_3.wav" id="12_6d5fg"]
+[ext_resource type="AudioStream" uid="uid://drha8fygstqrl" path="res://resources/sounds/step_4.wav" id="13_uv8kt"]
+[ext_resource type="AudioStream" uid="uid://ddix1phmjixmh" path="res://resources/sounds/jump_1.wav" id="14_028j8"]
+[ext_resource type="AudioStream" uid="uid://cgp7qr8qay0df" path="res://resources/sounds/jump_2.wav" id="15_pi7m7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peuui"]
 radius = 0.3
@@ -38,6 +44,28 @@ size = Vector2(2, 2)
 [sub_resource type="SphereMesh" id="SphereMesh_hqq2u"]
 radius = 0.01
 height = 0.02
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_aa8lu"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 4
+stream_0/stream = ExtResource("10_6nteo")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("11_nda4m")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("12_6d5fg")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("13_uv8kt")
+stream_3/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6y46g"]
+playback_mode = 1
+random_volume_offset_db = 5.0
+streams_count = 2
+stream_0/stream = ExtResource("14_028j8")
+stream_0/weight = 2.0
+stream_1/stream = ExtResource("15_pi7m7")
+stream_1/weight = 1.0
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 73
@@ -105,11 +133,23 @@ unkillable_duration = 3.0
 unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1348, 536)
+size = Vector2i(1348, 628)
 script = ExtResource("8_i8mnh")
 
 [node name="Hud" parent="HudViewport" instance=ExtResource("7_mnk68")]
 unique_name_in_owner = true
+
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="StepSound" type="AudioStreamPlayer3D" parent="Sounds"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_aa8lu")
+volume_db = -20.0
+
+[node name="JumpSound" type="AudioStreamPlayer3D" parent="Sounds"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29453, -0.20765)
+stream = SubResource("AudioStreamRandomizer_6y46g")
 
 [connection signal="killed" from="KillComponent" to="." method="on_killed"]
 [connection signal="killing" from="KillComponent" to="." method="on_killing"]
