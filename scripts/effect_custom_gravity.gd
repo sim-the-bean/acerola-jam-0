@@ -18,7 +18,8 @@ func _on_enter(node: Node3D):
 		return
 	var component: EffectComponent = node.get_node_or_null(^"EffectComponent")
 	if component != null:
-		if node is Player:
+		if node is Player and node.can_set_effect(self):
+			node.add_effect(self)
 			component.replace_variable("gravity_direction", gravity_direction)
 			component.replace_variable("gravity_strength", gravity_strength)
 			node.gravity_field_counter += 1
@@ -28,7 +29,8 @@ func _on_leave(node: Node3D):
 		return
 	var component: EffectComponent = node.get_node_or_null(^"EffectComponent")
 	if component != null:
-		if node is Player:
+		if node is Player and self in node.effects:
+			node.remove_effect(self)
 			node.gravity_field_counter -= 1
 			if node.gravity_field_counter == 0:
 				component.reset_variable("gravity_direction")

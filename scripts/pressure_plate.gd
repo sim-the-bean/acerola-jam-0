@@ -45,11 +45,11 @@ func toggle_on():
 	
 	tween_down = create_tween()
 	tween_down.tween_property(%Button, "position:y", -press_down, duration)
-	tween_down.tween_property(self, "is_moving_down", false, 0.0)
 	tween_down.tween_property(self, "is_powered_on", true, 0.0)
 	tween_down.tween_property(button_material, "emission_enabled", true, 0.0)
 	tween_down.tween_callback(%SoundOn.play)
 	tween_down.tween_callback(emit_powered_on)
+	tween_down.tween_property(self, "is_moving_down", false, 0.0)
 
 func _on_hitbox_body_exited(body):
 	if body == currently_pushing_down:
@@ -71,7 +71,7 @@ func toggle_off():
 	tween_up = create_tween()
 	tween_up.tween_property(%Button, "position:y", 0, duration)
 	tween_up.tween_property(self, "is_moving_up", false, 0.0)
-	tween_up.tween_callback(%SoundOff.play)
+	%SoundOff.play()
 	is_powered_on = false
 	button_material.emission_enabled = false
 	emit_powered_off()

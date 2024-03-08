@@ -102,10 +102,9 @@ func force_open():
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(%RightHalf, "position", default_position_right + Vector3(%RightHalf.shape.size.x * open_amount_right, 0.0, 0.0), duration)
 	tween.parallel().tween_property(%LeftHalf, "position", default_position_left - Vector3(%LeftHalf.shape.size.x * open_amount_left, 0.0, 0.0), duration)
-	tween.finished.connect(func():
-		is_opening = false
-		_is_open = true)
-	tween.finished.connect(emit_opened)
+	tween.tween_property(self, "is_opening", false, 0.0)
+	tween.tween_property(self, "_is_open", true, 0.0)
+	tween.tween_callback(emit_opened)
 	
 	if duration > 0.6:
 		$RightHalf/OpenSlowSound.play()
@@ -141,11 +140,10 @@ func force_close():
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(%RightHalf, "position", default_position_right, duration)
 	tween.parallel().tween_property(%LeftHalf, "position", default_position_left, duration)
-	tween.finished.connect(func():
-		is_closing = false
-		_is_open = false
-		trigger_counter = 0)
-	tween.finished.connect(emit_closed)
+	tween.tween_property(self, "is_closing", false, 0.0)
+	tween.tween_property(self, "_is_open", false, 0.0)
+	tween.tween_property(self, "trigger_counter", 0, 0.0)
+	tween.tween_callback(emit_closed)
 	
 	if duration > 0.6:
 		$RightHalf/OpenSlowSound.play()

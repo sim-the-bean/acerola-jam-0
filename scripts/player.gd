@@ -32,9 +32,9 @@ enum PositionState {
 
 @export_group("Controls")
 var mouse_look_speed: float:
-	get: return GameSettings.mouse_look_sensitivity * 0.0001
+	get: return GameSettings.mouse_look_sensitivity * 0.00005
 var controller_look_speed: float:
-	get: return GameSettings.controller_look_sensitivity * 0.1
+	get: return GameSettings.controller_look_sensitivity * 0.05
 @export_range(0.0, 1.0) var rotating_look_sensitivity := 0.2
 
 @export_group("Physics")
@@ -53,22 +53,21 @@ var controller_look_speed: float:
 var gravity_direction: Vector3:
 	get: return _gravity_direction
 	set(value):
-		if position_state == PositionState.NORMAL:
-			var new_gravity = value.normalized()
-			var new_up = -new_gravity
-			var current_rotation = rotation_quaternion
-			position_state = PositionState.ROTATING
-			previous_rotation = current_rotation
-			target_rotation = current_rotation * Quaternion(up_direction, new_up)
-			target_up_direction = new_up
-			rotation_axis = up_direction.cross(new_up)
-			if rotation_axis.is_zero_approx():
-				rotation_axis = current_rotation * Vector3.FORWARD
-			
-			velocity -= velocity * up_direction.abs()
-			direction = Vector3.ZERO
-			
-			_gravity_direction = new_gravity
+		var new_gravity = value.normalized()
+		var new_up = -new_gravity
+		var current_rotation = rotation_quaternion
+		position_state = PositionState.ROTATING
+		previous_rotation = current_rotation
+		target_rotation = current_rotation * Quaternion(up_direction, new_up)
+		target_up_direction = new_up
+		rotation_axis = up_direction.cross(new_up)
+		if rotation_axis.is_zero_approx():
+			rotation_axis = current_rotation * Vector3.FORWARD
+		
+		velocity -= velocity * up_direction.abs()
+		direction = Vector3.ZERO
+		
+		_gravity_direction = new_gravity
 var _gravity_direction: Vector3
 var gravity_strength: float
 var gravity: Vector3:
@@ -97,11 +96,15 @@ var target_rotation := Quaternion.IDENTITY:
 	set(value):
 		target_rotation = value.normalized()
 var target_up_direction := up_direction
-var rotation_axis := Vector3.ZERO
+var rotation_axis := Vector3.ZERO:
+	set(value):
+		rotation_axis = value.normalized()
 var base_rotation := Quaternion.from_euler(rotation)
 var rotation_weight := 0.0
 var rotation_quaternion: Quaternion:
 	get: return transform.basis.orthonormalized().get_rotation_quaternion()
+var effects: Array[BaseEffect] = []
+var last_effect: BaseEffect = null
 
 var input_allowed := true
 var direction := rotation_quaternion * Vector3.FORWARD
@@ -122,6 +125,7 @@ var bob_updown_t := 0.0
 var is_grounded := true
 var was_grounded := false
 
+@onready var cursor_initial_position: Vector3 = %Cursor.position
 var hovered: Node3D = null
 var last_hovered: Node3D = null
 var grabbed: RigidBody3D = null
@@ -335,7 +339,9 @@ func process_raycast(delta):
 			hover_entered.emit(hovered)
 			last_hovered = hovered
 	if grabbed == null and collider != null:
-		%GrabPoint.global_position = %RayCast.get_collision_point()
+		%Cursor.global_position = %RayCast.get_collision_point()
+	else:
+		%Cursor.position = cursor_initial_position
 	if hovered != null:
 		if hovered.is_in_group("grabbable"):
 			do_grab(delta)
@@ -399,12 +405,29 @@ func process_grabbed(delta: float):
 			grabbed.apply_force(pos_diff * grab_speed * delta)
 		
 		var rotate_axis := Vector3.UP
-		if grabbed.has_node("GrabComponent"):
-			rotate_axis = grabbed.get_node("GrabComponent").rotate_axis
+		var grab_component: GrabComponent = grabbed.get_node_or_null("GrabComponent")
+		if grab_component != null:
+			rotate_axis = grab_component.get_rotate_axis()
 		var grabbed_rotation := 0.0
 		grabbed_rotation -= float(Input.is_action_pressed(&"player_action_rotate_left"))
 		grabbed_rotation += float(Input.is_action_pressed(&"player_action_rotate_right"))
-		grabbed.apply_torque(rotate_axis * grabbed_rotation * grabbed_rotate_speed * delta)
+		var rotate_speed := grabbed_rotation * grabbed_rotate_speed
+		if grab_component != null:
+			rotate_speed *= grab_component.rotate_speed_multiplier
+		grabbed.apply_torque(rotate_axis * rotate_speed * delta)
+
+func can_set_effect(effect: BaseEffect) -> bool:
+	if effect is EffectCustomGravity:
+		return not (position_state != PositionState.NORMAL and effect == last_effect)
+	else:
+		return true
+
+func add_effect(effect: BaseEffect):
+	effects.append(effect)
+	last_effect = effect
+
+func remove_effect(effect: BaseEffect):
+	effects.remove_at(effects.find(effect))
 
 func get_hold_menu_point() -> Node3D:
 	return %HoldMenuPoint

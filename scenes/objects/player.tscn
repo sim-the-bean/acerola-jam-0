@@ -49,8 +49,8 @@ shader = ExtResource("5_6l0cb")
 
 [sub_resource type="SphereMesh" id="SphereMesh_hqq2u"]
 material = SubResource("ShaderMaterial_uselv")
-radius = 0.01
-height = 0.02
+radius = 0.02
+height = 0.04
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_aa8lu"]
 random_pitch = 1.2
@@ -110,16 +110,19 @@ unique_name_in_owner = true
 target_position = Vector3(0, 0, -2.5)
 collision_mask = 20
 
-[node name="GrabPoint" type="Node3D" parent="CameraPivot/RayCast"]
+[node name="Cursor" type="MeshInstance3D" parent="CameraPivot/RayCast"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot/RayCast/GrabPoint"]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_hqq2u")
+skeleton = NodePath("")
 script = ExtResource("3_43qcu")
 
-[node name="HoldItemPoint" type="Node3D" parent="CameraPivot"]
+[node name="GrabPoint" type="Marker3D" parent="CameraPivot/RayCast"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+
+[node name="HoldItemPoint" type="Marker3D" parent="CameraPivot"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.936678, 0.350191, 0, -0.350191, 0.936678, 0, -0.186727, -0.728917)
 
@@ -142,7 +145,7 @@ unkillable_duration = 3.0
 unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1348, 536)
+size = Vector2i(1348, 628)
 script = ExtResource("8_i8mnh")
 
 [node name="Hud" parent="HudViewport" instance=ExtResource("7_mnk68")]
