@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="AcerolaJam0"
+config/name="Aberratron"
+config/version="0.1.0"
 run/main_scene="res://scenes/splash.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.png"

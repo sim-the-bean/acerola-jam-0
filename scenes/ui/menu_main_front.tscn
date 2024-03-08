@@ -34,7 +34,7 @@ offset_right = 305.5
 offset_bottom = 70.0
 grow_horizontal = 2
 bbcode_enabled = true
-text = "[font_size=48][fill][b]THE POTATO PAPER[/b][/fill][/font_size]"
+text = "[font_size=48][fill][b]THE ABERRATRON[/b][/fill][/font_size]"
 scroll_active = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
@@ -61,6 +61,7 @@ size_flags_horizontal = 0
 text = "Play Test"
 
 [node name="Continue" type="Button" parent="Control/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
