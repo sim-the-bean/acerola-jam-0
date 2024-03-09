@@ -80,11 +80,15 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 			glitched_material.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
 			glitched_material.next_pass.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
 
-@onready var mesh_ok_node: Node3D = %MeshOk
-@onready var mesh_glitched_node: MeshInstance3D = %MeshGlitched
+var mesh_ok_node: Node3D = null
+var mesh_glitched_node: MeshInstance3D = null
 var glitched_material: ShaderMaterial:
 	get: return mesh_glitched_node.get_surface_override_material(0) if custom_mesh else %MeshGlitched.mesh.material
 var custom_mesh := false
+
+func _ready():
+	if mesh_ok_node == null: mesh_ok_node = %MeshOk
+	if mesh_glitched_node == null: mesh_glitched_node = %MeshGlitched
 
 func set_glitched():
 	is_glitched = true
@@ -145,8 +149,9 @@ func _on_child_entered_tree(node: Node):
 		custom_mesh = true
 		mesh_ok_node = node
 		mesh_glitched_node = MeshInstance3D.new()
-		mesh_glitched_node.mesh = mesh_node.mesh.duplicate()
+		mesh_glitched_node.mesh = mesh_node.mesh
 		mesh_glitched_node.set_surface_override_material(0, %MeshGlitched.mesh.material)
+		mesh_glitched_node.scale = mesh_ok_node.scale
 		add_child.call_deferred(mesh_glitched_node)
 		mesh_ok_node.visible = not is_glitched
 		mesh_glitched_node.visible = is_glitched

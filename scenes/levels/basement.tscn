@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=153 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -17,17 +17,16 @@
 [ext_resource type="PackedScene" uid="uid://cj42oov4huy3s" path="res://scenes/objects/door.tscn" id="11_g8c6u"]
 [ext_resource type="PackedScene" uid="uid://dnnmxd7d8ekff" path="res://scenes/zones/base_zone.tscn" id="12_px0bw"]
 [ext_resource type="Script" path="res://scripts/effect_custom_gravity.gd" id="13_ssnix"]
-[ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="14_jts1g"]
-[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="15_5po3o"]
 [ext_resource type="PackedScene" uid="uid://b7dr0xxom3w28" path="res://scenes/objects/destructible.tscn" id="15_8m51g"]
 [ext_resource type="PackedScene" uid="uid://dpr1gv3uoj2cq" path="res://resources/models/aberratron/Aberratron.blend" id="15_tmvwi"]
 [ext_resource type="PackedScene" uid="uid://ct1n67eh6krmx" path="res://scenes/objects/coffee_mug.tscn" id="16_57vgj"]
-[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="16_pmg2t"]
 [ext_resource type="PackedScene" uid="uid://5ry02ct650ae" path="res://scenes/objects/black_hole.tscn" id="21_dqt5v"]
 [ext_resource type="PackedScene" uid="uid://8fy7omnkotbe" path="res://scenes/objects/pressure_plate.tscn" id="22_w4384"]
 [ext_resource type="PackedScene" uid="uid://dxodjse6yt7cd" path="res://scenes/objects/projector.tscn" id="23_8aqtk"]
 [ext_resource type="PackedScene" uid="uid://lwemmy8vn3ol" path="res://scenes/components/push_down_component.tscn" id="24_8vx3s"]
 [ext_resource type="PackedScene" uid="uid://cvnglktf0rf3e" path="res://scenes/components/checkpoint_component.tscn" id="24_mmgyu"]
+[ext_resource type="PackedScene" uid="uid://b52c3agawh1qe" path="res://scenes/objects/small_box.tscn" id="25_dkrkp"]
+[ext_resource type="PackedScene" uid="uid://cbmir6cfr6dil" path="res://scenes/objects/big_box.tscn" id="27_o035y"]
 
 [sub_resource type="Resource" id="Resource_s1pfl"]
 script = ExtResource("3_mh14q")
@@ -2462,62 +2461,6 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_1ijbj")
 size = Vector3(9, 2, 8)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f3t4g"]
-resource_local_to_scene = true
-bounce = 0.5
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2mjm2"]
-resource_local_to_scene = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_3lng2"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_v8vh0")
-size = Vector3(0.5, 0.5, 0.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
-render_priority = 0
-shader = ExtResource("15_5po3o")
-shader_parameter/color = 2
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("16_pmg2t")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l8s"]
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_4pnlg")
-shader = ExtResource("15_5po3o")
-shader_parameter/color = 1
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("16_pmg2t")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x3ocm"]
-resource_local_to_scene = true
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_h6l8s")
-shader = ExtResource("15_5po3o")
-shader_parameter/color = 0
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("16_pmg2t")
-
-[sub_resource type="BoxMesh" id="BoxMesh_vigk6"]
-resource_local_to_scene = true
-material = SubResource("ShaderMaterial_x3ocm")
-size = Vector3(0.5, 0.5, 0.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ucvny"]
-resource_local_to_scene = true
-size = Vector3(1.01, 1.01, 1.01)
-
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oesdh"]
 resource_local_to_scene = true
 
@@ -2527,8 +2470,9 @@ size = Vector3(2, 2, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0hlgn"]
 size = Vector3(1, 2, 2)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov0k"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ciksl"]
 resource_local_to_scene = true
+bounce = 0.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lqw1p"]
 size = Vector3(2, 2, 2)
@@ -2544,6 +2488,10 @@ disable_receive_shadows = true
 [sub_resource type="BoxMesh" id="BoxMesh_hv0rt"]
 material = SubResource("StandardMaterial3D_spcse")
 size = Vector3(12.9, 3.9, 7.9)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_143xy"]
+resource_local_to_scene = true
+bounce = 0.5
 
 [node name="Basement" type="Node3D"]
 script = ExtResource("1_51x7k")
@@ -3238,7 +3186,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 12.6327
+light_energy = 12.4695
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3380,25 +3328,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 visible = false
 mesh = SubResource("BoxMesh_kosjh")
 
-[node name="Object" parent="InvertedRoom" instance=ExtResource("14_jts1g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.795, -0.445042, -21.251)
-physics_material_override = SubResource("PhysicsMaterial_f3t4g")
-can_be_glitched = false
-
-[node name="Collider" parent="InvertedRoom/Object" index="0"]
-shape = SubResource("BoxShape3D_2mjm2")
-
-[node name="MeshOk" parent="InvertedRoom/Object" index="1"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = SubResource("BoxMesh_3lng2")
-
-[node name="MeshGlitched" parent="InvertedRoom/Object" index="2"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = SubResource("BoxMesh_vigk6")
-
-[node name="CollisionShape3D" parent="InvertedRoom/Object/KillBox" index="0"]
-shape = SubResource("BoxShape3D_ucvny")
-
 [node name="Destructible" parent="InvertedRoom" instance=ExtResource("15_8m51g")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.58082, -1, -20.6303)
 
@@ -3431,7 +3360,7 @@ transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 5.96046e
 [node name="Checkpoint4" parent="ProjectorRoom" node_paths=PackedStringArray("components") instance=ExtResource("5_ofml4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -1, -32)
 checkpoint_priority = 3
-components = [NodePath("../Projector/CheckpointComponent"), NodePath("../Object2/CheckpointComponent")]
+components = [NodePath("../Projector/CheckpointComponent"), NodePath("../SmallBox/CheckpointComponent")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ProjectorRoom/Checkpoint4"]
 transform = Transform3D(0.999932, 0, 0, 0, 1, 0, 0, 0, 0.999932, 0, 1, 1.14441e-05)
@@ -3452,14 +3381,14 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -11, -
 
 [node name="CheckpointComponent" parent="ProjectorRoom/Projector" instance=ExtResource("24_mmgyu")]
 
-[node name="Object2" parent="ProjectorRoom" instance=ExtResource("14_jts1g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.779, -0.738476, -25.2)
-physics_material_override = SubResource("PhysicsMaterial_3ov0k")
+[node name="SmallBox" parent="ProjectorRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -1, -25)
+physics_material_override = SubResource("PhysicsMaterial_ciksl")
 chromatic_aberration_strength = Vector3(1, 0.4, 0.4)
 
-[node name="PushDownComponent" parent="ProjectorRoom/Object2" instance=ExtResource("24_8vx3s")]
+[node name="PushDownComponent" parent="ProjectorRoom/SmallBox" instance=ExtResource("24_8vx3s")]
 
-[node name="CheckpointComponent" parent="ProjectorRoom/Object2" instance=ExtResource("24_mmgyu")]
+[node name="CheckpointComponent" parent="ProjectorRoom/SmallBox" instance=ExtResource("24_mmgyu")]
 
 [node name="Outro" type="Node3D" parent="."]
 
@@ -3478,6 +3407,11 @@ transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 11, -78)
 mesh = SubResource("BoxMesh_hv0rt")
 
+[node name="BigBox" parent="." instance=ExtResource("27_o035y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1, -22)
+physics_material_override = SubResource("PhysicsMaterial_143xy")
+can_be_glitched = false
+
 [connection signal="clicked" from="IntroRoom/BigRedButton" to="." method="_on_big_red_button_clicked"]
 [connection signal="destroyed" from="InvertedRoom/Destructible" to="InvertedRoom/Door2" method="open"]
 [connection signal="powered_off" from="ProjectorRoom/PressurePlate" to="ProjectorRoom/Door3" method="close"]
@@ -3486,4 +3420,3 @@ mesh = SubResource("BoxMesh_hv0rt")
 
 [editable path="InvertedRoom/InvertedGravityZone"]
 [editable path="InvertedRoom/InvertedGravityZone2"]
-[editable path="InvertedRoom/Object"]

@@ -1,0 +1,98 @@
+[gd_scene load_steps=14 format=3 uid="uid://cbmir6cfr6dil"]
+
+[ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_3xrcx"]
+[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_vfq0h"]
+[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_ghkb0"]
+[ext_resource type="PackedScene" uid="uid://d2rxrut2q4u4i" path="res://resources/models/box/Box.blend" id="4_2f4a2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jo1tc"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8qps"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kjtue"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_v8vh0")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
+render_priority = 0
+shader = ExtResource("2_vfq0h")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_ghkb0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l8s"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_4pnlg")
+shader = ExtResource("2_vfq0h")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_ghkb0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0x8u7"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("2_vfq0h")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("3_ghkb0")
+
+[sub_resource type="BoxMesh" id="BoxMesh_3dvam"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_0x8u7")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dku5s"]
+resource_local_to_scene = true
+size = Vector3(1.01, 1.01, 1.01)
+
+[node name="BigBox" instance=ExtResource("1_3xrcx")]
+physics_material_override = SubResource("PhysicsMaterial_jo1tc")
+
+[node name="Collider" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_j8qps")
+
+[node name="MeshOk" parent="." index="1"]
+visible = false
+mesh = SubResource("BoxMesh_kjtue")
+
+[node name="MeshGlitched" parent="." index="2"]
+mesh = SubResource("BoxMesh_3dvam")
+
+[node name="CollisionShape3D" parent="KillBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_dku5s")
+
+[node name="KillComponent" parent="." index="6"]
+scale_target = NodePath("../Box")
+
+[node name="Box" parent="." index="13" instance=ExtResource("4_2f4a2")]
+
+[node name="Skeleton3D" parent="Box/Armature" index="0"]
+bones/1/rotation = Quaternion(0, 0, 0.694658, 0.71934)
+bones/2/rotation = Quaternion(0, 0, -0.688355, 0.725374)
+bones/3/rotation = Quaternion(0.707107, 0, 0, 0.707107)
+bones/4/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/5/rotation = Quaternion(0.707107, 0.707107, 1.59104e-07, -2.20921e-07)
+bones/6/rotation = Quaternion(0.707107, -0.707107, -2.20921e-07, -1.59103e-07)
+bones/7/rotation = Quaternion(0.700909, -7.42651e-09, -1.15272e-07, 0.71325)
+bones/8/rotation = Quaternion(0.700909, -1.15124e-07, 9.43716e-09, -0.713251)
+bones/9/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+
+[editable path="Box"]
