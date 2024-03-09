@@ -1,4 +1,4 @@
-[gd_scene load_steps=159 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=167 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://scripts/flickering_light.gd" id="7_4ti3l"]
 [ext_resource type="PackedScene" uid="uid://dx562v4dvc3mh" path="res://scenes/objects/button.tscn" id="7_wyvxl"]
 [ext_resource type="Material" uid="uid://boy36vdamdvww" path="res://resources/materials/floor/Floor.tres" id="8_o8wq7"]
-[ext_resource type="PackedScene" uid="uid://bafri2b015t68" path="res://scenes/objects/cube.tscn" id="10_duo8t"]
 [ext_resource type="PackedScene" uid="uid://cj42oov4huy3s" path="res://scenes/objects/door.tscn" id="11_g8c6u"]
 [ext_resource type="PackedScene" uid="uid://dnnmxd7d8ekff" path="res://scenes/zones/base_zone.tscn" id="12_px0bw"]
 [ext_resource type="Script" path="res://scripts/effect_custom_gravity.gd" id="13_ssnix"]
@@ -2401,25 +2400,138 @@ size = Vector3(0.1, 3, 6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fujql"]
 size = Vector3(2, 2, 2)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mbq0q"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hddwj"]
 resource_local_to_scene = true
-bounce = 0.2
+bounce = 0.5
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1bh3d"]
-resource_local_to_scene = true
-bounce = 0.2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
+render_priority = 0
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_us5sm"]
-resource_local_to_scene = true
-bounce = 0.2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l8s"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_4pnlg")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_at4or"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_se1yo"]
 resource_local_to_scene = true
-bounce = 0.2
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gfdij"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_scbxr"]
 resource_local_to_scene = true
-bounce = 0.2
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4tua7"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jmy8a"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_thpse"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2f2p8"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmv5n"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rhm6x"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_14bt3"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_peel7"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_47tgg"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_atmbv"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_221l0"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_psj5w"]
 size = Vector3(8, 1, 5)
@@ -2469,27 +2581,6 @@ resource_local_to_scene = true
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_143xy"]
 resource_local_to_scene = true
 bounce = 0.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
-render_priority = 0
-shader = ExtResource("15_5po3o")
-shader_parameter/color = 2
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("16_pmg2t")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l8s"]
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_4pnlg")
-shader = ExtResource("15_5po3o")
-shader_parameter/color = 1
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pccrs"]
 resource_local_to_scene = true
@@ -3233,7 +3324,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 13.4106
+light_energy = 12.8923
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3290,36 +3381,60 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 0
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1, 0.74886)
 
-[node name="Cube" parent="IntroRoom" instance=ExtResource("10_duo8t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.91838, 0.241599, -1.99698)
-physics_material_override = SubResource("PhysicsMaterial_mbq0q")
-can_sleep = false
-
-[node name="Cube2" parent="IntroRoom" instance=ExtResource("10_duo8t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.57293, 0.241599, -1.41898)
-physics_material_override = SubResource("PhysicsMaterial_1bh3d")
-can_sleep = false
-
-[node name="Cube3" parent="IntroRoom" instance=ExtResource("10_duo8t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69202, 0.241599, 2.29498)
-physics_material_override = SubResource("PhysicsMaterial_us5sm")
-can_sleep = false
-
-[node name="Cube5" parent="IntroRoom" instance=ExtResource("10_duo8t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12808, 0.770307, 2.29498)
-physics_material_override = SubResource("PhysicsMaterial_at4or")
-can_sleep = false
-
-[node name="Cube4" parent="IntroRoom" instance=ExtResource("10_duo8t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.33201, 0.241599, 2.50332)
-physics_material_override = SubResource("PhysicsMaterial_gfdij")
-can_sleep = false
-
 [node name="Door" parent="IntroRoom" instance=ExtResource("11_g8c6u")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
 open_amount_right = 0.7
 open_amount_left = 0.5
+
+[node name="SmallBox" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(0.884971, 0, -0.465645, 0, 1, 0, 0.465645, 0, 0.884971, 2.68747, 2.38419e-07, 2.46747)
+physics_material_override = SubResource("PhysicsMaterial_hddwj")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_se1yo")
+
+[node name="SmallBox2" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32386, 0, 2.38897)
+physics_material_override = SubResource("PhysicsMaterial_scbxr")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_4tua7")
+
+[node name="SmallBox3" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(0.992315, 0, 0.12374, 0, 1, 0, -0.12374, 0, 0.992315, 3.1101, 0.5, 2.43685)
+physics_material_override = SubResource("PhysicsMaterial_jmy8a")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_thpse")
+
+[node name="SmallBox4" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(-0.774636, 0, -0.632408, 0, 1, 0, 0.632408, 0, -0.774636, 2.77573, 0, -0.902925)
+physics_material_override = SubResource("PhysicsMaterial_2f2p8")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_kmv5n")
+
+[node name="SmallBox5" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(0.981118, 0, -0.193412, 0, 1, 0, 0.193412, 0, 0.981118, 5.83613, 0, 2.18625)
+physics_material_override = SubResource("PhysicsMaterial_rhm6x")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_14bt3")
+
+[node name="SmallBox6" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(0.83706, 0, -0.54711, 0, 1, 0, 0.54711, 0, 0.83706, -1.09363, 0, 2.03671)
+physics_material_override = SubResource("PhysicsMaterial_peel7")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_47tgg")
+
+[node name="SmallBox7" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(0.884092, 0, 0.467313, 0, 1, 0, -0.467313, 0, 0.884092, -0.540472, 0, 2.3464)
+collision_layer = 141
+physics_material_override = SubResource("PhysicsMaterial_peel7")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_47tgg")
+
+[node name="SmallBox8" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
+transform = Transform3D(0.968008, 0, 0.250921, 0, 1, 0, -0.250921, 0, 0.968008, -0.764799, 0.5, 2.21938)
+physics_material_override = SubResource("PhysicsMaterial_atmbv")
+can_sleep = false
+glitched_material = SubResource("ShaderMaterial_221l0")
 
 [node name="InvertedRoom" type="Node3D" parent="."]
 

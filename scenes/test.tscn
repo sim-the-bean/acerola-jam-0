@@ -1238,6 +1238,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12897, 0.965095, -1.3044)
 [node name="CoffeeMug" parent="." instance=ExtResource("16_5uhyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.556844, -5.44311)
 physics_material_override = SubResource("PhysicsMaterial_l6335")
+glitched_material = null
 
 [connection signal="clicked" from="Button" to="Door" method="toggle"]
 [connection signal="destroyed" from="Destructible" to="Door2" method="open"]

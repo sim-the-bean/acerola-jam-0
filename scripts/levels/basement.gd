@@ -2,6 +2,10 @@ extends Node3D
 
 const black_hole_scene := preload("res://scenes/objects/black_hole.tscn")
 
+@onready var boxes_to_glitch: Array[Glitched] = [
+	$IntroRoom/SmallBox6, $IntroRoom/SmallBox7, $IntroRoom/SmallBox8,
+]
+
 func _ready():
 	$LevelGeometry/CyclopsBlocks/Ceilings.visible = true
 
@@ -15,6 +19,11 @@ func _on_big_red_button_clicked():
 	timer.tween_property(%ReactorSpotLight, "base_light_energy", 5.0, 2.6)
 	timer.tween_property(%ReactorSpotLight, "base_light_energy", 0.2, 0.1)
 	timer.tween_callback(func():
+		for box in boxes_to_glitch:
+			box.is_glitched = true
+			box.apply_impulse(Vector3(randf_range(-0.1, 0.1), randf_range(0.3, 0.5), randf_range(-0.1, 0.1)))
+			box.apply_torque_impulse(Vector3(randf_range(-0.1, 0.1), randf_range(-0.1, 0.1), randf_range(-0.1, 0.1)))
+		
 		var black_hole := black_hole_scene.instantiate()
 		black_hole.position = %BlackHoleMarker.position
 		black_hole.scale = Vector3(0.01, 0.01, 0.01)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctlhsas4arlb4"]
+[gd_scene load_steps=8 format=3 uid="uid://ctlhsas4arlb4"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_wejoo"]
 [ext_resource type="PackedScene" uid="uid://x6vgsx8fif8s" path="res://scenes/ui/newspaper.tscn" id="2_lqdql"]
@@ -6,11 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://64ihksy30e4w" path="res://scenes/ui/menu_settings.tscn" id="4_0w1m7"]
 [ext_resource type="PackedScene" uid="uid://d4hncbcyk7340" path="res://scenes/ui/menu_main_front.tscn" id="4_3mmb2"]
 [ext_resource type="PackedScene" uid="uid://dd26h66awd80i" path="res://scenes/ui/menu_credits.tscn" id="6_64fmo"]
+[ext_resource type="PackedScene" uid="uid://ck0udmvhpvlfu" path="res://resources/models/table/table.tscn" id="7_2djst"]
 
 [node name="Menu" type="Node3D"]
 
 [node name="PhantomCamera3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.420244, 0.907411, 0, -0.907411, 0.420244, 0, 0.186, 0.048)
+transform = Transform3D(1, 0, 0, 0, 0.36999, 0.929036, 0, -0.929036, 0.36999, 0, 0.652748, 0.131229)
 script = ExtResource("1_wejoo")
 priority_override = false
 priority = 10
@@ -22,25 +23,30 @@ inactive_update_mode = 0
 camera_3D_resource = null
 
 [node name="Newspaper" parent="." instance=ExtResource("2_lqdql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51359, 0.136262)
 
 [node name="FrontPage" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 page = ExtResource("4_3mmb2")
-go_back_enabled = null
+go_back_enabled = false
 
 [node name="Settings" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 transform = Transform3D(0.999391, 0.0348995, 0, -0.0348995, 0.999391, 0, 0, 0, 1, 0, -0.005, 0)
 page = ExtResource("4_0w1m7")
 enabled = false
-go_back_enabled = null
+go_back_enabled = false
 
 [node name="Credits" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0, -0.01, 0)
 page = ExtResource("6_64fmo")
 enabled = false
-go_back_enabled = null
+go_back_enabled = false
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(0.828474, -0.436629, 0.350694, -0.389815, -4.37114e-08, 0.920893, -0.402089, -0.899642, -0.170205, 0.12, 0.279, -0.107)
+transform = Transform3D(0.828474, -0.436629, 0.350694, -0.389815, 1.07315e-07, 0.920893, -0.402089, -0.899642, -0.170204, 0.12, 0.805718, 0.0292616)
 light_color = Color(0.905882, 0.847059, 0.807843, 1)
+light_energy = 0.5
 spot_range = 0.5
 spot_angle = 30.0
+
+[node name="Table" parent="." instance=ExtResource("7_2djst")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
