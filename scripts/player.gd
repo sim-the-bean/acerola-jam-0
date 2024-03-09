@@ -134,6 +134,7 @@ var interactive: Node3D = null
 var step_sound_tween: Tween
 
 func _ready():
+	up_direction = Vector3.UP
 	_gravity_direction = ProjectSettings.get_setting("physics/3d/default_gravity_vector").normalized()
 	gravity_strength = ProjectSettings.get_setting("physics/3d/default_gravity")
 	position_state = PositionState.NORMAL
@@ -144,6 +145,8 @@ func _ready():
 	gravity_point_center = Vector3.ZERO
 	gravity_point_strength = 0.0
 	point_gravity_acc = Vector3.ZERO
+	effects = []
+	last_effect = null
 
 	input_allowed = true
 	direction = rotation_quaternion * Vector3.FORWARD
@@ -161,7 +164,6 @@ func _ready():
 	%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture())
 	
 	if not Engine.is_editor_hint():
-		# TODO: match speed to bob
 		step_sound_tween = create_tween()
 		step_sound_tween.set_loops()
 		step_sound_tween.tween_interval(step_delay)
@@ -173,7 +175,7 @@ func on_killing():
 	position_state = PositionState.KILLED
 
 func on_killed():
-	GameManager.instance.reset()
+	GameManager.instance.reset_to_checkpoint()
 
 func _unhandled_input(event: InputEvent):
 	%HudViewport.push_input(event)

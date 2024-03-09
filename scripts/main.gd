@@ -16,10 +16,10 @@ var menu: Newspaper = null
 var player: Player = null
 var active_scene: PackedScene
 var active_scene_node: Node3D = null
-var default_player_transform: Transform3D
 var game_menu_node: Node3D = null
 var in_main_menu := false
 var environment: WorldEnvironment
+var checkpoint: Checkpoint = null
 
 func _init():
 	instance = self
@@ -84,7 +84,7 @@ func quit():
 func force_quit():
 	get_tree().quit()
 
-func switch_scene(scene: PackedScene, reset_player := false):
+func switch_scene(scene: PackedScene, reset_player := false, reset_checkpoint := true):
 	if active_scene_node != null:
 		active_scene_node.queue_free()
 	
@@ -99,15 +99,25 @@ func switch_scene(scene: PackedScene, reset_player := false):
 	active_scene_node = scene.instantiate()
 	%GameRoot.add_child(active_scene_node)
 	environment = active_scene_node.get_node_or_null("WorldEnvironment")
-		
-	var player_marker: Node3D = get_tree().get_first_node_in_group(&"player_marker")
-	if player != null and player_marker != null:
-		player.transform = player_marker.transform
-		default_player_transform = player_marker.transform
+	
+	if reset_checkpoint or checkpoint == null:
+		var checkpoints = get_tree().get_nodes_in_group(&"checkpoint")
+		checkpoint = null
+		for cp in checkpoints:
+			if checkpoint == null or cp.checkpoint_priority < checkpoint.checkpoint_priority:
+				checkpoint = cp
+	if player != null and checkpoint != null:
+		player.transform = checkpoint.spawn_point
 	get_tree().paused = false
 
+func reset_to_checkpoint():
+	if player != null and checkpoint != null:
+		player._ready()
+		player.transform = checkpoint.spawn_point
+		checkpoint.reset_to()
+
 func reset():
-	switch_scene(active_scene, true)
+	switch_scene(active_scene, true, true)
 
 func trigger_achievement(id: String):
 	for achievement in achievements:

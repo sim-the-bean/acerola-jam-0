@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfpnwtv7gtdic"]
+
+[ext_resource type="PackedScene" uid="uid://ykpfonk2hvs4" path="res://scenes/objects/player_only_area.tscn" id="1_uqehm"]
+[ext_resource type="Script" path="res://scripts/checkpoint.gd" id="2_tn8bg"]
+
+[node name="Checkpoint" node_paths=PackedStringArray("components") groups=["checkpoint"] instance=ExtResource("1_uqehm")]
+script = ExtResource("2_tn8bg")
+checkpoint_priority = 0
+components = []
+
+[connection signal="player_entered" from="." to="." method="_on_player_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=162 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -8,6 +8,7 @@
 [ext_resource type="CameraAttributesPractical" uid="uid://bby3mqcjclj1e" path="res://resources/camera_attributes.tres" id="3_1bk3y"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/convex_block_data.gd" id="3_mh14q"]
 [ext_resource type="Material" uid="uid://ebhmmablutj0" path="res://resources/materials/wall/Wall.tres" id="4_qjaye"]
+[ext_resource type="PackedScene" uid="uid://cfpnwtv7gtdic" path="res://scenes/objects/checkpoint.tscn" id="5_ofml4"]
 [ext_resource type="PackedScene" uid="uid://dy6mv6w70gmxv" path="res://resources/models/control_panel/ControlPanel.blend" id="6_phv3k"]
 [ext_resource type="Script" path="res://scripts/flickering_light.gd" id="7_4ti3l"]
 [ext_resource type="PackedScene" uid="uid://dx562v4dvc3mh" path="res://scenes/objects/button.tscn" id="7_wyvxl"]
@@ -26,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://8fy7omnkotbe" path="res://scenes/objects/pressure_plate.tscn" id="22_w4384"]
 [ext_resource type="PackedScene" uid="uid://dxodjse6yt7cd" path="res://scenes/objects/projector.tscn" id="23_8aqtk"]
 [ext_resource type="PackedScene" uid="uid://lwemmy8vn3ol" path="res://scenes/components/push_down_component.tscn" id="24_8vx3s"]
-[ext_resource type="PackedScene" uid="uid://ykpfonk2hvs4" path="res://scenes/objects/player_only_area.tscn" id="25_62x5m"]
+[ext_resource type="PackedScene" uid="uid://cvnglktf0rf3e" path="res://scenes/components/checkpoint_component.tscn" id="24_mmgyu"]
 
 [sub_resource type="Resource" id="Resource_s1pfl"]
 script = ExtResource("3_mh14q")
@@ -2396,6 +2397,9 @@ size = Vector3(0.01, 3, 6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vckm"]
 size = Vector3(0.1, 3, 6)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_fujql"]
+size = Vector3(2, 2, 2)
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mbq0q"]
 resource_local_to_scene = true
 bounce = 0.2
@@ -2415,6 +2419,9 @@ bounce = 0.2
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gfdij"]
 resource_local_to_scene = true
 bounce = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_psj5w"]
+size = Vector3(8, 1, 5)
 
 [sub_resource type="Resource" id="Resource_noiir"]
 script = ExtResource("13_ssnix")
@@ -2514,6 +2521,12 @@ size = Vector3(1.01, 1.01, 1.01)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oesdh"]
 resource_local_to_scene = true
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_afr2w"]
+size = Vector3(2, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0hlgn"]
+size = Vector3(1, 2, 2)
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov0k"]
 resource_local_to_scene = true
 
@@ -2539,9 +2552,6 @@ script = ExtResource("1_51x7k")
 environment = ExtResource("2_aw8kq")
 camera_attributes = ExtResource("3_1bk3y")
 script = ExtResource("1_nn1fi")
-
-[node name="PlayerMarker" type="Marker3D" parent="." groups=["player_marker"]]
-transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -1, 0, -2)
 
 [node name="LevelGeometry" type="Node3D" parent="."]
 
@@ -3228,7 +3238,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 15.5639
+light_energy = 12.6327
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3258,6 +3268,16 @@ omni_range = 10.0
 omni_attenuation = 0.406126
 
 [node name="IntroRoom" type="Node3D" parent="."]
+
+[node name="Checkpoint" parent="IntroRoom" instance=ExtResource("5_ofml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IntroRoom/Checkpoint"]
+transform = Transform3D(0.999991, 0, 0, 0, 1, 0, 0, 0, 0.999991, 0, 1, 0)
+shape = SubResource("BoxShape3D_fujql")
+
+[node name="PlayerMarker" type="Marker3D" parent="IntroRoom/Checkpoint"]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0)
 
 [node name="ControlPanel2" parent="IntroRoom" instance=ExtResource("6_phv3k")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.44815, 0, -1.43813)
@@ -3307,6 +3327,18 @@ open_amount_right = 0.7
 open_amount_left = 0.5
 
 [node name="InvertedRoom" type="Node3D" parent="."]
+
+[node name="Checkpoint2" parent="InvertedRoom" node_paths=PackedStringArray("components") instance=ExtResource("5_ofml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, -20)
+checkpoint_priority = 1
+components = [NodePath("../CoffeeMug/CheckpointComponent")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvertedRoom/Checkpoint2"]
+transform = Transform3D(0.999947, 0, 0, 0, 1, 0, 0, 0, 0.999947, 0, 0.5, -0.499964)
+shape = SubResource("BoxShape3D_psj5w")
+
+[node name="PlayerMarker" type="Marker3D" parent="InvertedRoom/Checkpoint2"]
+transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 5.96046e-08, 0, 2)
 
 [node name="InvertedGravityZone" parent="InvertedRoom" instance=ExtResource("12_px0bw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, -9.5)
@@ -3378,10 +3410,35 @@ transform = Transform3D(0.0836083, 0, -0.996499, 0, 1, 0, 0.996499, 0, 0.0836083
 physics_material_override = SubResource("PhysicsMaterial_oesdh")
 infinite_coffee = true
 
+[node name="CheckpointComponent" parent="InvertedRoom/CoffeeMug" instance=ExtResource("24_mmgyu")]
+
 [node name="BlackHole" parent="." instance=ExtResource("21_dqt5v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -31)
 
+[node name="Checkpoint3" parent="." instance=ExtResource("5_ofml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, -24)
+checkpoint_priority = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint3"]
+transform = Transform3D(0.999936, 0, 0, 0, 1, 0, 0, 0, 0.999936, 0, 1, 1.14441e-05)
+shape = SubResource("BoxShape3D_afr2w")
+
+[node name="PlayerMarker" type="Marker3D" parent="Checkpoint3"]
+transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 5.96046e-08, 0, 0)
+
 [node name="ProjectorRoom" type="Node3D" parent="."]
+
+[node name="Checkpoint4" parent="ProjectorRoom" node_paths=PackedStringArray("components") instance=ExtResource("5_ofml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -1, -32)
+checkpoint_priority = 3
+components = [NodePath("../Projector/CheckpointComponent"), NodePath("../Object2/CheckpointComponent")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProjectorRoom/Checkpoint4"]
+transform = Transform3D(0.999932, 0, 0, 0, 1, 0, 0, 0, 0.999932, 0, 1, 1.14441e-05)
+shape = SubResource("BoxShape3D_0hlgn")
+
+[node name="PlayerMarker" type="Marker3D" parent="ProjectorRoom/Checkpoint4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="PressurePlate" parent="ProjectorRoom" instance=ExtResource("22_w4384")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, -1, -34.5)
@@ -3393,6 +3450,8 @@ duration = 1.0
 [node name="Projector" parent="ProjectorRoom" instance=ExtResource("23_8aqtk")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -11, -0.249969, -28)
 
+[node name="CheckpointComponent" parent="ProjectorRoom/Projector" instance=ExtResource("24_mmgyu")]
+
 [node name="Object2" parent="ProjectorRoom" instance=ExtResource("14_jts1g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.779, -0.738476, -25.2)
 physics_material_override = SubResource("PhysicsMaterial_3ov0k")
@@ -3400,14 +3459,20 @@ chromatic_aberration_strength = Vector3(1, 0.4, 0.4)
 
 [node name="PushDownComponent" parent="ProjectorRoom/Object2" instance=ExtResource("24_8vx3s")]
 
-[node name="PlayerOnlyArea" parent="ProjectorRoom" instance=ExtResource("25_62x5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -1, -38)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ProjectorRoom/PlayerOnlyArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_lqw1p")
+[node name="CheckpointComponent" parent="ProjectorRoom/Object2" instance=ExtResource("24_mmgyu")]
 
 [node name="Outro" type="Node3D" parent="."]
+
+[node name="Checkpoint5" parent="Outro" instance=ExtResource("5_ofml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -1, -38)
+checkpoint_priority = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outro/Checkpoint5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 1, 0)
+shape = SubResource("BoxShape3D_lqw1p")
+
+[node name="PlayerMarker" type="Marker3D" parent="Outro/Checkpoint5"]
+transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Outro"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 11, -78)
@@ -3417,7 +3482,7 @@ mesh = SubResource("BoxMesh_hv0rt")
 [connection signal="destroyed" from="InvertedRoom/Destructible" to="InvertedRoom/Door2" method="open"]
 [connection signal="powered_off" from="ProjectorRoom/PressurePlate" to="ProjectorRoom/Door3" method="close"]
 [connection signal="powered_on" from="ProjectorRoom/PressurePlate" to="ProjectorRoom/Door3" method="open"]
-[connection signal="player_entered" from="ProjectorRoom/PlayerOnlyArea" to="ProjectorRoom/Door3" method="close_and_lock" unbinds=1]
+[connection signal="player_entered" from="Outro/Checkpoint5" to="ProjectorRoom/Door3" method="close_and_lock" unbinds=1]
 
 [editable path="InvertedRoom/InvertedGravityZone"]
 [editable path="InvertedRoom/InvertedGravityZone2"]

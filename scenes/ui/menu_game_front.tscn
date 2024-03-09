@@ -67,6 +67,16 @@ focus_next = NodePath("../Settings")
 focus_previous = NodePath("../Unpause")
 text = "Save Game"
 
+[node name="Restart" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../Unpause")
+focus_neighbor_bottom = NodePath("../Settings")
+focus_next = NodePath("../Settings")
+focus_previous = NodePath("../Unpause")
+text = "Restart"
+
 [node name="Settings" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -95,6 +105,7 @@ text = "Quit Game"
 
 [connection signal="pressed" from="Control/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/SaveGame" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/QuitMenu" to="." method="_on_quit_menu_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
