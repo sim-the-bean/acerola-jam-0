@@ -26,10 +26,8 @@ func _ready():
 		mesh.mesh = QuadMesh.new()
 		add_child(mesh)
 	
-	var count := 0
 	for child in get_children():
 		if child is MeshInstance3D:
-			count += 1
 			RenderingServer.instance_set_ignore_culling(child.get_instance(), true)
 
 func add_material(material: Material):

@@ -17,13 +17,13 @@ signal setting_changed(key: StringName, value: Variant)
 
 const config_path := "user://config.cfg"
 
-var mouse_look_sensitivity := 0.3:
+var mouse_look_sensitivity := 0.5:
 	set(value):
 		mouse_look_sensitivity = value
 		setting_changed.emit("mouse_look_sensitivity", mouse_look_sensitivity)
 		config.set_value("Settings", "mouse_look_sensitivity", value)
 		save_settings()
-var controller_look_sensitivity := 0.6:
+var controller_look_sensitivity := 0.5:
 	set(value):
 		controller_look_sensitivity = value
 		setting_changed.emit("controller_look_sensitivity", controller_look_sensitivity)

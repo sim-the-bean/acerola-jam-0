@@ -24,7 +24,13 @@ signal closed()
 			open()
 		else:
 			close()
-@export var enabled := true
+@export var enabled := true:
+	set(value):
+		enabled = value
+		if enabled:
+			grab_focus()
+		else:
+			release_focus()
 @export var go_back_enabled := false
 
 @onready var animation_player: AnimationPlayer = $Mesh/AnimationPlayer
@@ -84,6 +90,14 @@ func close():
 		is_closing = false,
 		CONNECT_ONE_SHOT)
 
+func grab_focus():
+	if page_node != null and page_node.has_method("initial_focus"):
+		page_node.initial_focus()
+
+func release_focus():
+	if page_node != null and page_node.has_method("release_focus_recursive"):
+		page_node.release_focus_recursive()
+
 func _unhandled_input(event):
 	if Engine.is_editor_hint():
 		return
@@ -109,6 +123,9 @@ func _on_area_input_event(camera: Camera3D, event: InputEvent, mouse_position: V
 			get_parent().previous_page()
 		return
 	
+	if not enabled:
+		return
+	
 	var is_mouse_event := event is InputEventMouseButton or event is InputEventMouseMotion
 	
 	if is_mouse_event and (is_mouse_inside or is_mouse_held):
@@ -117,7 +134,6 @@ func _on_area_input_event(camera: Camera3D, event: InputEvent, mouse_position: V
 		%SubViewport.push_input(event)
 
 func handle_mouse_event(camera: Camera3D, event: InputEvent, mouse_position: Vector3, normal: Vector3, shape_idx: int):
-	# Detect mouse being held to mantain event while outside of bounds. Avoid orphan clicks
 	if event is InputEventMouseButton or event is InputEventScreenTouch:
 		is_mouse_held = event.pressed
 	

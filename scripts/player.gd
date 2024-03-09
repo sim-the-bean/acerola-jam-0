@@ -34,7 +34,7 @@ enum PositionState {
 var mouse_look_speed: float:
 	get: return GameSettings.mouse_look_sensitivity * 0.00005
 var controller_look_speed: float:
-	get: return GameSettings.controller_look_sensitivity * 0.05
+	get: return GameSettings.controller_look_sensitivity * 0.075
 @export_range(0.0, 1.0) var rotating_look_sensitivity := 0.2
 
 @export_group("Physics")

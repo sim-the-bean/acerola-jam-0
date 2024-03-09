@@ -28,11 +28,18 @@ func _ready():
 	if not child_exiting_tree.is_connected(remove_page):
 		child_exiting_tree.connect(remove_page)
 
+func disable_all():
+	for page in pages:
+		page.enabled = false
+		page.go_back_enabled = false
+
 func previous_page():
-	page_index = previous_page_index
+	if page_index != 0:
+		page_index = previous_page_index
 
 func first_page():
 	page_index = 0
+	current_page.enabled = true
 
 func last_page():
 	page_index = pages.size() - 1
@@ -41,11 +48,13 @@ func flip_to(index: int):
 	if index == current_page_index:
 		return
 	
+	for page in pages:
+		page.go_back_enabled = false
+		page.enabled = false
+	
 	if index > current_page_index:
 		var prev_page: NewspaperPage = null
 		for i in range(current_page_index, index):
-			pages[i].go_back_enabled = false
-			pages[i].enabled = false
 			if prev_page == null:
 				pages[i].open()
 			else:
@@ -54,8 +63,6 @@ func flip_to(index: int):
 	else:
 		var prev_page: NewspaperPage = null
 		for i in range(current_page_index - 1, index - 1, -1):
-			pages[i].go_back_enabled = false
-			pages[i].enabled = false
 			if prev_page == null:
 				pages[i].close()
 			else:

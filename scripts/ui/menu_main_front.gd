@@ -5,10 +5,18 @@ func _ready():
 		%TestScene.visible = false
 
 func _unhandled_input(event):
+	initial_focus()
+
+func initial_focus():
 	for child in find_children("*"):
 		if child.has_focus():
 			return
 	%NewGame.grab_focus()
+
+func release_focus_recursive():
+	for child in find_children("*"):
+		if child.has_focus():
+			child.release_focus()
 
 func _on_new_game_pressed():
 	GameManager.instance.new_game()

@@ -44,6 +44,9 @@ func _process(delta):
 			menu.previous_page()
 		else:
 			toggle_pause()
+	elif Input.is_action_just_pressed(&"game_cancel"):
+		if get_tree().paused:
+			unpause()
 
 func switch_to_main_menu():
 	if player != null:
@@ -126,6 +129,7 @@ func reset_to_checkpoint():
 		player._ready()
 		player.transform = checkpoint.spawn_point
 		checkpoint.reset_to()
+		unpause()
 
 func reset():
 	switch_scene(active_scene, true, true)

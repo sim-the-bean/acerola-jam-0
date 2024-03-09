@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cm7ijq6kt2wc5"]
 
 [ext_resource type="PackedScene" uid="uid://dccmbeqml15pg" path="res://scenes/ui/menu_template.tscn" id="1_uhg2i"]
-[ext_resource type="Script" path="res://scripts/ui/menu_main.gd" id="2_2cqig"]
+[ext_resource type="Script" path="res://scripts/ui/menu_main_front.gd" id="2_2cqig"]
 [ext_resource type="FontFile" uid="uid://cj15etcx8g7g5" path="res://resources/fonts/Playfair_Display/static/PlayfairDisplay-SemiBoldItalic.ttf" id="4_k6vdy"]
 [ext_resource type="Script" path="res://scripts/ui/label_version.gd" id="4_pfeo7"]
 [ext_resource type="Script" path="res://scripts/ui/jam_title.gd" id="5_e0ab3"]
