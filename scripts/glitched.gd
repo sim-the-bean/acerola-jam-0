@@ -18,16 +18,16 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 		is_glitched = value and can_be_glitched
 		gravity_scale = 0.0 if is_glitched else 1.0
 		if is_glitched:
-			if is_inside_tree():
-				mesh_glitched_node.visible = true
-				mesh_ok_node.visible = false
+			if mesh_ok_node != null:
+				for i in mesh_ok_node.get_surface_override_material_count():
+					mesh_ok_node.set_surface_override_material(i, glitched_material)
 			collision_layer = layers_glitched | (Layers.destructible if can_destroy else 0)
 			collision_mask = Layers.glitched
 			emit_glitched()
 		else:
-			if is_inside_tree():
-				mesh_glitched_node.visible = false
-				mesh_ok_node.visible = true
+			if mesh_ok_node != null:
+				for i in mesh_ok_node.get_surface_override_material_count():
+					mesh_ok_node.set_surface_override_material(i, null)
 			collision_layer = layers_unglitched
 			collision_mask = Layers.default
 			emit_unglitched()
@@ -79,16 +79,13 @@ const layers_unglitched := Layers.default | Layers.grabbable | Layers.aoe | Laye
 			glitched_material.set_shader_parameter("albedo_color", Color(color, alpha))
 			glitched_material.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
 			glitched_material.next_pass.next_pass.set_shader_parameter("albedo_color", Color(color, alpha))
+@export var glitched_material: ShaderMaterial
 
-var mesh_ok_node: Node3D = null
-var mesh_glitched_node: MeshInstance3D = null
-var glitched_material: ShaderMaterial:
-	get: return mesh_glitched_node.get_surface_override_material(0) if custom_mesh else %MeshGlitched.mesh.material
+var mesh_ok_node: MeshInstance3D = null
 var custom_mesh := false
 
 func _ready():
-	if mesh_ok_node == null: mesh_ok_node = %MeshOk
-	if mesh_glitched_node == null: mesh_glitched_node = %MeshGlitched
+	if mesh_ok_node == null: mesh_ok_node = %Mesh
 
 func set_glitched():
 	is_glitched = true
@@ -127,7 +124,7 @@ func _on_child_entered_tree(node: Node):
 	var mesh_node: MeshInstance3D = null
 	var col_node: CollisionShape3D = null
 	if node is Node3D:
-		if node is MeshInstance3D and node != %MeshOk and node != %MeshGlitched:
+		if node is MeshInstance3D and node != %Mesh:
 			mesh_node = node
 		if node is CollisionShape3D and node != %Collider and node.get_parent() != %KillBox:
 			col_node = node
@@ -147,29 +144,29 @@ func _on_child_entered_tree(node: Node):
 	
 	if mesh_node != null:
 		custom_mesh = true
-		mesh_ok_node = node
-		mesh_glitched_node = MeshInstance3D.new()
-		mesh_glitched_node.mesh = mesh_node.mesh
-		mesh_glitched_node.set_surface_override_material(0, %MeshGlitched.mesh.material)
-		mesh_glitched_node.scale = mesh_ok_node.scale
-		add_child.call_deferred(mesh_glitched_node)
-		mesh_ok_node.visible = not is_glitched
-		mesh_glitched_node.visible = is_glitched
-		%MeshOk.visible = false
-		%MeshGlitched.visible = false
+		mesh_ok_node = mesh_node
+		if is_glitched:
+			for i in mesh_ok_node.get_surface_override_material_count():
+				mesh_ok_node.set_surface_override_material(i, glitched_material)
+		else:
+			for i in mesh_ok_node.get_surface_override_material_count():
+				mesh_ok_node.set_surface_override_material(i, null)
+		%Mesh.visible = false
 		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
 	if col_node != null:
 		%Collider.disabled = true
 		%Collider.visible = false
 
 func _on_child_exiting_tree(node):
-	if custom_mesh and node == mesh_ok_node and node != %MeshOk and node != %MeshGlitched:
-		mesh_glitched_node.queue_free()
-		mesh_ok_node = %MeshOk
-		mesh_glitched_node = %MeshGlitched
-		mesh_ok_node.visible = not is_glitched
-		mesh_glitched_node.visible = is_glitched
+	if custom_mesh and node == mesh_ok_node and node != %Mesh:
+		mesh_ok_node = %Mesh
 		custom_mesh = false
+		if is_glitched:
+			for i in mesh_ok_node.get_surface_override_material_count():
+				mesh_ok_node.set_surface_override_material(i, glitched_material)
+		else:
+			for i in mesh_ok_node.get_surface_override_material_count():
+				mesh_ok_node.set_surface_override_material(i, null)
 		$KillComponent.scale_target = $KillComponent.get_path_to(mesh_ok_node)
 	if node is CollisionShape3D and node != %Collider and node.get_parent() != %KillBox:
 		%Collider.disabled = false

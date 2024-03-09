@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cbmir6cfr6dil"]
+[gd_scene load_steps=13 format=3 uid="uid://cbmir6cfr6dil"]
 
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_3xrcx"]
 [ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_vfq0h"]
@@ -9,22 +9,12 @@
 resource_local_to_scene = true
 bounce = 0.5
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_j8qps"]
-resource_local_to_scene = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_kjtue"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_v8vh0")
-size = Vector3(0.5, 0.5, 0.5)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
 render_priority = 0
 shader = ExtResource("2_vfq0h")
 shader_parameter/color = 2
 shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
 shader_parameter/glitchiness_amplitude = 1.0
 shader_parameter/glitchiness_frequency = 1.0
 shader_parameter/noise_texture = ExtResource("3_ghkb0")
@@ -35,12 +25,12 @@ next_pass = SubResource("ShaderMaterial_4pnlg")
 shader = ExtResource("2_vfq0h")
 shader_parameter/color = 1
 shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
 shader_parameter/glitchiness_amplitude = 1.0
 shader_parameter/glitchiness_frequency = 1.0
 shader_parameter/noise_texture = ExtResource("3_ghkb0")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0x8u7"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s0sad"]
 resource_local_to_scene = true
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_h6l8s")
@@ -52,9 +42,14 @@ shader_parameter/glitchiness_amplitude = 1.0
 shader_parameter/glitchiness_frequency = 1.0
 shader_parameter/noise_texture = ExtResource("3_ghkb0")
 
-[sub_resource type="BoxMesh" id="BoxMesh_3dvam"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8qps"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_0x8u7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_upkrh"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_v8vh0")
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dku5s"]
@@ -63,26 +58,24 @@ size = Vector3(1.01, 1.01, 1.01)
 
 [node name="BigBox" instance=ExtResource("1_3xrcx")]
 physics_material_override = SubResource("PhysicsMaterial_jo1tc")
+glitched_material = SubResource("ShaderMaterial_s0sad")
 
 [node name="Collider" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_j8qps")
 
-[node name="MeshOk" parent="." index="1"]
+[node name="Mesh" parent="." index="1"]
 visible = false
-mesh = SubResource("BoxMesh_kjtue")
-
-[node name="MeshGlitched" parent="." index="2"]
-mesh = SubResource("BoxMesh_3dvam")
+mesh = SubResource("BoxMesh_upkrh")
 
 [node name="CollisionShape3D" parent="KillBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_dku5s")
 
-[node name="KillComponent" parent="." index="6"]
-scale_target = NodePath("../Box")
+[node name="KillComponent" parent="." index="5"]
+scale_target = NodePath("../Box/Armature/Skeleton3D/Cube")
 
-[node name="Box" parent="." index="13" instance=ExtResource("4_2f4a2")]
+[node name="Box" parent="." index="12" instance=ExtResource("4_2f4a2")]
 
 [node name="Skeleton3D" parent="Box/Armature" index="0"]
 bones/1/rotation = Quaternion(0, 0, 0.694658, 0.71934)

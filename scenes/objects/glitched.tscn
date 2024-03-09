@@ -1,9 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1yldm36qcj08"]
+[gd_scene load_steps=13 format=3 uid="uid://d1yldm36qcj08"]
 
 [ext_resource type="Script" path="res://scripts/glitched.gd" id="1_atq5k"]
 [ext_resource type="PackedScene" uid="uid://ntyjgfrwrkcf" path="res://scenes/components/effect_component.tscn" id="1_b61yb"]
-[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_jp6qs"]
-[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_ipdrd"]
+[ext_resource type="Material" uid="uid://bif0vwujua2ba" path="res://resources/materials/glitched.tres" id="2_ux81n"]
 [ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="5_7hngu"]
 [ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="6_67b7w"]
 [ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="7_0sivp"]
@@ -24,44 +23,6 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_v8vh0")
 size = Vector3(0.5, 0.5, 0.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
-render_priority = 0
-shader = ExtResource("2_jp6qs")
-shader_parameter/color = 2
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("3_ipdrd")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l8s"]
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_4pnlg")
-shader = ExtResource("2_jp6qs")
-shader_parameter/color = 1
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("3_ipdrd")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pryju"]
-resource_local_to_scene = true
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_h6l8s")
-shader = ExtResource("2_jp6qs")
-shader_parameter/color = 0
-shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
-shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
-shader_parameter/glitchiness_amplitude = 1.0
-shader_parameter/glitchiness_frequency = 1.0
-shader_parameter/noise_texture = ExtResource("3_ipdrd")
-
-[sub_resource type="BoxMesh" id="BoxMesh_wqngw"]
-resource_local_to_scene = true
-material = SubResource("ShaderMaterial_pryju")
-size = Vector3(0.5, 0.5, 0.5)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_ulw2b"]
 resource_local_to_scene = true
 size = Vector3(0.51, 0.51, 0.51)
@@ -74,19 +35,15 @@ angular_damp = 1.0
 script = ExtResource("1_atq5k")
 can_be_glitched = true
 chromatic_aberration_strength = Vector3(0.5, 0.2, 0.2)
+glitched_material = ExtResource("2_ux81n")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
 shape = SubResource("BoxShape3D_ormki")
 
-[node name="MeshOk" type="MeshInstance3D" parent="."]
+[node name="Mesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 mesh = SubResource("BoxMesh_y5oox")
-
-[node name="MeshGlitched" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-visible = false
-mesh = SubResource("BoxMesh_wqngw")
 
 [node name="KillBox" type="Area3D" parent="."]
 unique_name_in_owner = true
@@ -103,7 +60,7 @@ unique_name_in_owner = true
 
 [node name="KillComponent" parent="." instance=ExtResource("5_7hngu")]
 scale_on_kill = true
-scale_target = NodePath("../MeshOk")
+scale_target = NodePath("../Mesh")
 
 [node name="HoverComponent" parent="." instance=ExtResource("6_67b7w")]
 
