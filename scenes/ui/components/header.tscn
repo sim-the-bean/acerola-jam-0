@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1up6lfhnwxm7"]
+
+[ext_resource type="Script" path="res://scripts/ui/header.gd" id="1_b5nvd"]
+[ext_resource type="FontFile" uid="uid://bvioncftva5b7" path="res://resources/fonts/Gravitas_One/GravitasOne-Regular.ttf" id="1_u2spd"]
+
+[node name="Header" type="RichTextLabel"]
+custom_minimum_size = Vector2(640, 64)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("1_u2spd")
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
+scroll_active = false
+script = ExtResource("1_b5nvd")

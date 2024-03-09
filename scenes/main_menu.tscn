@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_wejoo"]
 [ext_resource type="PackedScene" uid="uid://x6vgsx8fif8s" path="res://scenes/ui/newspaper.tscn" id="2_lqdql"]
 [ext_resource type="PackedScene" uid="uid://bkvrnykj3pxlj" path="res://scenes/ui/newspaper_page.tscn" id="3_2rwnh"]
-[ext_resource type="PackedScene" uid="uid://64ihksy30e4w" path="res://scenes/ui/menu_settings.tscn" id="4_0w1m7"]
-[ext_resource type="PackedScene" uid="uid://d4hncbcyk7340" path="res://scenes/ui/menu_main_front.tscn" id="4_3mmb2"]
-[ext_resource type="PackedScene" uid="uid://dd26h66awd80i" path="res://scenes/ui/menu_credits.tscn" id="6_64fmo"]
+[ext_resource type="PackedScene" uid="uid://b81snd5x1wyvh" path="res://scenes/ui/menu_settings.tscn" id="4_0w1m7"]
+[ext_resource type="PackedScene" uid="uid://cm7ijq6kt2wc5" path="res://scenes/ui/menu_main_front.tscn" id="4_3mmb2"]
+[ext_resource type="PackedScene" uid="uid://c1i8dhdv8i8lm" path="res://scenes/ui/menu_credits.tscn" id="6_64fmo"]
 [ext_resource type="PackedScene" uid="uid://ck0udmvhpvlfu" path="res://resources/models/table/table.tscn" id="7_2djst"]
 
 [node name="Menu" type="Node3D"]
@@ -23,22 +23,20 @@ inactive_update_mode = 0
 camera_3D_resource = null
 
 [node name="Newspaper" parent="." instance=ExtResource("2_lqdql")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51359, 0.136262)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.517527, 0.136262)
 
 [node name="FrontPage" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 page = ExtResource("4_3mmb2")
 go_back_enabled = false
 
 [node name="Settings" parent="Newspaper" instance=ExtResource("3_2rwnh")]
-transform = Transform3D(0.999391, 0.0348995, 0, -0.0348995, 0.999391, 0, 0, 0, 1, 0, -0.005, 0)
+transform = Transform3D(0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 0, 0, 1, 0, -0.005, 0)
 page = ExtResource("4_0w1m7")
-enabled = false
 go_back_enabled = false
 
 [node name="Credits" parent="Newspaper" instance=ExtResource("3_2rwnh")]
-transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0, -0.01, 0)
+transform = Transform3D(0.994522, 0.104528, 0, -0.104528, 0.994522, 0, 0, 0, 1, 0, -0.01, 0)
 page = ExtResource("6_64fmo")
-enabled = false
 go_back_enabled = false
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]

@@ -1,63 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://64ihksy30e4w"]
+[gd_scene load_steps=4 format=3 uid="uid://b81snd5x1wyvh"]
 
-[ext_resource type="Theme" uid="uid://m6f2pnni01p5" path="res://resources/ui/theme.tres" id="1_g2tk6"]
+[ext_resource type="PackedScene" uid="uid://dccmbeqml15pg" path="res://scenes/ui/menu_template.tscn" id="1_cwo3i"]
+[ext_resource type="FontFile" uid="uid://c7c05odras3s" path="res://resources/fonts/Playfair_Display/static/PlayfairDisplay-SemiBold.ttf" id="2_ffj8p"]
 [ext_resource type="Script" path="res://scripts/ui/menu_settings.gd" id="2_rq30w"]
 
-[node name="MenuSettings" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1000.0
-offset_bottom = 1400.0
-theme = ExtResource("1_g2tk6")
+[node name="MenuSettings" instance=ExtResource("1_cwo3i")]
 script = ExtResource("2_rq30w")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = 140.0
-offset_right = -100.0
-offset_bottom = -140.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Header" parent="MarginContainer/VBoxContainer" index="0"]
+text = "[fill]THE SETTINGS[/fill]"
+title = "THE SETTINGS"
 
-[node name="Header" type="RichTextLabel" parent="Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -305.5
-offset_right = 305.5
-offset_bottom = 70.0
-grow_horizontal = 2
-bbcode_enabled = true
-text = "[font_size=48][fill][b]THE SETTINGS[/b][/fill][/font_size]"
-scroll_active = false
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -332.0
-offset_top = 170.0
-offset_right = 332.0
-offset_bottom = 508.0
-grow_horizontal = 2
-
-[node name="MouseSensitivity" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="MouseSensitivity" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="0"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/MouseSensitivity"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/MouseSensitivity" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
 text = "Mouse Sensitivity"
 
-[node name="MouseSensitivitySlider" type="HSlider" parent="Control/VBoxContainer/MouseSensitivity"]
+[node name="MouseSensitivitySlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/MouseSensitivity" index="1"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
@@ -67,17 +32,18 @@ max_value = 10.0
 value = 3.0
 rounded = true
 
-[node name="ControllerSensitivity" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="ControllerSensitivity" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/ControllerSensitivity"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/ControllerSensitivity" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
 text = "Controller Sensitivity"
 
-[node name="ControllerSensitivitySlider" type="HSlider" parent="Control/VBoxContainer/ControllerSensitivity"]
+[node name="ControllerSensitivitySlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/ControllerSensitivity" index="1"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
@@ -87,64 +53,68 @@ max_value = 10.0
 value = 3.0
 rounded = true
 
-[node name="InvertCameraX" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="InvertCameraX" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/InvertCameraX"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/InvertCameraX" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
 text = "Invert Camera X"
 
-[node name="InvertCameraXCheck" type="CheckButton" parent="Control/VBoxContainer/InvertCameraX"]
+[node name="InvertCameraXCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/InvertCameraX" index="1"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="InvertCameraY" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="InvertCameraY" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="3"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/InvertCameraY"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/InvertCameraY" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
 text = "Invert Camera Y"
 
-[node name="InvertCameraYCheck" type="CheckButton" parent="Control/VBoxContainer/InvertCameraY"]
+[node name="InvertCameraYCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/InvertCameraY" index="1"]
 unique_name_in_owner = true
 process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="ViewBobbing" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="ViewBobbing" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="4"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/ViewBobbing"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/ViewBobbing" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
 text = "View Bobbing"
 
-[node name="ViewBobbingCheck" type="CheckButton" parent="Control/VBoxContainer/ViewBobbing"]
+[node name="ViewBobbingCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/ViewBobbing" index="1"]
 unique_name_in_owner = true
 process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="Graphics" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="Graphics" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="5"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/Graphics"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Graphics" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
 text = "Graphics"
 
-[node name="GraphicsSlider" type="HSlider" parent="Control/VBoxContainer/Graphics"]
+[node name="GraphicsSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Graphics" index="1"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
@@ -156,9 +126,5 @@ rounded = true
 tick_count = 3
 ticks_on_borders = true
 
-[connection signal="value_changed" from="Control/VBoxContainer/MouseSensitivity/MouseSensitivitySlider" to="." method="_on_mouse_sensitivity_slider_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/ControllerSensitivity/ControllerSensitivitySlider" to="." method="_on_controller_sensitivity_slider_value_changed"]
-[connection signal="toggled" from="Control/VBoxContainer/InvertCameraX/InvertCameraXCheck" to="." method="_on_invert_camera_x_check_toggled"]
-[connection signal="toggled" from="Control/VBoxContainer/InvertCameraY/InvertCameraYCheck" to="." method="_on_invert_camera_y_check_toggled"]
-[connection signal="toggled" from="Control/VBoxContainer/ViewBobbing/ViewBobbingCheck" to="." method="_on_view_bobbing_check_toggled"]
-[connection signal="value_changed" from="Control/VBoxContainer/Graphics/GraphicsSlider" to="." method="_on_graphics_slider_value_changed"]
+[node name="VBoxContainer2" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+visible = false

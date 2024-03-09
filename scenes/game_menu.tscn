@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_78e0s"]
 [ext_resource type="PackedScene" uid="uid://x6vgsx8fif8s" path="res://scenes/ui/newspaper.tscn" id="2_hlyco"]
 [ext_resource type="PackedScene" uid="uid://bkvrnykj3pxlj" path="res://scenes/ui/newspaper_page.tscn" id="3_yg3op"]
-[ext_resource type="PackedScene" uid="uid://da2fhw2qo812p" path="res://scenes/ui/menu_game_front.tscn" id="4_absg6"]
-[ext_resource type="PackedScene" uid="uid://64ihksy30e4w" path="res://scenes/ui/menu_settings.tscn" id="4_owy48"]
+[ext_resource type="PackedScene" uid="uid://d0e8e71aee5hp" path="res://scenes/ui/menu_game_front.tscn" id="4_absg6"]
+[ext_resource type="PackedScene" uid="uid://b81snd5x1wyvh" path="res://scenes/ui/menu_settings.tscn" id="4_owy48"]
 
 [sub_resource type="Resource" id="Resource_056c7"]
 script = ExtResource("2_78e0s")
@@ -38,10 +38,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.30385e-08)
 
 [node name="FrontPage" parent="Newspaper" instance=ExtResource("3_yg3op")]
 page = ExtResource("4_absg6")
+go_back_enabled = false
 
 [node name="Settings" parent="Newspaper" instance=ExtResource("3_yg3op")]
 transform = Transform3D(0.999391, 0.0348995, 0, -0.0348995, 0.999391, 0, 0, 0, 1, 0, -0.005, 0)
 page = ExtResource("4_owy48")
+enabled = false
+go_back_enabled = false
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(0.828474, -0.436629, 0.350693, -0.389814, 3.37349e-07, 0.920894, -0.402089, -0.899641, -0.170204, 0.12, 0.279, -0.107)

@@ -1,92 +1,136 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4hncbcyk7340"]
+[gd_scene load_steps=7 format=3 uid="uid://cm7ijq6kt2wc5"]
 
-[ext_resource type="Theme" uid="uid://m6f2pnni01p5" path="res://resources/ui/theme.tres" id="1_l62sg"]
+[ext_resource type="PackedScene" uid="uid://dccmbeqml15pg" path="res://scenes/ui/menu_template.tscn" id="1_uhg2i"]
 [ext_resource type="Script" path="res://scripts/ui/menu_main.gd" id="2_2cqig"]
+[ext_resource type="FontFile" uid="uid://cj15etcx8g7g5" path="res://resources/fonts/Playfair_Display/static/PlayfairDisplay-SemiBoldItalic.ttf" id="4_k6vdy"]
+[ext_resource type="Script" path="res://scripts/ui/label_version.gd" id="4_pfeo7"]
+[ext_resource type="Script" path="res://scripts/ui/jam_title.gd" id="5_e0ab3"]
+[ext_resource type="Script" path="res://scripts/ui/label_date.gd" id="5_id22a"]
 
-[node name="MenuMain" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1000.0
-offset_bottom = 1400.0
-theme = ExtResource("1_l62sg")
+[node name="MenuMain" instance=ExtResource("1_uhg2i")]
 script = ExtResource("2_2cqig")
 
-[node name="Control" type="Control" parent="."]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = 140.0
-offset_right = -100.0
-offset_bottom = -140.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="2"]
+layout_mode = 2
 
-[node name="Header" type="RichTextLabel" parent="Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -305.5
-offset_right = 305.5
-offset_bottom = 70.0
-grow_horizontal = 2
+[node name="Version" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "Ver. 0.1.0"
+script = ExtResource("4_pfeo7")
+
+[node name="Credit" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" index="1"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 16
+text = "A game by sim_the_bean"
+
+[node name="Date" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" index="2"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 16
+text = "March 9, 2024"
+script = ExtResource("5_id22a")
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer" index="3"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer" index="4"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("4_k6vdy")
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
-text = "[font_size=48][fill][b]THE ABERRATRON[/b][/fill][/font_size]"
+text = "[fill]Acerola Jam 0 is still ongoing, you have time.[/fill]"
+fit_content = true
 scroll_active = false
+script = ExtResource("5_e0ab3")
+text_ongoing = "[fill]Acerola Jam 0 is still ongoing, you have time.[/fill]"
+text_ended = "[fill]Acerola Jam 0 has officially ended, thousands in panic.[/fill]"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -186.0
-offset_top = 170.0
-offset_right = 186.0
-offset_bottom = 508.0
-grow_horizontal = 2
-
-[node name="NewGame" type="Button" parent="Control/VBoxContainer"]
+[node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="0"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
+size_flags_vertical = 0
 text = "New Game"
 
-[node name="TestScene" type="Button" parent="Control/VBoxContainer"]
-unique_name_in_owner = true
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Play Test"
+bbcode_enabled = true
+text = "[fill][i]Stolen uranium![/i] A batch of the radioactive material was stolen while being transported to the nuclear power plant. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et posuere diam. Maecenas tristique porttitor tortor nec tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+fit_content = true
+scroll_active = false
 
-[node name="Continue" type="Button" parent="Control/VBoxContainer"]
+[node name="Continue" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="2"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "Continue"
 
-[node name="Settings" type="Button" parent="Control/VBoxContainer"]
+[node name="TestScene" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Play Test"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="4"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[fill]Morbi nulla enim, viverra in ligula nec, laoreet interdum sem. Sed vel porttitor ex. Suspendisse potenti. Vestibulum egestas eleifend hendrerit. Nulla facilisi. "
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="5"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[fill]Morbi nulla enim, viverra in ligula nec, laoreet interdum sem. Sed vel porttitor ex. Suspendisse potenti. Vestibulum egestas eleifend hendrerit. Nulla facilisi. "
+fit_content = true
+scroll_active = false
+
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Settings
 "
 
-[node name="Credits" type="Button" parent="Control/VBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="1"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[fill]Nulla orci velit, eleifend et vestibulum et, interdum at velit. In vitae elementum sem, a rhoncus mauris. Suspendisse potenti. "
+fit_content = true
+scroll_active = false
+
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Credits
 "
 
-[node name="Quit" type="Button" parent="Control/VBoxContainer"]
+[node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="3"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[fill]Nunc porttitor nunc libero, elementum dapibus odio pulvinar sed. Cras non quam rutrum, condimentum risus non, eleifend magna. Proin odio eros, malesuada nec ultricies et, imperdiet sed nunc. "
+fit_content = true
+scroll_active = false
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="4"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Quit Game"
 
-[connection signal="pressed" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/TestScene" to="." method="_on_test_scene_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[node name="RichTextLabel4" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="5"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[fill]Morbi nulla enim, viverra in ligula nec, laoreet interdum sem. Sed vel porttitor ex. Suspendisse potenti. Vestibulum egestas eleifend hendrerit. Nulla facilisi. "
+fit_content = true
+scroll_active = false
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/TestScene" to="." method="_on_test_scene_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
