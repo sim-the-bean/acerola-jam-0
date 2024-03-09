@@ -10,6 +10,7 @@ const black_hole_scene := preload("res://scenes/objects/black_hole.tscn")
 func _ready():
 	$LevelGeometry/CyclopsBlocks/Ceilings.visible = true
 	wait_button_timer.timeout.connect(GameManager.instance.trigger_achievement.bind("wait_button"))
+	get_tree().paused = true
 
 func _on_big_red_button_clicked():
 	wait_button_timer.stop()
@@ -48,3 +49,9 @@ func _on_door_clicked():
 func _on_companion_cube_achievement_trigger_body_entered(body):
 	if body.name == "CompanionCube":
 		GameManager.instance.trigger_achievement("companion_cube")
+
+func _on_shaders_compiled():
+	GameManager.instance.unpause()
+
+func _on_shaders_compiling(progress):
+	pass # Replace with function body.

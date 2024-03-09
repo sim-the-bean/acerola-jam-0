@@ -27,6 +27,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 script = ExtResource("1_crysu")
 icon = SubResource("PlaceholderTexture2D_8am2u")
+id = null
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2

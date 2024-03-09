@@ -3,8 +3,8 @@
 [resource]
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 4
-Label/font_sizes/font_size = 24
-MarginContainer/constants/margin_bottom = 10
-MarginContainer/constants/margin_left = 20
-MarginContainer/constants/margin_right = 20
-MarginContainer/constants/margin_top = 10
+Label/font_sizes/font_size = 36
+MarginContainer/constants/margin_bottom = 30
+MarginContainer/constants/margin_left = 50
+MarginContainer/constants/margin_right = 50
+MarginContainer/constants/margin_top = 30

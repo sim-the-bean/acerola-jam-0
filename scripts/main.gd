@@ -140,11 +140,11 @@ func trigger_achievement(id: String):
 				achievement = a.duplicate()
 				break
 	if achievement == null:
-		printerr("Achievemnt {0} not found" % id)
+		printerr("Achievement {0} not found".format([id]))
 		return
 	if not achievement.finished:
 		achievement.progress += 1
-		if achievement.finished or achievement.show_progress or OS.is_debug_build():
+		if achievement.finished or achievement.show_progress:
 			achievement_got.emit(achievement)
 	_achievements[id] = achievement
 	if achievement.finished or achievement.save_progress:

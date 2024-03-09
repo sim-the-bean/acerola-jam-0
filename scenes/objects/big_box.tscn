@@ -7,7 +7,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jo1tc"]
 resource_local_to_scene = true
-bounce = 0.5
+bounce = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4pnlg"]
 render_priority = 0

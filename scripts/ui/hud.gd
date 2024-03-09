@@ -14,8 +14,12 @@ func _ready():
 		GameManager.instance.achievement_got.connect(show_achievement)
 
 func show_achievement(achievement: Achievement):
+	for child in %Achievements.get_children():
+		if child is UiAchievement and child.id == achievement.id:
+			child.queue_free()
 	var node: UiAchievement = achievement_scene.instantiate()
 	%Achievements.add_child(node)
+	node.id = achievement.id
 	node.title = achievement.title
 	node.description = achievement.description
 	node.steps = achievement.steps

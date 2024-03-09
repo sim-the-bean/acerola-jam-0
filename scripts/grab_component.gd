@@ -23,7 +23,6 @@ var is_grabbed := false
 @onready var default_axis_lock_angular_x = get_parent().axis_lock_angular_x
 @onready var default_axis_lock_angular_y = get_parent().axis_lock_angular_y
 @onready var default_axis_lock_angular_z = get_parent().axis_lock_angular_z
-@onready var parent_rotation: Quaternion = get_parent().quaternion
 
 func grab() -> bool:
 	if enabled:
@@ -33,7 +32,6 @@ func grab() -> bool:
 		if (axis_lock & FLAG_LOCK_Y) != 0: get_parent().axis_lock_angular_y = true
 		if (axis_lock & FLAG_LOCK_Z) != 0: get_parent().axis_lock_angular_z = true
 		is_grabbed = true
-		parent_rotation = get_parent().quaternion
 		emit_grab_begin()
 	return enabled
 
@@ -45,12 +43,8 @@ func ungrab() -> bool:
 		get_parent().axis_lock_angular_y = default_axis_lock_angular_y
 		get_parent().axis_lock_angular_z = default_axis_lock_angular_z
 		is_grabbed = false
-		parent_rotation = get_parent().quaternion
 		emit_grab_end()
 	return enabled
-
-func get_rotate_axis() -> Vector3:
-	return parent_rotation * rotate_axis
 
 func emit_grab_begin():
 	grab_begin.emit()

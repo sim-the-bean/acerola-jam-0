@@ -70,6 +70,12 @@ hud_type = 1
 hint = "Grab"
 show = false
 
+[node name="UiHintComponentDrop" parent="." instance=ExtResource("7_0sivp")]
+hint_type = 2
+hud_type = 1
+hint = "Drop"
+show = false
+
 [node name="GrabComponent" parent="." instance=ExtResource("8_vhty1")]
 
 [node name="UiHintComponentThrow" parent="." instance=ExtResource("7_0sivp")]
@@ -99,6 +105,8 @@ show = false
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_show"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateRight" method="set_show"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentDrop" method="set_show"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_hide"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateRight" method="set_hide"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentDrop" method="set_hide"]

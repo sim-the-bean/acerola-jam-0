@@ -163,6 +163,9 @@ func _ready():
 	%HudQuad.visible = true
 	%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture())
 	
+	$HudViewport.size_changed.connect(func():
+		%HudQuad.mesh.material.set_shader_parameter("hud_viewport", $HudViewport.get_texture()))
+	
 	if not Engine.is_editor_hint():
 		step_sound_tween = create_tween()
 		step_sound_tween.set_loops()
@@ -409,7 +412,7 @@ func process_grabbed(delta: float):
 		var rotate_axis := Vector3.UP
 		var grab_component: GrabComponent = grabbed.get_node_or_null("GrabComponent")
 		if grab_component != null:
-			rotate_axis = grab_component.get_rotate_axis()
+			rotate_axis = grab_component.rotate_axis
 		var grabbed_rotation := 0.0
 		grabbed_rotation -= float(Input.is_action_pressed(&"player_action_rotate_left"))
 		grabbed_rotation += float(Input.is_action_pressed(&"player_action_rotate_right"))

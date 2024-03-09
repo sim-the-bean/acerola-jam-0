@@ -7,6 +7,7 @@ const duration := 5.0
 @export var icon: Texture2D:
 	get: return %TextureRect.texture
 	set(value): if is_inside_tree(): %TextureRect.texture = value
+@export var id: String
 @export_placeholder("Achievement title") var title: String:
 	get: return "" if %Title.text == "Achievement title" else %Title.text
 	set(value):
