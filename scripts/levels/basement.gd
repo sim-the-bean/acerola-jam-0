@@ -5,11 +5,15 @@ const black_hole_scene := preload("res://scenes/objects/black_hole.tscn")
 @onready var boxes_to_glitch: Array[Glitched] = [
 	$IntroRoom/SmallBox6, $IntroRoom/SmallBox7, $IntroRoom/SmallBox8,
 ]
+@onready var wait_button_timer: Timer = %BigRedButtonAchievementTimer
 
 func _ready():
 	$LevelGeometry/CyclopsBlocks/Ceilings.visible = true
+	wait_button_timer.timeout.connect(GameManager.instance.trigger_achievement.bind("wait_button"))
 
 func _on_big_red_button_clicked():
+	wait_button_timer.stop()
+	GameManager.instance.trigger_achievement("press_10_times")
 	%ReactorSpotLight.light_energy = 1.0
 	var timer = create_tween()
 	timer.tween_interval(1.0)
@@ -34,3 +38,13 @@ func _on_big_red_button_clicked():
 		black_hole_tween.tween_property(black_hole, "scale", Vector3.ONE, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO))
 	timer.tween_interval(2.5)
 	timer.tween_callback(%Door.open)
+
+func _on_big_red_button_clicked_locked():
+	GameManager.instance.trigger_achievement("press_10_times")
+
+func _on_door_clicked():
+	GameManager.instance.trigger_achievement("open_doors")
+
+func _on_companion_cube_achievement_trigger_body_entered(body):
+	if body.name == "CompanionCube":
+		GameManager.instance.trigger_achievement("companion_cube")

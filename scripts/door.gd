@@ -1,6 +1,7 @@
 @tool
 extends StaticBody3D
 
+signal clicked()
 signal opening()
 signal opened()
 signal closing()
@@ -153,6 +154,7 @@ func force_close():
 		$LeftHalf/OpenFastSound.play()
 
 func click():
+	clicked.emit()
 	%LockedSound.play()
 
 func unclick():

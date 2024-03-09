@@ -27,17 +27,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.517527, 0.136262)
 
 [node name="FrontPage" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 page = ExtResource("4_3mmb2")
-go_back_enabled = false
 
 [node name="Settings" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 transform = Transform3D(0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 0, 0, 1, 0, -0.005, 0)
 page = ExtResource("4_0w1m7")
-go_back_enabled = false
+enabled = false
 
 [node name="Credits" parent="Newspaper" instance=ExtResource("3_2rwnh")]
 transform = Transform3D(0.994522, 0.104528, 0, -0.104528, 0.994522, 0, 0, 0, 1, 0, -0.01, 0)
 page = ExtResource("6_64fmo")
-go_back_enabled = false
+enabled = false
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(0.828474, -0.436629, 0.350694, -0.389815, 1.07315e-07, 0.920893, -0.402089, -0.899642, -0.170204, 0.12, 0.805718, 0.0292616)

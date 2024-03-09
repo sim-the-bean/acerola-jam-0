@@ -15,11 +15,11 @@ func _ready():
 
 func show_achievement(achievement: Achievement):
 	var node: UiAchievement = achievement_scene.instantiate()
+	%Achievements.add_child(node)
 	node.title = achievement.title
 	node.description = achievement.description
-	node.progress = achievement.counter
 	node.steps = achievement.steps
-	%Achievements.add_child(node)
+	node.progress = achievement.progress
 
 func show_hint(hint_type: UiHintComponent.HintType, hud_type: UiHintComponent.HudType, hint: String):
 	var label := Label.new()

@@ -5,6 +5,8 @@ signal achievement_got(achievement: Achievement)
 
 static var instance: GameManager
 
+const achievements_path := "user://achievements.cfg"
+
 @export var player_scene: PackedScene = preload("res://scenes/objects/player.tscn")
 @export var main_menu_scene: PackedScene = preload("res://scenes/main_menu.tscn")
 @export var game_menu_scene: PackedScene = preload("res://scenes/game_menu.tscn")
@@ -21,11 +23,20 @@ var in_main_menu := false
 var environment: WorldEnvironment
 var checkpoint: Checkpoint = null
 
+var _achievements: Dictionary = {}
+var achievement_file := ConfigFile.new()
+
 func _init():
 	instance = self
 
 func _ready():
 	switch_to_main_menu()
+	if not Engine.is_editor_hint():
+		achievement_file.load(achievements_path)
+		for a in achievements:
+			var progress = achievement_file.get_value("Achievements", a.id, 0)
+			_achievements[a.id] = a.duplicate()
+			_achievements[a.id].progress = progress
 
 func _process(delta):
 	if Input.is_action_just_pressed(&"game_pause"):
@@ -120,8 +131,22 @@ func reset():
 	switch_scene(active_scene, true, true)
 
 func trigger_achievement(id: String):
-	for achievement in achievements:
-		if achievement.id == id:
-			achievement.counter += 1
+	var achievement: Achievement = null
+	if _achievements.has(id):
+		achievement = _achievements[id]
+	else:
+		for a in achievements:
+			if a.id == id:
+				achievement = a.duplicate()
+				break
+	if achievement == null:
+		printerr("Achievemnt {0} not found" % id)
+		return
+	if not achievement.finished:
+		achievement.progress += 1
+		if achievement.finished or achievement.show_progress or OS.is_debug_build():
 			achievement_got.emit(achievement)
-			return
+	_achievements[id] = achievement
+	if achievement.finished or achievement.save_progress:
+		achievement_file.set_value("Achievements", id, achievement.progress)
+		achievement_file.save(achievements_path)

@@ -21,7 +21,6 @@ size = Vector3(0.2, 0.01, 0.28)
 [node name="Page" type="Node3D"]
 script = ExtResource("1_g1mcm")
 signal_time_scale = 0.25
-go_back_enabled = null
 
 [node name="Mesh" parent="." instance=ExtResource("2_sh017")]
 
@@ -35,7 +34,7 @@ bones/5/rotation = Quaternion(-2.68556e-07, 8.79424e-08, 0.0950824, 0.99547)
 surface_material_override/0 = SubResource("ShaderMaterial_2ug1m")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.154459, 0.987999, 1.09958e-07, -0.987999, 0.154459, -5.2005e-07, -5.30793e-07, -2.83118e-08, 1, -0.099957, -0.0078151, 0)
+transform = Transform3D(0.15446, 0.987999, 1.09957e-07, -0.987999, 0.15446, -5.2005e-07, -5.30793e-07, -2.83112e-08, 1, -0.099957, -0.0078151, 0)
 bone_name = "Page"
 bone_idx = 0
 

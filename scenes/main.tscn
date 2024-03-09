@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnw2pjgtkurfm"]
+[gd_scene load_steps=10 format=3 uid="uid://bnw2pjgtkurfm"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_jtluw"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5qpj4"]
@@ -11,11 +11,49 @@ title = "Best day ever!"
 description = "Find all lore items"
 id = "collect_all_items"
 steps = 1
+show_progress = true
+save_progress = false
+
+[sub_resource type="Resource" id="Resource_f3yhp"]
+script = ExtResource("2_qtdwm")
+title = "All the time in the world"
+description = "Wait 2 minutes before pressing the button"
+id = "wait_button"
+steps = 1
+show_progress = false
+save_progress = false
+
+[sub_resource type="Resource" id="Resource_hbxod"]
+script = ExtResource("2_qtdwm")
+title = "BIG red button"
+description = "Press the button 10 times"
+id = "press_10_times"
+steps = 10
+show_progress = false
+save_progress = false
+
+[sub_resource type="Resource" id="Resource_x4hf7"]
+script = ExtResource("2_qtdwm")
+title = "Let me in!"
+description = "Try to open every door"
+id = "open_doors"
+steps = 3
+show_progress = false
+save_progress = false
+
+[sub_resource type="Resource" id="Resource_e85v4"]
+script = ExtResource("2_qtdwm")
+title = "Companion cube"
+description = "Bring your friend with you"
+id = "companion_cube"
+steps = 1
+show_progress = true
+save_progress = false
 
 [node name="Main" type="Node3D"]
 process_mode = 3
 script = ExtResource("1_jtluw")
-achievements = Array[ExtResource("2_qtdwm")]([SubResource("Resource_351ue")])
+achievements = Array[ExtResource("2_qtdwm")]([SubResource("Resource_351ue"), SubResource("Resource_f3yhp"), SubResource("Resource_hbxod"), SubResource("Resource_x4hf7"), SubResource("Resource_e85v4")])
 
 [node name="Camera3D" type="Camera3D" parent="."]
 

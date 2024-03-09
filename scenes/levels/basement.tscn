@@ -1,4 +1,4 @@
-[gd_scene load_steps=167 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=173 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -2517,6 +2517,22 @@ shader_parameter/glitchiness_amplitude = 1.0
 shader_parameter/glitchiness_frequency = 1.0
 shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s3bq4"]
+resource_local_to_scene = true
+bounce = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rydbk"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h6l8s")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_atmbv"]
 resource_local_to_scene = true
 bounce = 0.5
@@ -2578,6 +2594,39 @@ size = Vector3(9, 2, 8)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oesdh"]
 resource_local_to_scene = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neh83"]
+render_priority = 0
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6tauc"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_neh83")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tq8p0"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_6tauc")
+shader = ExtResource("15_5po3o")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_143xy"]
 resource_local_to_scene = true
 bounce = 0.5
@@ -2631,6 +2680,9 @@ disable_receive_shadows = true
 material = SubResource("StandardMaterial3D_spcse")
 size = Vector3(12.9, 3.9, 7.9)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_x4oxv"]
+size = Vector3(4, 4, 4)
+
 [node name="Basement" type="Node3D"]
 script = ExtResource("1_51x7k")
 
@@ -2638,6 +2690,12 @@ script = ExtResource("1_51x7k")
 environment = ExtResource("2_aw8kq")
 camera_attributes = ExtResource("3_1bk3y")
 script = ExtResource("1_nn1fi")
+
+[node name="BigRedButtonAchievementTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 120.0
+one_shot = true
+autostart = true
 
 [node name="LevelGeometry" type="Node3D" parent="."]
 
@@ -3324,7 +3382,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 12.8923
+light_energy = 12.7552
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3426,9 +3484,9 @@ glitched_material = SubResource("ShaderMaterial_47tgg")
 [node name="SmallBox7" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
 transform = Transform3D(0.884092, 0, 0.467313, 0, 1, 0, -0.467313, 0, 0.884092, -0.540472, 0, 2.3464)
 collision_layer = 141
-physics_material_override = SubResource("PhysicsMaterial_peel7")
+physics_material_override = SubResource("PhysicsMaterial_s3bq4")
 can_sleep = false
-glitched_material = SubResource("ShaderMaterial_47tgg")
+glitched_material = SubResource("ShaderMaterial_rydbk")
 
 [node name="SmallBox8" parent="IntroRoom" instance=ExtResource("25_dkrkp")]
 transform = Transform3D(0.968008, 0, 0.250921, 0, 1, 0, -0.250921, 0, 0.968008, -0.764799, 0.5, 2.21938)
@@ -3501,6 +3559,7 @@ transform = Transform3D(0.0836083, 0, -0.996499, 0, 1, 0, 0.996499, 0, 0.0836083
 collision_layer = 141
 physics_material_override = SubResource("PhysicsMaterial_oesdh")
 infinite_coffee = true
+glitched_material = SubResource("ShaderMaterial_tq8p0")
 
 [node name="CheckpointComponent" parent="InvertedRoom/CoffeeMug" instance=ExtResource("24_mmgyu")]
 
@@ -3529,7 +3588,7 @@ transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 5.96046e
 [node name="Checkpoint4" parent="ProjectorRoom" node_paths=PackedStringArray("components") instance=ExtResource("5_ofml4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -1, -32)
 checkpoint_priority = 3
-components = [NodePath("../Projector/CheckpointComponent"), NodePath("../SmallBox/CheckpointComponent")]
+components = [NodePath("../Projector/CheckpointComponent"), NodePath("../CompanionCube/CheckpointComponent")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ProjectorRoom/Checkpoint4"]
 transform = Transform3D(0.999932, 0, 0, 0, 1, 0, 0, 0, 0.999932, 0, 1, 1.14441e-05)
@@ -3550,14 +3609,14 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -11, -
 
 [node name="CheckpointComponent" parent="ProjectorRoom/Projector" instance=ExtResource("24_mmgyu")]
 
-[node name="SmallBox" parent="ProjectorRoom" instance=ExtResource("25_dkrkp")]
+[node name="CompanionCube" parent="ProjectorRoom" instance=ExtResource("25_dkrkp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -1, -25)
 physics_material_override = SubResource("PhysicsMaterial_ciksl")
 glitched_material = SubResource("ShaderMaterial_keh8t")
 
-[node name="PushDownComponent" parent="ProjectorRoom/SmallBox" instance=ExtResource("24_8vx3s")]
+[node name="PushDownComponent" parent="ProjectorRoom/CompanionCube" instance=ExtResource("24_8vx3s")]
 
-[node name="CheckpointComponent" parent="ProjectorRoom/SmallBox" instance=ExtResource("24_mmgyu")]
+[node name="CheckpointComponent" parent="ProjectorRoom/CompanionCube" instance=ExtResource("24_mmgyu")]
 
 [node name="Outro" type="Node3D" parent="."]
 
@@ -3576,11 +3635,24 @@ transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 11, -78)
 mesh = SubResource("BoxMesh_hv0rt")
 
+[node name="CompanionCubeAchievementTrigger" type="Area3D" parent="Outro"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 9, -61)
+collision_mask = 129
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outro/CompanionCubeAchievementTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_x4oxv")
+
 [connection signal="clicked" from="IntroRoom/BigRedButton" to="." method="_on_big_red_button_clicked"]
+[connection signal="clicked_locked" from="IntroRoom/BigRedButton" to="." method="_on_big_red_button_clicked_locked"]
+[connection signal="clicked" from="IntroRoom/Door" to="." method="_on_door_clicked" flags=6]
 [connection signal="destroyed" from="InvertedRoom/Destructible" to="InvertedRoom/Door2" method="open"]
+[connection signal="clicked" from="InvertedRoom/Door2" to="." method="_on_door_clicked" flags=6]
 [connection signal="powered_off" from="ProjectorRoom/PressurePlate" to="ProjectorRoom/Door3" method="close"]
 [connection signal="powered_on" from="ProjectorRoom/PressurePlate" to="ProjectorRoom/Door3" method="open"]
+[connection signal="clicked" from="ProjectorRoom/Door3" to="." method="_on_door_clicked" flags=6]
 [connection signal="player_entered" from="Outro/Checkpoint5" to="ProjectorRoom/Door3" method="close_and_lock" unbinds=1]
+[connection signal="body_entered" from="Outro/CompanionCubeAchievementTrigger" to="." method="_on_companion_cube_achievement_trigger_body_entered"]
 
 [editable path="InvertedRoom/InvertedGravityZone"]
 [editable path="InvertedRoom/InvertedGravityZone2"]

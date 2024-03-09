@@ -5,9 +5,11 @@ class_name Achievement
 @export var description := ""
 @export var id := ""
 @export var steps := 1
+@export var show_progress := true
+@export var save_progress := false
 
-var counter := 0:
+var progress := 0:
 	set(value):
-		counter = clamp(value, 0, steps)
+		progress = clamp(value, 0, steps)
 var finished: bool:
-	get: return counter == steps
+	get: return progress == steps

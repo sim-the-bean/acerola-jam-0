@@ -3,6 +3,7 @@ extends StaticBody3D
 
 signal clicked()
 signal unclicked()
+signal clicked_locked()
 
 @export_category("Button")
 @export var can_be_clicked := true
@@ -85,6 +86,7 @@ func switch_on():
 	if is_clicked:
 		return
 	if not can_be_clicked or (oneshot and was_clicked):
+		clicked_locked.emit()
 		%SoundBroken.play()
 		return
 	

@@ -3,6 +3,9 @@
 [ext_resource type="Script" path="res://scripts/ui/achievement.gd" id="1_crysu"]
 [ext_resource type="Theme" uid="uid://bt2wems2prnu4" path="res://resources/ui/achievement_theme.tres" id="1_n2b0o"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8am2u"]
+size = Vector2(50, 50)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mklsp"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
@@ -16,9 +19,6 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8am2u"]
-size = Vector2(50, 50)
-
 [node name="Achievement" type="MarginContainer"]
 offset_right = 300.0
 offset_bottom = 92.0
@@ -26,6 +26,7 @@ theme = ExtResource("1_n2b0o")
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 script = ExtResource("1_crysu")
+icon = SubResource("PlaceholderTexture2D_8am2u")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -85,3 +86,4 @@ unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 1.0
+allow_greater = true

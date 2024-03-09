@@ -1,22 +1,58 @@
-[gd_scene load_steps=9 format=3 uid="uid://k822ewk0uvyu"]
+[gd_scene load_steps=14 format=3 uid="uid://k822ewk0uvyu"]
 
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_wixsq"]
 [ext_resource type="PackedScene" uid="uid://r1s62a1l1x0j" path="res://scenes/decals/coffee_stain.tscn" id="2_dumfv"]
 [ext_resource type="Script" path="res://scripts/coffee_ball.gd" id="2_peiaa"]
+[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="4_vlrov"]
+[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="5_d5w6w"]
+[ext_resource type="Material" uid="uid://cia41w5gd7dnl" path="res://resources/materials/coffee.tres" id="6_x4cae"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f0qnx"]
 resource_local_to_scene = true
 bounce = 0.5
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neh83"]
+render_priority = 0
+shader = ExtResource("4_vlrov")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("5_d5w6w")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6tauc"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_neh83")
+shader = ExtResource("4_vlrov")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("5_d5w6w")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_am8id"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_6tauc")
+shader = ExtResource("4_vlrov")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("5_d5w6w")
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_1vhrd"]
 radius = 0.035
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8vh0"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_444hl"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_v8vh0")
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="SphereMesh" id="SphereMesh_0848f"]
+material = ExtResource("6_x4cae")
+radius = 0.035
+height = 0.08
+radial_segments = 16
+rings = 8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g08aa"]
 resource_local_to_scene = true
@@ -29,12 +65,13 @@ can_be_glitched = false
 can_destroy = true
 break_on_impact = true
 decal_scene = ExtResource("2_dumfv")
+glitched_material = SubResource("ShaderMaterial_am8id")
 
 [node name="Collider" parent="." index="0"]
 shape = SubResource("SphereShape3D_1vhrd")
 
 [node name="Mesh" parent="." index="1"]
-mesh = SubResource("BoxMesh_444hl")
+mesh = SubResource("SphereMesh_0848f")
 
 [node name="CollisionShape3D" parent="KillBox" index="0"]
 shape = SubResource("BoxShape3D_g08aa")
