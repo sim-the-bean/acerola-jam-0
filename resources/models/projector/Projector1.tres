@@ -1,0 +1,11 @@
+[gd_resource type="ORMMaterial3D" load_steps=4 format=3 uid="uid://cd8gshepxty30"]
+
+[ext_resource type="Texture2D" uid="uid://cve81u3ns7o86" path="res://resources/models/projector/Projector1-albedo.png" id="1_84npx"]
+[ext_resource type="Texture2D" uid="uid://cc3a5837cmm8e" path="res://resources/models/projector/Projector1-normal.png" id="2_yvret"]
+[ext_resource type="Texture2D" uid="uid://cok8hb7qnkqwl" path="res://resources/models/projector/Projector1-orm.png" id="3_t1xl5"]
+
+[resource]
+albedo_texture = ExtResource("1_84npx")
+orm_texture = ExtResource("3_t1xl5")
+normal_enabled = true
+normal_texture = ExtResource("2_yvret")

@@ -24,8 +24,8 @@ signal left_light(node: Node3D)
 
 var wheel_tween: Tween = null
 var toggle_tween: Tween = null
-@onready var wheel1 = $Mesh/Wheel1
-@onready var wheel2 = $Mesh/Wheel2
+@onready var wheel1 = find_child("Wheel1")
+@onready var wheel2 = find_child("Wheel2")
 
 func _ready():
 	restart()
