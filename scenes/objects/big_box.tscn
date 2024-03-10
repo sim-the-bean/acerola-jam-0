@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbmir6cfr6dil"]
+[gd_scene load_steps=14 format=3 uid="uid://cbmir6cfr6dil"]
 
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_3xrcx"]
 [ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="2_vfq0h"]
 [ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="3_ghkb0"]
 [ext_resource type="PackedScene" uid="uid://d2rxrut2q4u4i" path="res://resources/models/box/Box.blend" id="4_2f4a2"]
+[ext_resource type="AudioStream" uid="uid://rdv3ymvl1gwy" path="res://resources/sounds/box_land.wav" id="5_wlxow"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jo1tc"]
 resource_local_to_scene = true
@@ -87,5 +88,8 @@ bones/6/rotation = Quaternion(0.707107, -0.707107, -2.20921e-07, -1.59103e-07)
 bones/7/rotation = Quaternion(0.700909, -7.42651e-09, -1.15272e-07, 0.71325)
 bones/8/rotation = Quaternion(0.700909, -1.15124e-07, 9.43716e-09, -0.713251)
 bones/9/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+
+[node name="LandSound" parent="." index="14"]
+stream = ExtResource("5_wlxow")
 
 [editable path="Box"]

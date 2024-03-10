@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://k822ewk0uvyu"]
+[gd_scene load_steps=15 format=3 uid="uid://k822ewk0uvyu"]
 
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_wixsq"]
 [ext_resource type="PackedScene" uid="uid://r1s62a1l1x0j" path="res://scenes/decals/coffee_stain.tscn" id="2_dumfv"]
@@ -6,10 +6,10 @@
 [ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="4_vlrov"]
 [ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="5_d5w6w"]
 [ext_resource type="Material" uid="uid://cia41w5gd7dnl" path="res://resources/materials/coffee.tres" id="6_x4cae"]
+[ext_resource type="AudioStream" uid="uid://b5l4cg2cmh5ql" path="res://resources/sounds/coffee_splash.wav" id="7_ucdrq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f0qnx"]
 resource_local_to_scene = true
-bounce = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neh83"]
 render_priority = 0
@@ -76,7 +76,11 @@ mesh = SubResource("SphereMesh_0848f")
 [node name="CollisionShape3D" parent="KillBox" index="0"]
 shape = SubResource("BoxShape3D_g08aa")
 
-[node name="GrabComponent" parent="." index="8"]
+[node name="GrabComponent" parent="." index="9"]
 enabled = false
+
+[node name="LandSound" parent="." index="13"]
+stream = ExtResource("7_ucdrq")
+max_polyphony = 1
 
 [connection signal="body_exited" from="KillBox" to="." method="_on_kill_box_body_exited"]

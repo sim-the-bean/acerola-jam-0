@@ -1,13 +1,49 @@
-[gd_scene load_steps=12 format=3 uid="uid://ct1n67eh6krmx"]
+[gd_scene load_steps=18 format=3 uid="uid://ct1n67eh6krmx"]
 
 [ext_resource type="PackedScene" uid="uid://d1yldm36qcj08" path="res://scenes/objects/glitched.tscn" id="1_s1eaj"]
 [ext_resource type="Script" path="res://scripts/coffee_mug.gd" id="2_4mpcn"]
 [ext_resource type="PackedScene" uid="uid://k822ewk0uvyu" path="res://scenes/objects/coffee_ball.tscn" id="3_28mwc"]
+[ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="4_kgcdc"]
 [ext_resource type="Material" uid="uid://cia41w5gd7dnl" path="res://resources/materials/coffee.tres" id="4_qloi0"]
+[ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="5_4m5fx"]
 [ext_resource type="PackedScene" uid="uid://bkf8vtbjhd4lk" path="res://resources/models/mug/CoffeeMug.blend" id="5_6rndy"]
+[ext_resource type="AudioStream" uid="uid://d0t8mnc771kn7" path="res://resources/sounds/mug_land.wav" id="8_iwvax"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mx7dt"]
 resource_local_to_scene = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neh83"]
+render_priority = 0
+shader = ExtResource("4_kgcdc")
+shader_parameter/color = 2
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("5_4m5fx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6tauc"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_neh83")
+shader = ExtResource("4_kgcdc")
+shader_parameter/color = 1
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("5_4m5fx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_urbdp"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_6tauc")
+shader = ExtResource("4_kgcdc")
+shader_parameter/color = 0
+shader_parameter/albedo_color = Vector4(1, 1, 1, 0.75)
+shader_parameter/chromatic_aberration_strength = Vector3(0.05, 0.02, 0.02)
+shader_parameter/glitchiness_amplitude = 1.0
+shader_parameter/glitchiness_frequency = 1.0
+shader_parameter/noise_texture = ExtResource("5_4m5fx")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_646st"]
 resource_local_to_scene = true
@@ -38,11 +74,10 @@ coffee_ball_scene = ExtResource("3_28mwc")
 infinite_coffee = false
 can_be_glitched = false
 alpha = 1.0
+glitched_material = SubResource("ShaderMaterial_urbdp")
 
 [node name="Collider" parent="." index="0"]
-visible = false
 shape = SubResource("BoxShape3D_646st")
-disabled = true
 
 [node name="Mesh" parent="." index="1"]
 visible = false
@@ -59,7 +94,7 @@ shape = SubResource("BoxShape3D_vt4g6")
 [node name="KillComponent" parent="." index="5"]
 scale_target = NodePath("../CoffeeMug/Mug")
 
-[node name="GrabComponent" parent="." index="8"]
+[node name="GrabComponent" parent="." index="9"]
 angular_damp = 100.0
 rotate_axis = Vector3(0, 0, 1)
 rotate_speed_multiplier = 0.3
@@ -70,3 +105,7 @@ rotate_speed_multiplier = 0.3
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0453752, 0)
 mesh = SubResource("CylinderMesh_i2usj")
+
+[node name="LandSound" parent="." index="15"]
+stream = ExtResource("8_iwvax")
+pitch_scale = 0.9

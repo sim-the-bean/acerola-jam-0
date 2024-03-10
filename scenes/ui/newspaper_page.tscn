@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkvrnykj3pxlj"]
+[gd_scene load_steps=10 format=3 uid="uid://bkvrnykj3pxlj"]
 
 [ext_resource type="Script" path="res://scripts/ui/newspaper_page.gd" id="1_g1mcm"]
 [ext_resource type="PackedScene" uid="uid://but5o24bfwxyo" path="res://resources/models/newspaper/newspaper.blend" id="2_sh017"]
 [ext_resource type="Shader" path="res://shaders/newspaper_page.gdshader" id="4_emfaq"]
 [ext_resource type="Texture2D" uid="uid://cjdyjwwa53bht" path="res://resources/models/newspaper/Newspaper-albedo.png" id="5_iavdg"]
+[ext_resource type="AudioStream" uid="uid://qfqkn2sjpvcw" path="res://resources/sounds/page_open.wav" id="5_wpnia"]
+[ext_resource type="AudioStream" uid="uid://dds3gr5yktaah" path="res://resources/sounds/page_close.wav" id="6_htiiq"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_qmgns"]
 viewport_path = NodePath("SubViewport")
@@ -50,6 +52,14 @@ shape = SubResource("BoxShape3D_5gwhw")
 unique_name_in_owner = true
 transparent_bg = true
 size = Vector2i(1024, 1434)
+
+[node name="OpenSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_wpnia")
+
+[node name="CloseSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_htiiq")
 
 [connection signal="input_event" from="Mesh/Armature/Skeleton3D/BoneAttachment3D/Area" to="." method="_on_area_input_event"]
 [connection signal="mouse_entered" from="Mesh/Armature/Skeleton3D/BoneAttachment3D/Area" to="." method="_on_area_mouse_entered"]

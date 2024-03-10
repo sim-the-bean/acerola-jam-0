@@ -109,6 +109,9 @@ func destroy():
 			var decal = decal_scene.instantiate()
 			decal.translate(decal_position)
 			get_parent_node_3d().add_child(decal)
+		%LandSound.play()
+		%LandSound.finished.connect(%LandSound.queue_free)
+		%LandSound.reparent(get_parent())
 		queue_free()
 
 func emit_glitched():
@@ -180,3 +183,11 @@ func _validate_property(property):
 			"is_glitched", "chromatic_aberration_strength", "chromatic_aberration_strength", \
 				"glitchiness_amplitude", "glitchiness_frequency", "color", "alpha":
 					property.usage &= ~PROPERTY_USAGE_EDITOR
+
+func _on_body_entered(body):
+	var velocity: float = max(linear_velocity.length(), body.linear_velocity.length() if body is RigidBody3D else 0.0)
+	if velocity < 0.5:
+		return
+	var volume: float = clamp(velocity / 10.0, 0.0, 1.0) * 2.0 - 1.0
+	%LandSound.volume_db = volume * 20 - 10
+	%LandSound.play()

@@ -66,6 +66,7 @@ func open():
 	
 	emit_opening()
 	animation_player.play(animation_name)
+	%OpenSound.play()
 	var time := animation_player.current_animation_length * signal_time_scale
 	var timer := get_tree().create_timer(time)
 	timer.timeout.connect(emit_opened)
@@ -82,6 +83,7 @@ func close():
 	
 	emit_closing()
 	animation_player.play_backwards(animation_name)
+	%CloseSound.play()
 	var time := animation_player.current_animation_length * signal_time_scale
 	var timer := get_tree().create_timer(time)
 	timer.timeout.connect(emit_closed)
@@ -91,12 +93,14 @@ func close():
 		CONNECT_ONE_SHOT)
 
 func grab_focus():
-	if page_node != null and page_node.has_method("initial_focus"):
-		page_node.initial_focus()
+	if not Engine.is_editor_hint():
+		if page_node != null and page_node.has_method("initial_focus"):
+			page_node.initial_focus()
 
 func release_focus():
-	if page_node != null and page_node.has_method("release_focus_recursive"):
-		page_node.release_focus_recursive()
+	if not Engine.is_editor_hint():
+		if page_node != null and page_node.has_method("release_focus_recursive"):
+			page_node.release_focus_recursive()
 
 func _unhandled_input(event):
 	if Engine.is_editor_hint():

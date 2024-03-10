@@ -19,6 +19,7 @@ func _on_big_red_button_clicked():
 	var timer = create_tween()
 	timer.tween_interval(1.0)
 	timer.tween_callback(%Aberratron/AnimationPlayer.play.bind("Spin"))
+	timer.tween_callback(%Aberratron/AudioStreamPlayer3D.play)
 	timer.tween_property(%ReactorSpotLight, "flicker_enabled", true, 0.0)
 	timer.tween_interval(4.0)
 	timer.tween_property(%ReactorSpotLight, "base_light_energy", 5.0, 2.6)

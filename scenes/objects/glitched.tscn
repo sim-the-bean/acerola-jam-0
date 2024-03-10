@@ -30,6 +30,8 @@ size = Vector3(0.51, 0.51, 0.51)
 [node name="Object" type="RigidBody3D" groups=["glitched", "grabbable"]]
 collision_layer = 173
 physics_material_override = SubResource("PhysicsMaterial_dbufy")
+max_contacts_reported = 1
+contact_monitor = true
 linear_damp = 1.0
 angular_damp = 1.0
 script = ExtResource("1_atq5k")
@@ -96,17 +98,22 @@ hud_type = 1
 hint = "Rotate Right"
 show = false
 
+[node name="LandSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+max_polyphony = 3
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="body_entered" from="KillBox" to="." method="_on_kill_box_body_entered"]
 [connection signal="hover_entered" from="HoverComponent" to="UiHintComponentGrab" method="set_show"]
 [connection signal="hover_exited" from="HoverComponent" to="UiHintComponentGrab" method="set_hide"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentGrab" method="set_hide"]
-[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentDrop" method="set_show"]
+[connection signal="grab_begin" from="GrabComponent" to="UiHintComponentThrow" method="set_show"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_show"]
 [connection signal="grab_begin" from="GrabComponent" to="UiHintComponentRotateRight" method="set_show"]
-[connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentDrop" method="set_hide"]
+[connection signal="grab_end" from="GrabComponent" to="UiHintComponentThrow" method="set_hide"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateLeft" method="set_hide"]
 [connection signal="grab_end" from="GrabComponent" to="UiHintComponentRotateRight" method="set_hide"]

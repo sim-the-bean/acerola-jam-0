@@ -1,4 +1,4 @@
-[gd_scene load_steps=174 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=175 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://dpr1gv3uoj2cq" path="res://resources/models/aberratron/Aberratron.blend" id="15_tmvwi"]
 [ext_resource type="PackedScene" uid="uid://ct1n67eh6krmx" path="res://scenes/objects/coffee_mug.tscn" id="16_57vgj"]
 [ext_resource type="Texture2D" uid="uid://blvbtkic1sj76" path="res://resources/chromatic_noise.tres" id="16_pmg2t"]
+[ext_resource type="AudioStream" uid="uid://bgfmkypl6jha4" path="res://resources/sounds/aberratron.wav" id="16_pnj8x"]
 [ext_resource type="PackedScene" uid="uid://5ry02ct650ae" path="res://scenes/objects/black_hole.tscn" id="21_dqt5v"]
 [ext_resource type="PackedScene" uid="uid://8fy7omnkotbe" path="res://scenes/objects/pressure_plate.tscn" id="22_w4384"]
 [ext_resource type="PackedScene" uid="uid://dxodjse6yt7cd" path="res://scenes/objects/projector.tscn" id="23_8aqtk"]
@@ -2536,7 +2537,7 @@ shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_atmbv"]
 resource_local_to_scene = true
-bounce = 0.5
+bounce = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_221l0"]
 resource_local_to_scene = true
@@ -2630,7 +2631,7 @@ shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_143xy"]
 resource_local_to_scene = true
-bounce = 0.5
+bounce = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pccrs"]
 resource_local_to_scene = true
@@ -2652,7 +2653,7 @@ size = Vector3(1, 2, 2)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ciksl"]
 resource_local_to_scene = true
-bounce = 0.5
+bounce = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_keh8t"]
 resource_local_to_scene = true
@@ -3386,7 +3387,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 13.5807
+light_energy = 15.2455
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3438,6 +3439,9 @@ emission_low = 0.05
 [node name="Aberratron" parent="IntroRoom" instance=ExtResource("15_tmvwi")]
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 0, 0.74886)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="IntroRoom/Aberratron"]
+stream = ExtResource("16_pnj8x")
 
 [node name="BlackHoleMarker" type="Marker3D" parent="IntroRoom"]
 unique_name_in_owner = true
