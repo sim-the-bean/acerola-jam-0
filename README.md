@@ -14,6 +14,14 @@
 - [Xelu's Controller & Keyboard Prompts](https://thoseawesomeguys.com/prompts/)
     - CC0 asset pack with input icons for various controllers, mouse and keyboard
 
+## Tools used
+
+- [Godot 4.2](https://godotengine.org/)
+- [Blender 4.0](https://blender.org)
+- [Krita](https://krita.org/en/)
+- [Tenacity](https://tenacityaudio.org/)
+- [Chiptone](https://sfbgames.itch.io/chiptone)
+
 ## License
 
 This game and all its assets are licensed under the terms of the GPLv3 license.

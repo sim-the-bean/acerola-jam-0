@@ -1,4 +1,4 @@
-[gd_scene load_steps=180 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=181 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://b52c3agawh1qe" path="res://scenes/objects/small_box.tscn" id="25_dkrkp"]
 [ext_resource type="PackedScene" uid="uid://cbmir6cfr6dil" path="res://scenes/objects/big_box.tscn" id="27_o035y"]
 [ext_resource type="PackedScene" uid="uid://cxrm226rua21x" path="res://scenes/objects/lore_item_2.tscn" id="28_aj6hn"]
+[ext_resource type="PackedScene" uid="uid://r1s62a1l1x0j" path="res://scenes/decals/coffee_stain.tscn" id="29_oyncf"]
 [ext_resource type="PackedScene" uid="uid://beyjomqpe1bp1" path="res://scenes/objects/lore_item_3.tscn" id="30_fd6c5"]
 [ext_resource type="PackedScene" uid="uid://cimwbdhu2rbtd" path="res://scenes/objects/lore_item_4.tscn" id="34_j81rs"]
 [ext_resource type="PackedScene" uid="uid://bbexqqrqln3wg" path="res://scenes/objects/lore_item_5.tscn" id="35_an4t0"]
@@ -2650,9 +2651,6 @@ shader_parameter/glitchiness_amplitude = 1.0
 shader_parameter/glitchiness_frequency = 1.0
 shader_parameter/noise_texture = ExtResource("16_pmg2t")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_afr2w"]
-size = Vector3(2, 2, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_0hlgn"]
 size = Vector3(1, 2, 2)
 
@@ -2671,6 +2669,9 @@ shader_parameter/chromatic_aberration_strength = Vector3(0.1, 0.04, 0.04)
 shader_parameter/glitchiness_amplitude = 1.0
 shader_parameter/glitchiness_frequency = 1.0
 shader_parameter/noise_texture = ExtResource("16_pmg2t")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_afr2w"]
+size = Vector3(2, 2, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lqw1p"]
 size = Vector3(2, 2, 2)
@@ -2713,6 +2714,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 script = ExtResource("1_1doe3")
 
 [node name="Ceilings" type="Node3D" parent="LevelGeometry/CyclopsBlocks"]
+visible = false
 
 [node name="Block_5" type="Node3D" parent="LevelGeometry/CyclopsBlocks/Ceilings"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3, -15)
@@ -3391,7 +3393,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 13.6413
+light_energy = 15.114
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3597,22 +3599,11 @@ glitched_material = SubResource("ShaderMaterial_pccrs")
 [node name="Item" parent="InvertedRoom" instance=ExtResource("28_aj6hn")]
 transform = Transform3D(0.34849, -0.937312, 0, -4.09712e-08, -1.5233e-08, 1, -0.937312, -0.34849, -4.37114e-08, -4.63718, -1, -21.5618)
 
-[node name="BlackHole" parent="." instance=ExtResource("21_dqt5v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -31)
+[node name="CoffeeStain" parent="InvertedRoom" instance=ExtResource("29_oyncf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83698, 0.19, -20.4459)
 
-[node name="Item" parent="." instance=ExtResource("30_fd6c5")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, -4.93554, -25.9995)
-
-[node name="Checkpoint3" parent="." instance=ExtResource("5_ofml4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, -24)
-checkpoint_priority = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint3"]
-transform = Transform3D(0.999936, 0, 0, 0, 1, 0, 0, 0, 0.999936, 0, 1, 1.14441e-05)
-shape = SubResource("BoxShape3D_afr2w")
-
-[node name="PlayerMarker" type="Marker3D" parent="Checkpoint3"]
-transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 5.96046e-08, 0, 0)
+[node name="CoffeeStain2" parent="InvertedRoom" instance=ExtResource("29_oyncf")]
+transform = Transform3D(0.618962, 0.681186, 0.390988, -0.740101, 0.672496, 2.98023e-08, -0.262938, -0.289371, 0.920396, -4.56531, 0.0311802, -19.6395)
 
 [node name="ProjectorRoom" type="Node3D" parent="."]
 
@@ -3651,6 +3642,25 @@ glitched_material = SubResource("ShaderMaterial_keh8t")
 
 [node name="Item" parent="ProjectorRoom" instance=ExtResource("34_j81rs")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.00683, 3.51289, -24.3723)
+
+[node name="BlackHoleRoom" type="Node3D" parent="."]
+
+[node name="BlackHole" parent="BlackHoleRoom" instance=ExtResource("21_dqt5v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -31)
+
+[node name="Item" parent="BlackHoleRoom" instance=ExtResource("30_fd6c5")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, -4.93554, -25.9995)
+
+[node name="Checkpoint3" parent="BlackHoleRoom" instance=ExtResource("5_ofml4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, -24)
+checkpoint_priority = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlackHoleRoom/Checkpoint3"]
+transform = Transform3D(0.999936, 0, 0, 0, 1, 0, 0, 0, 0.999936, 0, 1, 1.14441e-05)
+shape = SubResource("BoxShape3D_afr2w")
+
+[node name="PlayerMarker" type="Marker3D" parent="BlackHoleRoom/Checkpoint3"]
+transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 5.96046e-08, 0, 0)
 
 [node name="Outro" type="Node3D" parent="."]
 
