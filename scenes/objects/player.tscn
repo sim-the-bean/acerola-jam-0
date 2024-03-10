@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dju6tadl6ss46"]
+[gd_scene load_steps=26 format=3 uid="uid://dju6tadl6ss46"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6168c"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="1_ca6ab"]
@@ -9,7 +9,6 @@
 [ext_resource type="Shader" path="res://shaders/cursor.gdshader" id="5_6l0cb"]
 [ext_resource type="PackedScene" uid="uid://cf8tm3pqh5qqf" path="res://scenes/components/kill_component.tscn" id="6_7g65a"]
 [ext_resource type="PackedScene" uid="uid://8ib6xi3owdyw" path="res://scenes/ui/hud.tscn" id="7_mnk68"]
-[ext_resource type="PackedScene" uid="uid://lwemmy8vn3ol" path="res://scenes/components/push_down_component.tscn" id="8_ctknv"]
 [ext_resource type="Script" path="res://scripts/follow_main_viewport.gd" id="8_i8mnh"]
 [ext_resource type="AudioStream" uid="uid://dnxvtfj0xmq74" path="res://resources/sounds/step_1.wav" id="10_6nteo"]
 [ext_resource type="AudioStream" uid="uid://qm1r4ficasl8" path="res://resources/sounds/step_2.wav" id="11_nda4m"]
@@ -124,7 +123,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 
 [node name="HoldItemPoint" type="Marker3D" parent="CameraPivot"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.936678, 0.350191, 0, -0.350191, 0.936678, 0, -0.186727, -0.728917)
+transform = Transform3D(1, 0, 0, 0, 0.936678, 0.350191, 0, -0.350191, 0.936678, 0, -0.0152148, -0.448596)
 
 [node name="HoldMenuPoint" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -138,8 +137,6 @@ unique_name_in_owner = true
 killed_interval = 3.0
 free_on_killed = false
 unkillable_duration = 3.0
-
-[node name="PushDownComponent" parent="." instance=ExtResource("8_ctknv")]
 
 [node name="HudViewport" type="SubViewport" parent="."]
 unique_name_in_owner = true

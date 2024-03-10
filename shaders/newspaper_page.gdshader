@@ -9,6 +9,6 @@ void fragment() {
 	vec3 albedo = texture(albedo_texture, UV).rgb;
 	vec3 color = mix(albedo, albedo * canvas.rgb, canvas.a);
 	ALBEDO = color;
-	ROUGHNESS = mix(1.0, 0.7, canvas.a);
+	ROUGHNESS = mix(1.0, 0.5, canvas.a);
 	EMISSION = color * 0.5;
 }

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwj85fje77x0b"]
+
+[ext_resource type="PackedScene" uid="uid://c1kmeui3wfpvs" path="res://scenes/objects/item.tscn" id="1_wy5y4"]
+[ext_resource type="PackedScene" uid="uid://chj384qg703dw" path="res://scenes/objects/lore_item_1_ui.tscn" id="2_3tfej"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nyq14"]
+resource_local_to_scene = true
+size = Vector3(0.343, 0.48, 0.012)
+
+[node name="Item" instance=ExtResource("1_wy5y4")]
+
+[node name="Collider" parent="." index="0"]
+shape = SubResource("BoxShape3D_nyq14")
+
+[node name="Page" parent="." index="1"]
+page = ExtResource("2_3tfej")

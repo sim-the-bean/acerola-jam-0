@@ -28,7 +28,9 @@ enum PositionState {
 @export var grabbed_rotate_speed := 100.0
 @export var jump_buffer_duration := 0.2
 @export var killed_rotation_speed := 10.0
-@export var item_zoom_speed := 1.0
+@export var item_zoom_speed := 1.5
+@export var item_zoom_in_speed_controller := 1.0
+@export var item_zoom_in_speed_mouse := 0.05
 
 @export_group("Controls")
 var mouse_look_speed: float:
@@ -126,6 +128,8 @@ var is_grounded := true
 var was_grounded := false
 
 @onready var cursor_initial_position: Vector3 = %Cursor.position
+@onready var itemmarker_initial_position: Vector3 = %HoldItemPoint.position
+@onready var itemmarker_initial_rotation: Vector3 = %HoldItemPoint.rotation
 var hovered: Node3D = null
 var last_hovered: Node3D = null
 var grabbed: RigidBody3D = null
@@ -338,6 +342,9 @@ func process_raycast(delta):
 				hovered.get_node("HoverComponent").emit_hover_exited()
 			hover_left.emit(hovered)
 		hovered = collider
+		if hovered != null and hovered is CollectibleItem:
+			if hovered.global_position.distance_to(%CameraPivot.global_position) > 1.5:
+				hovered = null
 		if hovered != null:
 			if hovered.has_node("HoverComponent"):
 				hovered.get_node("HoverComponent").emit_hover_entered()
@@ -363,11 +370,16 @@ func process_raycast(delta):
 		do_grab(delta)
 		do_item()
 
-func process_item(_delta: float):
+func process_item(delta: float):
 	var look := get_look_vector()
 	
 	%HoldItemPoint.rotate_y(look.x)
 	%HoldItemPoint.rotate_x(look.y)
+	
+	var zoom := Input.get_axis(&"item_zoom_out_controller", &"item_zoom_in_controller") * item_zoom_in_speed_controller * delta
+	zoom += float(Input.is_action_just_pressed(&"item_zoom_in")) * item_zoom_in_speed_mouse
+	zoom -= float(Input.is_action_just_pressed(&"item_zoom_out")) * item_zoom_in_speed_mouse
+	%HoldItemPoint.position.z += zoom
 
 func do_grab(delta):
 	if Input.is_action_just_pressed(&"player_action_grab"):
@@ -375,10 +387,12 @@ func do_grab(delta):
 			if grabbed.has_node("GrabComponent"):
 				if grabbed.get_node("GrabComponent").ungrab():
 					grabbed = null
+					%Cursor.visible = true
 		elif hovered != null:
 			if hovered.has_node("GrabComponent"):
 				if hovered.get_node("GrabComponent").grab():
 					grabbed = hovered
+					%Cursor.visible = false
 	if Input.is_action_just_pressed(&"player_action_throw"):
 		if grabbed != null:
 			if grabbed.has_node("GrabComponent"):
@@ -386,6 +400,7 @@ func do_grab(delta):
 					var throw_direction = %CameraPivot.global_transform.basis.get_rotation_quaternion() * Vector3.FORWARD
 					grabbed.apply_impulse(throw_direction * throw_strength)
 					grabbed = null
+					%Cursor.visible = true
 
 func do_item():
 	if Input.is_action_just_released(&"player_action_interact"):
@@ -397,11 +412,15 @@ func do_item():
 			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_speed)
 			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_speed)
 			position_state = PositionState.ITEM_ZOOM
+			%Cursor.visible = false
 		elif interactive != null:
 			interactive.collect()
 			interactive.queue_free()
 			interactive = null
 			position_state = PositionState.NORMAL
+			%HoldItemPoint.position = itemmarker_initial_position
+			%HoldItemPoint.rotation = itemmarker_initial_rotation
+			%Cursor.visible = true
 
 func process_grabbed(delta: float):
 	if grabbed != null:

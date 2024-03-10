@@ -3,14 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://sx2h6j67s8yu" path="res://scenes/components/hover_component.tscn" id="1_a44ji"]
 [ext_resource type="Script" path="res://scripts/item.gd" id="1_geyh2"]
 [ext_resource type="PackedScene" uid="uid://mq05dcn7se8o" path="res://scenes/components/ui_hint_component.tscn" id="2_rxant"]
+[ext_resource type="PackedScene" uid="uid://t4536sl5x46j" path="res://scenes/objects/lore_note.tscn" id="2_y4n2a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d0402"]
 resource_local_to_scene = true
 size = Vector3(0.343, 0.48, 0.012)
-
-[sub_resource type="BoxMesh" id="BoxMesh_j6rrn"]
-resource_local_to_scene = true
-size = Vector3(0.286, 0.4, 0.01)
 
 [node name="Item" type="StaticBody3D" groups=["item"]]
 collision_layer = 16
@@ -21,9 +18,10 @@ script = ExtResource("1_geyh2")
 unique_name_in_owner = true
 shape = SubResource("BoxShape3D_d0402")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="Page" parent="." instance=ExtResource("2_y4n2a")]
 unique_name_in_owner = true
-mesh = SubResource("BoxMesh_j6rrn")
+transform = Transform3D(0.997949, 0.0640098, -2.79796e-09, 0, -4.37114e-08, -1, -0.0640098, 0.997949, -4.36217e-08, 6.05574e-05, -2.6918e-10, 0.00615813)
+enabled = false
 
 [node name="HoverComponent" parent="." instance=ExtResource("1_a44ji")]
 

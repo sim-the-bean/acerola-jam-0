@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cf0ku0wmx4inm"]
+
+[ext_resource type="FontFile" uid="uid://bw1n575or8qsg" path="res://resources/fonts/Patrick_Hand/PatrickHand-Regular.ttf" id="1_pinxk"]
+
+[sub_resource type="Theme" id="Theme_ubgom"]
+RichTextLabel/colors/default_color = Color(0.0705882, 0.0705882, 0.141176, 1)
+RichTextLabel/font_sizes/normal_font_size = 28
+RichTextLabel/fonts/normal_font = ExtResource("1_pinxk")
+
+[node name="LoreItem2Ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -80.0
+offset_bottom = 960.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ubgom")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 40
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "You've gone insane, you're not the person I used to know. You spend all your time in the basement now, you won't talk to me, you keep rambling about how things used to be. But they won't ever be like that again, you have to accept that. Clearly my presence is only reminding you of what was.
+
+I packed my bags, by the time you're reading this I'm long gone. You won't see me again. I'll be staying with my mother, she'll need my help now. I will send you the divorce papers, after you sign them there will be nothing keeping us together anymore. It will be better that way, easier for us both.
+
+I talked to my lawyer, she said a reduced sentence is on the table. I thought you might want to know that. I do hope you still care."

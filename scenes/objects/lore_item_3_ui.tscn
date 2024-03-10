@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk4wph7isyset"]
+
+[ext_resource type="Texture2D" uid="uid://cgwk5odc7k073" path="res://resources/textures/drawing.png" id="1_pd2bm"]
+
+[node name="LoreItem3Ui" type="Control"]
+layout_mode = 3
+anchor_right = 0.781
+anchor_bottom = 1.944
+offset_right = 0.319946
+offset_bottom = 0.319946
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 615.0
+offset_top = 9.0
+offset_right = 615.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_pd2bm")
+expand_mode = 3

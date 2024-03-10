@@ -10,7 +10,7 @@ script = ExtResource("2_qtdwm")
 title = "Best day ever!"
 description = "Find all lore items"
 id = "collect_all_items"
-steps = 1
+steps = 5
 show_progress = true
 save_progress = false
 

@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://chj384qg703dw"]
+
+[ext_resource type="FontFile" uid="uid://brrcr5rbp82jd" path="res://resources/fonts/Josefin_Slab/static/JosefinSlab-SemiBold.ttf" id="1_u1s5d"]
+
+[sub_resource type="Theme" id="Theme_m66xr"]
+RichTextLabel/colors/default_color = Color(0.0470588, 0.0470588, 0.0705882, 1)
+RichTextLabel/font_sizes/normal_font_size = 32
+RichTextLabel/fonts/normal_font = ExtResource("1_u1s5d")
+
+[node name="LoreItem1Ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -80.0
+offset_bottom = 960.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m66xr")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 40
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Date: 1953-08-30
+Nothing makes any sense anymore. If only things could go back to how they were.
+
+Date: 1953-09-07
+Things can go back to how they were. I had a dream and in it I saw the solution, a way to go back in time.
+
+Date: 1953-10-02
+The maths is all there, I'm sure it can work. I found ways to source most of the materials. The others - I'll have to improvise.
+
+Date: 1954-02-20
+I can't figure out why it won't work. The mechanics are sound, but the force field just isn't strong enough. The only way it could work is with a much stronger, more explosive power. But only the atom has a power that big.
+
+Date: 1954-03-14
+I have done it. With this final piece of the puzzle I'm sure it will work. The Aberratron is ready, it will work."
