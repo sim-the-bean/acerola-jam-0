@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctovpla40btva"]
+
+[ext_resource type="Texture2D" uid="uid://bdesg6ou83vmv" path="res://resources/models/mold/Mold-albedo.png" id="1_3hcc2"]
+[ext_resource type="Texture2D" uid="uid://dkk6hxxie3h0h" path="res://resources/models/mold/Mold-orm.png" id="2_iyp14"]
+
+[node name="Mold" type="Node3D"]
+
+[node name="Decal" type="Decal" parent="."]
+texture_albedo = ExtResource("1_3hcc2")
+texture_orm = ExtResource("2_iyp14")
