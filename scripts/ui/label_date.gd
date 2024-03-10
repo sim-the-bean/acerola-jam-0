@@ -21,4 +21,4 @@ func _ready():
 
 func reset_label():
 	var time := Time.get_datetime_dict_from_system()
-	text = "{0} {1}, {2}".format([months[time.month - 1], time.day, time.year])
+	text = "{0} {1}, {2}".format([months[time.month - 1], time.day, time.year - 70])

@@ -109,9 +109,10 @@ func destroy():
 			var decal = decal_scene.instantiate()
 			decal.translate(decal_position)
 			get_parent_node_3d().add_child(decal)
-		%LandSound.play()
-		%LandSound.finished.connect(%LandSound.queue_free)
-		%LandSound.reparent(get_parent())
+		if %LandSound != null:
+			%LandSound.play()
+			%LandSound.finished.connect(%LandSound.queue_free)
+			%LandSound.reparent(get_parent())
 		queue_free()
 
 func emit_glitched():

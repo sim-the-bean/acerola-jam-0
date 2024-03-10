@@ -81,6 +81,9 @@ enabled = false
 
 [node name="LandSound" parent="." index="13"]
 stream = ExtResource("7_ucdrq")
+attenuation_model = 1
+volume_db = -7.0
+pitch_scale = 0.9
 max_polyphony = 1
 
 [connection signal="body_exited" from="KillBox" to="." method="_on_kill_box_body_exited"]
