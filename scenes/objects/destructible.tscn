@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b7dr0xxom3w28"]
 
 [ext_resource type="Script" path="res://scripts/destructible.gd" id="1_7m337"]
-[ext_resource type="PackedScene" uid="uid://dy6mv6w70gmxv" path="res://resources/models/control_panel/ControlPanel.blend" id="2_c4m44"]
+[ext_resource type="PackedScene" uid="uid://bktgxkpc0c0g" path="res://resources/models/control_panel/control_panel.tscn" id="2_b3aoj"]
 [ext_resource type="Material" uid="uid://cpe1ubw7c0kmb" path="res://resources/materials/glowing_button_red.tres" id="3_lg2pp"]
 [ext_resource type="Material" uid="uid://1kx5argwqwyg" path="res://resources/materials/glowing_button_green.tres" id="4_l1rt2"]
 
@@ -26,14 +26,14 @@ shape = SubResource("BoxShape3D_4c16b")
 transform = Transform3D(0.938788, 0, 0.344495, 0, 1, 0, -0.344495, 0, 0.938788, -0.858909, 0.997009, 0.0272669)
 shape = SubResource("BoxShape3D_u8j1f")
 
-[node name="ControlPanel2" parent="." instance=ExtResource("2_c4m44")]
+[node name="ControlPanel" parent="." instance=ExtResource("2_b3aoj")]
 
-[node name="Buttons" parent="ControlPanel2/ControlPanel" index="0"]
+[node name="Buttons" parent="ControlPanel/ControlPanel" index="0"]
 surface_material_override/0 = ExtResource("3_lg2pp")
 
-[node name="Buttons_001" parent="ControlPanel2/ControlPanel" index="1"]
+[node name="Buttons_001" parent="ControlPanel/ControlPanel" index="1"]
 surface_material_override/0 = ExtResource("4_l1rt2")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 
-[editable path="ControlPanel2"]
+[editable path="ControlPanel"]

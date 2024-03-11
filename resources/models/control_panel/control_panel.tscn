@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bktgxkpc0c0g"]
+
+[ext_resource type="PackedScene" uid="uid://dy6mv6w70gmxv" path="res://resources/models/control_panel/ControlPanel.blend" id="1_iutdf"]
+[ext_resource type="Material" uid="uid://kox7w76qs2if" path="res://resources/models/control_panel/Metallic.tres" id="2_n5n8t"]
+[ext_resource type="Material" uid="uid://burdmvmjgv3nx" path="res://scenes/objects/Plastic.tres" id="3_rss4v"]
+
+[node name="ControlPanel" instance=ExtResource("1_iutdf")]
+
+[node name="ControlPanel" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_n5n8t")
+
+[node name="ControlPanelPlastic" parent="ControlPanel" index="3"]
+surface_material_override/0 = ExtResource("3_rss4v")

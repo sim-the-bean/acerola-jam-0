@@ -16,8 +16,8 @@ signal destroyed()
 @export var minimum_momentum := 0.0
 
 var _is_destroyed := false
-@onready var red_buttons := $ControlPanel2/ControlPanel/Buttons
-@onready var green_buttons := $ControlPanel2/ControlPanel/Buttons_001
+@onready var red_buttons := find_child("Buttons")
+@onready var green_buttons := find_child("Buttons_001")
 
 func _on_hurtbox_body_entered(body):
 	if body is Glitched:

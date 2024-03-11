@@ -1,0 +1,11 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://burdmvmjgv3nx"]
+
+[ext_resource type="Texture2D" uid="uid://crpdi4w5nox63" path="res://resources/models/control_panel/Plastic-normal.png" id="1_rqgml"]
+[ext_resource type="Texture2D" uid="uid://ba88ois3qoc80" path="res://resources/models/control_panel/Plastic-orm.png" id="2_l7j48"]
+
+[resource]
+albedo_color = Color(0.905882, 0.890196, 0.823529, 1)
+orm_texture = ExtResource("2_l7j48")
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("1_rqgml")

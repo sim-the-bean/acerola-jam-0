@@ -10,12 +10,12 @@
 [ext_resource type="Material" uid="uid://ebhmmablutj0" path="res://resources/materials/wall/Wall.tres" id="4_qjaye"]
 [ext_resource type="PackedScene" uid="uid://c777xctkqusnt" path="res://scenes/shader_precompile.tscn" id="5_b1u5x"]
 [ext_resource type="PackedScene" uid="uid://cfpnwtv7gtdic" path="res://scenes/objects/checkpoint.tscn" id="5_ofml4"]
-[ext_resource type="PackedScene" uid="uid://dy6mv6w70gmxv" path="res://resources/models/control_panel/ControlPanel.blend" id="6_phv3k"]
 [ext_resource type="Script" path="res://scripts/flickering_light.gd" id="7_4ti3l"]
 [ext_resource type="PackedScene" uid="uid://dx562v4dvc3mh" path="res://scenes/objects/button.tscn" id="7_wyvxl"]
 [ext_resource type="Material" uid="uid://boy36vdamdvww" path="res://resources/materials/floor/Floor.tres" id="8_o8wq7"]
 [ext_resource type="PackedScene" uid="uid://cj42oov4huy3s" path="res://scenes/objects/door.tscn" id="11_g8c6u"]
 [ext_resource type="PackedScene" uid="uid://dnnmxd7d8ekff" path="res://scenes/zones/base_zone.tscn" id="12_px0bw"]
+[ext_resource type="PackedScene" uid="uid://bktgxkpc0c0g" path="res://resources/models/control_panel/control_panel.tscn" id="13_fmcdm"]
 [ext_resource type="Script" path="res://scripts/effect_custom_gravity.gd" id="13_ssnix"]
 [ext_resource type="Shader" path="res://shaders/glitched.gdshader" id="15_5po3o"]
 [ext_resource type="PackedScene" uid="uid://b7dr0xxom3w28" path="res://scenes/objects/destructible.tscn" id="15_8m51g"]
@@ -3405,7 +3405,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 13.2868
+light_energy = 15.3999
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3446,13 +3446,16 @@ shape = SubResource("BoxShape3D_fujql")
 [node name="PlayerMarker" type="Marker3D" parent="IntroRoom/Checkpoint"]
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0)
 
-[node name="ControlPanel2" parent="IntroRoom" instance=ExtResource("6_phv3k")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.44815, 0, -1.43813)
+[node name="ControlPanel" parent="IntroRoom" instance=ExtResource("13_fmcdm")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.448, 0, -1.438)
 
-[node name="BigRedButton" parent="IntroRoom" instance=ExtResource("7_wyvxl")]
-transform = Transform3D(0.366501, 0.371003, -0.853249, 0, 0.91706, 0.398749, 0.930418, -0.146142, 0.336104, 1.38423, 1.01566, -2.35284)
+[node name="BigRedButton" parent="IntroRoom/ControlPanel" instance=ExtResource("7_wyvxl")]
+transform = Transform3D(0.930418, -0.146142, 0.336104, 0, 0.91706, 0.398749, -0.366501, -0.371003, 0.853249, -0.91484, 1.01566, 0.0637699)
 oneshot = true
 emission_low = 0.05
+
+[node name="Item" parent="IntroRoom/ControlPanel" instance=ExtResource("21_d2kqh")]
+transform = Transform3D(0.258819, 0.965926, -4.37114e-08, 1.13133e-08, 4.22219e-08, 1, 0.965926, -0.258819, 1.91069e-15, 0.39796, 0.84, 0.21839)
 
 [node name="Aberratron" parent="IntroRoom" instance=ExtResource("15_tmvwi")]
 unique_name_in_owner = true
@@ -3529,9 +3532,6 @@ transform = Transform3D(0.968008, 0, 0.250921, 0, 1, 0, -0.250921, 0, 0.968008, 
 physics_material_override = SubResource("PhysicsMaterial_atmbv")
 can_sleep = false
 glitched_material = SubResource("ShaderMaterial_221l0")
-
-[node name="Item" parent="IntroRoom" instance=ExtResource("21_d2kqh")]
-transform = Transform3D(-0.965926, 0.258819, 0, 1.13133e-08, 4.22219e-08, 1, 0.258819, 0.965926, -4.37114e-08, 1.22961, 0.84, -1.04004)
 
 [node name="InvertedRoom" type="Node3D" parent="."]
 
@@ -3745,8 +3745,8 @@ transform = Transform3D(-0.876744, -0.480958, 0, -2.10234e-08, 3.83237e-08, 1, -
 
 [connection signal="shaders_compiled" from="ShaderPrecompile" to="." method="_on_shaders_compiled"]
 [connection signal="shaders_compiling" from="ShaderPrecompile" to="." method="_on_shaders_compiling"]
-[connection signal="clicked" from="IntroRoom/BigRedButton" to="." method="_on_big_red_button_clicked"]
-[connection signal="clicked_locked" from="IntroRoom/BigRedButton" to="." method="_on_big_red_button_clicked_locked"]
+[connection signal="clicked" from="IntroRoom/ControlPanel/BigRedButton" to="." method="_on_big_red_button_clicked"]
+[connection signal="clicked_locked" from="IntroRoom/ControlPanel/BigRedButton" to="." method="_on_big_red_button_clicked_locked"]
 [connection signal="clicked" from="IntroRoom/Door" to="." method="_on_door_clicked" flags=6]
 [connection signal="destroyed" from="InvertedRoom/Destructible" to="InvertedRoom/Door2" method="open"]
 [connection signal="clicked" from="InvertedRoom/Door2" to="." method="_on_door_clicked" flags=6]

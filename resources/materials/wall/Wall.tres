@@ -9,4 +9,6 @@ albedo_texture = ExtResource("1_dhdrt")
 normal_enabled = true
 normal_texture = ExtResource("2_6rlqr")
 ao_enabled = true
+ao_light_affect = 1.0
 ao_texture = ExtResource("2_okwb0")
+ao_texture_channel = 4
