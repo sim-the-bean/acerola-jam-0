@@ -9,5 +9,5 @@
 [node name="ControlPanel" parent="." index="0"]
 surface_material_override/0 = ExtResource("2_n5n8t")
 
-[node name="ControlPanelPlastic" parent="ControlPanel" index="3"]
+[node name="ControlPanelPlastic" parent="ControlPanel" index="4"]
 surface_material_override/0 = ExtResource("3_rss4v")

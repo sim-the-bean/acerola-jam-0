@@ -3405,7 +3405,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 15.3999
+light_energy = 12.5558
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
