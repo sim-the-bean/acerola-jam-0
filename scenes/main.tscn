@@ -16,7 +16,7 @@ save_progress = false
 
 [sub_resource type="Resource" id="Resource_f3yhp"]
 script = ExtResource("2_qtdwm")
-title = "All the time in the world"
+title = "Calm before the storm"
 description = "Wait 2 minutes before pressing the button"
 id = "wait_button"
 steps = 1
@@ -25,7 +25,7 @@ save_progress = false
 
 [sub_resource type="Resource" id="Resource_hbxod"]
 script = ExtResource("2_qtdwm")
-title = "BIG red button"
+title = "Big friendly button"
 description = "Press the button 10 times"
 id = "press_10_times"
 steps = 10
@@ -43,7 +43,7 @@ save_progress = false
 
 [sub_resource type="Resource" id="Resource_e85v4"]
 script = ExtResource("2_qtdwm")
-title = "Companion cube"
+title = "Companion box"
 description = "Bring your friend with you"
 id = "companion_cube"
 steps = 1
