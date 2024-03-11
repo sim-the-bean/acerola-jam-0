@@ -1,4 +1,16 @@
-# Acerola Jam 0
+# The Aberratron
+
+## Tips
+
+- There's 5 collectibles which outline the backstory of the game
+- There's 5 achievements
+    - 4 are hidden and might require you to do things you wouldn't do normally
+    - 1 is related to collecting all collectibles
+
+## Which graphics settings to use?
+There's 3 graphics presets available, on my laptop with a 1660 TI the highest one runs at a smooth 90fps.  
+There isn't a big visual difference between 2 and 3 but a significant difference in performance.  
+The lowest setting uses significantly less VRAM and performs much better, but also looks worse.  
 
 ## Addons and resources used
 
