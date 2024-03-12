@@ -55,4 +55,7 @@ func _on_shaders_compiled():
 	GameManager.instance.unpause()
 
 func _on_shaders_compiling(progress):
-	pass # Replace with function body.
+	pass
+
+func _on_end_area_player_entered(player):
+	GameManager.instance.switch_to_main_menu()

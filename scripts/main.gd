@@ -52,6 +52,7 @@ func switch_to_main_menu():
 	if player != null:
 		player.queue_free()
 		player = null
+	Utils.mouse_focus = false
 	switch_scene(main_menu_scene)
 	menu = active_scene_node.get_node(^"Newspaper")
 	in_main_menu = true

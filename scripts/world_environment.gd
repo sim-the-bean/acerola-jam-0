@@ -6,8 +6,8 @@ func _ready():
 	set_graphics(GameSettings.graphics)
 
 func _on_setting_changed(key: StringName, value: Variant):
-		if key == &"graphics":
-			set_graphics(value)
+	if key == &"graphics":
+		set_graphics(value)
 
 func set_graphics(graphics: GameSettings.Graphics):
 	environment.ssr_enabled = graphics >= GameSettings.Graphics.PRETTY

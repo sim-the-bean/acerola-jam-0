@@ -49,7 +49,7 @@ var bobbing_enabled := true:
 		setting_changed.emit("bobbing_enabled", bobbing_enabled)
 		config.set_value("Settings", "bobbing_enabled", value)
 		save_settings()
-var graphics := Graphics.PRETTY if OS.is_debug_build() else Graphics.FAST:
+var graphics := Graphics.BALANCED:
 	set(value):
 		graphics = value
 		setting_changed.emit("graphics", graphics)

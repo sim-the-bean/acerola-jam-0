@@ -343,7 +343,7 @@ func process_raycast(delta):
 			hover_left.emit(hovered)
 		hovered = collider
 		if hovered != null and hovered is CollectibleItem:
-			if hovered.global_position.distance_to(%CameraPivot.global_position) > 1.5:
+			if hovered.global_position.distance_to(%CameraPivot.global_position) > 1.75:
 				hovered = null
 		if hovered != null:
 			if hovered.has_node("HoverComponent"):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=3 uid="uid://cc62bao6lnwbg"]
+[gd_scene load_steps=191 format=3 uid="uid://cc62bao6lnwbg"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_blocks.gd" id="1_1doe3"]
 [ext_resource type="Script" path="res://scripts/levels/basement.gd" id="1_51x7k"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://r1s62a1l1x0j" path="res://scenes/decals/coffee_stain.tscn" id="29_oyncf"]
 [ext_resource type="PackedScene" uid="uid://beyjomqpe1bp1" path="res://scenes/objects/lore_item_3.tscn" id="30_fd6c5"]
 [ext_resource type="PackedScene" uid="uid://ctovpla40btva" path="res://scenes/decals/mold.tscn" id="31_bokjs"]
+[ext_resource type="PackedScene" uid="uid://q3tykinwryja" path="res://scenes/decals/wall_crack.tscn" id="32_orcml"]
 [ext_resource type="PackedScene" uid="uid://cimwbdhu2rbtd" path="res://scenes/objects/lore_item_4.tscn" id="34_j81rs"]
 [ext_resource type="PackedScene" uid="uid://uemifkwgju52" path="res://resources/models/crater/Crater.blend" id="34_y3isr"]
 [ext_resource type="Texture2D" uid="uid://54vxwlk7pfir" path="res://resources/models/crater/Crater-albedo.png" id="35_0onw0"]
@@ -42,6 +43,7 @@
 [ext_resource type="Texture2D" uid="uid://dgevd78mabtyw" path="res://resources/models/crater/Crater-normal.png" id="36_n4j21"]
 [ext_resource type="PackedScene" uid="uid://vn8yrtosrbr4" path="res://scenes/decals/puddle.tscn" id="37_c2dph"]
 [ext_resource type="Texture2D" uid="uid://t1ci3na528mt" path="res://resources/models/crater/Crater-orm.png" id="37_jnroo"]
+[ext_resource type="PackedScene" uid="uid://ykpfonk2hvs4" path="res://scenes/objects/player_only_area.tscn" id="42_toxdf"]
 
 [sub_resource type="Resource" id="Resource_s1pfl"]
 script = ExtResource("3_mh14q")
@@ -2700,6 +2702,9 @@ disable_receive_shadows = true
 material = SubResource("StandardMaterial3D_spcse")
 size = Vector3(12.9, 3.9, 7.9)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_uq27a"]
+size = Vector3(16, 4, 7)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_x4oxv"]
 size = Vector3(4, 4, 4)
 
@@ -2726,7 +2731,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 script = ExtResource("1_1doe3")
 
 [node name="Ceilings" type="Node3D" parent="LevelGeometry/CyclopsBlocks"]
-visible = false
 
 [node name="Block_5" type="Node3D" parent="LevelGeometry/CyclopsBlocks/Ceilings"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3, -15)
@@ -3405,7 +3409,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 12.5558
+light_energy = 13.959
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3631,6 +3635,15 @@ transform = Transform3D(0.920343, 0.190094, -0.34181, -0.304489, 0.896748, -0.32
 [node name="Mold2" parent="InvertedRoom" instance=ExtResource("31_bokjs")]
 transform = Transform3D(0.842321, 0.538977, 0, -0.467425, 0.730498, -0.497882, -0.268347, 0.419377, 0.867245, -4.88428, -1, -22.9035)
 
+[node name="WallCrack" parent="InvertedRoom" instance=ExtResource("32_orcml")]
+transform = Transform3D(-4.99637e-08, -1, -2.40521e-08, 1.14304, -4.37114e-08, 0.550247, -0.440557, 0, 1.42763, 3, 0.339759, -18.2939)
+
+[node name="WallCrack2" parent="InvertedRoom" instance=ExtResource("32_orcml")]
+transform = Transform3D(0.918276, 6.3163e-08, 1.50176, 1.1157, -6.3163e-08, -1.23602, 8.62979e-09, 1.445, -1.19672e-07, -2.2489, 1.84713, -23)
+
+[node name="WallCrack3" parent="InvertedRoom" instance=ExtResource("32_orcml")]
+transform = Transform3D(-2.3725e-08, 1.36158, -1.04423, 1.915, -8.37073e-08, -9.17972e-08, -1.43029e-07, -1.3466, -1.05585, -2.24487, -0.255332, -15.7466)
+
 [node name="BlackHoleRoom" type="Node3D" parent="."]
 
 [node name="BlackHole" parent="BlackHoleRoom" instance=ExtResource("21_dqt5v")]
@@ -3715,6 +3728,12 @@ transform = Transform3D(0.557301, -0.498722, 0.482486, 0.593503, 0.663215, -6.55
 [node name="Mold5" parent="ProjectorRoom" instance=ExtResource("31_bokjs")]
 transform = Transform3D(0.6636, -0.594697, 0.932776, 0.344742, 1.14474, 0.48458, -1.05114, 1.92225e-08, 0.747805, -14, 4.27025, -27.2762)
 
+[node name="WallCrack" parent="ProjectorRoom" instance=ExtResource("32_orcml")]
+transform = Transform3D(-1.25115, -7.10543e-15, 1.31798, 1.06801, -7.19052e-08, 1.54397, 4.66844e-08, 1.645, 6.7489e-08, -9.88683, 1.9991, -36)
+
+[node name="WallCrack2" parent="ProjectorRoom" instance=ExtResource("32_orcml")]
+transform = Transform3D(-0.989796, 0, -1.85237, 2.43124, -8.74228e-08, -0.75413, -1.06273e-07, -2, 3.29641e-08, -9.35688, -0.0256092, -24)
+
 [node name="Outro" type="Node3D" parent="."]
 
 [node name="Checkpoint5" parent="Outro" instance=ExtResource("5_ofml4")]
@@ -3731,6 +3750,11 @@ transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, 0)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Outro"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 11, -78)
 mesh = SubResource("BoxMesh_hv0rt")
+
+[node name="EndArea" parent="Outro/MeshInstance3D" instance=ExtResource("42_toxdf")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outro/MeshInstance3D/EndArea"]
+shape = SubResource("BoxShape3D_uq27a")
 
 [node name="CompanionCubeAchievementTrigger" type="Area3D" parent="Outro"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 9, -61)
@@ -3754,6 +3778,7 @@ transform = Transform3D(-0.876744, -0.480958, 0, -2.10234e-08, 3.83237e-08, 1, -
 [connection signal="powered_on" from="ProjectorRoom/PressurePlate" to="ProjectorRoom/Door3" method="open"]
 [connection signal="clicked" from="ProjectorRoom/Door3" to="." method="_on_door_clicked" flags=6]
 [connection signal="player_entered" from="Outro/Checkpoint5" to="ProjectorRoom/Door3" method="close_and_lock" unbinds=1]
+[connection signal="player_entered" from="Outro/MeshInstance3D/EndArea" to="." method="_on_end_area_player_entered"]
 [connection signal="body_entered" from="Outro/CompanionCubeAchievementTrigger" to="." method="_on_companion_cube_achievement_trigger_body_entered"]
 
 [editable path="InvertedRoom/InvertedGravityZone"]

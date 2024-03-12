@@ -3,13 +3,14 @@
 [resource]
 resource_local_to_scene = true
 background_color = Color(0.247059, 0.247059, 0.247059, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.235294, 0.235294, 0.235294, 1)
+ambient_light_source = 1
 tonemap_mode = 3
 ssr_enabled = true
 ssil_enabled = true
-ssil_intensity = 0.1
+ssil_intensity = 0.25
 sdfgi_enabled = true
 sdfgi_read_sky_light = false
-glow_enabled = true
+sdfgi_cascades = 2
+sdfgi_y_scale = 0
 volumetric_fog_enabled = true
+volumetric_fog_length = 16.0

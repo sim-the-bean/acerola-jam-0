@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://vn8yrtosrbr4"]
+[gd_scene load_steps=4 format=3 uid="uid://vn8yrtosrbr4"]
 
 [ext_resource type="PackedScene" uid="uid://opys8a48uhx8" path="res://resources/models/puddle/Puddle.blend" id="1_gc660"]
 [ext_resource type="Material" uid="uid://cthqckxrto2j2" path="res://scenes/decals/Puddle.tres" id="2_4gcvo"]
+[ext_resource type="Script" path="res://scripts/graphics_dependent.gd" id="3_pne1t"]
 
 [node name="Puddle" type="Node3D"]
 
@@ -11,11 +12,12 @@
 surface_material_override/0 = ExtResource("2_4gcvo")
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468331, 0)
-size = Vector3(2, 1, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.96833, 0)
+size = Vector3(8, 6, 8)
 origin_offset = Vector3(0, -0.46, 0)
 box_projection = true
 interior = true
 ambient_mode = 0
+script = ExtResource("3_pne1t")
 
 [editable path="Puddle"]
