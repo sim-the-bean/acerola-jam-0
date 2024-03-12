@@ -3380,7 +3380,7 @@ omni_attenuation = 0.34151
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 4, -30)
 light_color = Color(1, 0.937255, 0.882353, 1)
-light_energy = 12.2981
+light_energy = 13.4053
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 10.0
@@ -3740,7 +3740,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 2.98023e-08, -9, 0.646793, -37.
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Outro"]
 transform = Transform3D(1, 0, 0, 0, -0.0916407, 0.995792, 0, -0.995792, -0.0916407, -11, 13, -59)
-light_energy = 14.9802
+light_energy = 12.8044
 spot_range = 6.0
 spot_angle = 66.0
 script = ExtResource("7_4ti3l")

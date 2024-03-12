@@ -17,7 +17,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
-text = "Ver. 0.1.0"
+text = "Ver. 1.0.0"
 script = ExtResource("4_pfeo7")
 
 [node name="Credit" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" index="1"]
@@ -30,7 +30,7 @@ text = "A game by sim_the_bean"
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 16
-text = "March 9, 2024"
+text = "March 12, 1954"
 script = ExtResource("5_id22a")
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer" index="3"]
@@ -53,13 +53,17 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+focus_neighbor_right = NodePath("../../../../VBoxContainer2/MarginContainer/VBoxContainer/Settings")
+focus_neighbor_bottom = NodePath("../../../../VBoxContainer2/MarginContainer/VBoxContainer/Settings")
+focus_next = NodePath("../../../../VBoxContainer2/MarginContainer/VBoxContainer/Settings")
 text = "New Game"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[fill][i]Stolen uranium![/i] A batch of the radioactive material was stolen while being transported to the nuclear power plant. 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et posuere diam. Maecenas tristique porttitor tortor nec tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+text = "[fill][i]Stolen uranium![/i] —A batch of the radioactive material was stolen while being transported to the nuclear power plant. 
+The energy harnessed from the splitting of the atom of this precious material is what powers your fridge, toaster and microwave oven.
+The element poses a danger to civilians. Authorities are looking for the suspect, described as wearing a turtleneck and a white coat. If you know anyone who matches this description, don't hesitate to contact your local police department."
 fit_content = true
 scroll_active = false
 
@@ -79,52 +83,57 @@ text = "Play Test"
 [node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="4"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[fill]Morbi nulla enim, viverra in ligula nec, laoreet interdum sem. Sed vel porttitor ex. Suspendisse potenti. Vestibulum egestas eleifend hendrerit. Nulla facilisi. "
-fit_content = true
-scroll_active = false
-
-[node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="5"]
-layout_mode = 2
-bbcode_enabled = true
-text = "[fill]Morbi nulla enim, viverra in ligula nec, laoreet interdum sem. Sed vel porttitor ex. Suspendisse potenti. Vestibulum egestas eleifend hendrerit. Nulla facilisi. "
+text = "[fill]CHICAGO, Aug. 23. —Industrialist Louis E. Wolfson today confirmed reports that he is buying common stock in Montgomery Ward Co. He did not, however, say whether his purchases were for merely investment purposes or constituted an effort to seize control of the big mail order firm."
 fit_content = true
 scroll_active = false
 
 [node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="0"]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_left = NodePath("../../../../VBoxContainer/MarginContainer/VBoxContainer/NewGame")
+focus_neighbor_top = NodePath("../../../../VBoxContainer/MarginContainer/VBoxContainer/NewGame")
+focus_neighbor_bottom = NodePath("../Credits")
+focus_next = NodePath("../Credits")
+focus_previous = NodePath("../../../../VBoxContainer/MarginContainer/VBoxContainer/NewGame")
 text = "Settings
 "
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[fill]Nulla orci velit, eleifend et vestibulum et, interdum at velit. In vitae elementum sem, a rhoncus mauris. Suspendisse potenti. "
+text = "[fill]AMSTERDAM, Netherlands, Aug. 23. —A Royal Dutch KLM airliner from New York crashed into the North Sea off the Dutch coast today and all 21 or more persons aboard are feared to have perished, the KLM air line announced.
+"
 fit_content = true
 scroll_active = false
 
 [node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Settings")
 text = "Credits
 "
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="3"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[fill]Nunc porttitor nunc libero, elementum dapibus odio pulvinar sed. Cras non quam rutrum, condimentum risus non, eleifend magna. Proin odio eros, malesuada nec ultricies et, imperdiet sed nunc. "
+text = "[fill]LONDON, Aug. 23. French —Premier Pierre Mendes-France conferred more than three hours with Prime Minister Churchill today on ways to salvage the European Defense Community and left with the Briton’s pledge: “I will do all I can to help you.”"
 fit_content = true
 scroll_active = false
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="4"]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../Credits")
+focus_previous = NodePath("../Credits")
 text = "Quit Game"
 
 [node name="RichTextLabel4" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/VBoxContainer" index="5"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[fill]Morbi nulla enim, viverra in ligula nec, laoreet interdum sem. Sed vel porttitor ex. Suspendisse potenti. Vestibulum egestas eleifend hendrerit. Nulla facilisi. "
+text = "[fill]Sir Winston gave his pledge as he opened the door of Mr. Mendes-France’s car for him after a long talk at Chartwell, the Prime Minister’s country estate 25 miles outside London. British Foreign Secretary Anthony Eden sat in on the talks."
 fit_content = true
 scroll_active = false
 
