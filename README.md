@@ -1,5 +1,7 @@
 # The Aberratron
 
+[Download](https://github.com/sim-the-bean/acerola-jam-0/releases)
+
 ## Tips
 
 - There's 5 collectibles which outline the backstory of the game
@@ -8,7 +10,7 @@
     - 1 is related to collecting all collectibles
 
 ## Which graphics settings to use?
-There's 3 graphics presets available, on my laptop with a 1660 TI the highest one runs at a smooth 90-100fps.  
+There's 3 graphics presets available, on my laptop with a 1660 TI the highest one runs at a smooth 110fps.  
 There isn't a big visual difference between 2 and 3 but a significant difference in performance.  
 The lowest setting uses significantly less VRAM and performs much better, but also looks worse.  
 
@@ -25,6 +27,7 @@ The lowest setting uses significantly less VRAM and performs much better, but al
     - Editor-only addon
 - [Xelu's Controller & Keyboard Prompts](https://thoseawesomeguys.com/prompts/)
     - CC0 asset pack with input icons for various controllers, mouse and keyboard
+- Snippets from the August 23, 1954 Evening Star
 
 ## Tools used
 
