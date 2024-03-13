@@ -77,6 +77,7 @@ alpha = 1.0
 glitched_material = SubResource("ShaderMaterial_urbdp")
 
 [node name="Collider" parent="." index="0"]
+visible = false
 shape = SubResource("BoxShape3D_646st")
 
 [node name="Mesh" parent="." index="1"]
@@ -96,7 +97,7 @@ scale_target = NodePath("../CoffeeMug/Mug")
 
 [node name="GrabComponent" parent="." index="9"]
 angular_damp = 100.0
-rotate_axis = Vector3(0, 0, 1)
+rotate_axis = Vector3(1, 0, 0)
 rotate_speed_multiplier = 0.3
 
 [node name="CoffeeMug" parent="." index="11" instance=ExtResource("5_6rndy")]

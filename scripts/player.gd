@@ -257,6 +257,8 @@ func process_look(_delta: float):
 	%CameraPivot.rotate_x(look.y)
 	%CameraPivot.rotation.x = clampf(%CameraPivot.rotation.x, -PI * 0.5, PI * 0.5)
 	rotate(up_direction, look.x)
+	if grabbed != null:
+		grabbed.rotate(up_direction, look.x)
 
 func process_input(delta: float):
 	if Input.is_action_just_pressed(&"player_jump") or (jump_buffer and jump_buffer_time >= 0.0):
