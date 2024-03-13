@@ -39,7 +39,11 @@ The lowest setting uses significantly less VRAM and performs much better, but al
 
 ## License
 
-This game and all its assets are licensed under the terms of the GPLv3 license.
+The source code of this game is licensed under the terms of the GPLv3 license.
+
+The assets of this game are licensed under the terms of the [Creative Commons BY-NC-SA 4.0 license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+### GPLv3
 
 Copyright (C) 2024 sim_the_bean
 
