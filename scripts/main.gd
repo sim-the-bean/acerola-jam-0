@@ -32,11 +32,7 @@ func _init():
 func _ready():
 	switch_to_main_menu()
 	if not Engine.is_editor_hint():
-		achievement_file.load(achievements_path)
-		for a in achievements:
-			var progress = achievement_file.get_value("Achievements", a.id, 0)
-			_achievements[a.id] = a.duplicate()
-			_achievements[a.id].progress = progress
+		load_achievements()
 
 func _process(delta):
 	if Input.is_action_just_pressed(&"game_pause"):
@@ -58,6 +54,7 @@ func switch_to_main_menu():
 	in_main_menu = true
 
 func new_game():
+	load_achievements()
 	switch_scene(first_scene, true)
 	in_main_menu = false
 
@@ -134,6 +131,14 @@ func reset_to_checkpoint():
 
 func reset():
 	switch_scene(active_scene, true, true)
+
+func load_achievements():
+	_achievements = {}
+	achievement_file.load(achievements_path)
+	for a in achievements:
+		var progress = achievement_file.get_value("Achievements", a.id, 0)
+		_achievements[a.id] = a.duplicate()
+		_achievements[a.id].progress = progress
 
 func trigger_achievement(id: String):
 	var achievement: Achievement = null
