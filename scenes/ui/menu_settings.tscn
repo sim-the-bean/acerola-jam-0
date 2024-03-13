@@ -126,6 +126,27 @@ rounded = true
 tick_count = 3
 ticks_on_borders = true
 
+[node name="Sound" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer" index="6"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Sound" index="0"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ffj8p")
+text = "Sound"
+
+[node name="SoundSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Sound" index="1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+min_value = 1.0
+step = 5.0
+value = 100.0
+
 [node name="VBoxContainer2" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
 visible = false
 
@@ -135,3 +156,4 @@ visible = false
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/InvertCameraY/InvertCameraYCheck" to="." method="_on_invert_camera_y_check_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/ViewBobbing/ViewBobbingCheck" to="." method="_on_view_bobbing_check_toggled"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Graphics/GraphicsSlider" to="." method="_on_graphics_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Sound/SoundSlider" to="." method="_on_sound_slider_value_changed"]

@@ -52,15 +52,15 @@ surface_material_override/0 = ExtResource("3_r3g6p")
 surface_material_override/0 = SubResource("ORMMaterial3D_l8el1")
 
 [node name="Wheel1" parent="Projector/Tripod" index="4"]
-transform = Transform3D(1, 0, 0, 0, 0.732532, -0.680733, 0, 0.680733, 0.732532, 0.0311643, 0.114309, -0.148053)
+transform = Transform3D(1, 0, 0, 0, -0.459389, -0.888236, 0, 0.888236, -0.459389, 0.0311643, 0.114309, -0.148053)
 
 [node name="Wheel2" parent="Projector/Tripod" index="5"]
-transform = Transform3D(1, 0, 0, 0, 0.732532, -0.680733, 0, 0.680733, 0.732532, 0.0311643, 0.456265, -0.143457)
+transform = Transform3D(1, 0, 0, 0, -0.459389, -0.888236, 0, 0.888236, -0.459389, 0.0311643, 0.456265, -0.143457)
 
 [node name="Light" type="SpotLight3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0223144, 0.624247, -0.147923)
-light_energy = 1.05921
+light_energy = 0.93757
 shadow_enabled = true
 distance_fade_enabled = true
 spot_attenuation = 0.329878

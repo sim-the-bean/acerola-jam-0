@@ -63,6 +63,13 @@ var anti_aliasing := AntiAliasing.FXAA:
 		config.set_value("Settings", "anti_aliasing", anti_aliasing)
 		save_settings()
 var xinput_type := ControllerType.InputType.OTHER
+var sound := 100.0:
+	set(value):
+		sound = clamp(value, 1.0, 100.0)
+		set_sound()
+		setting_changed.emit("sound", sound)
+		config.set_value("Settings", "sound", sound)
+		save_settings()
 
 var config := ConfigFile.new()
 var save_to_file := false
@@ -91,6 +98,11 @@ func set_aa():
 			ProjectSettings.set_setting("rendering/anti_aliasing/quality/msaa_3d", 0)
 			ProjectSettings.set_setting("rendering/anti_aliasing/quality/screen_space_aa", 0)
 			ProjectSettings.set_setting("rendering/anti_aliasing/quality/use_taa", true)
+
+func set_sound(bus := "Master"):
+	var bus_idx := AudioServer.get_bus_index(bus)
+	var db: float = log(clamp(sound, 1.0, 100.0)) / log(10.0) * 25.0 - 50.0
+	AudioServer.set_bus_volume_db(bus_idx, db)
 
 func save_settings():
 	if save_to_file:

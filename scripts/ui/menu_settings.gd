@@ -7,6 +7,7 @@ func _ready():
 	%InvertCameraYCheck.button_pressed = GameSettings.look_invert_y
 	%ViewBobbingCheck.button_pressed = GameSettings.bobbing_enabled
 	%GraphicsSlider.value = GameSettings.graphics
+	%SoundSlider.value = GameSettings.sound
 
 func _unhandled_input(event):
 	initial_focus()
@@ -39,3 +40,6 @@ func _on_view_bobbing_check_toggled(toggled_on):
 
 func _on_graphics_slider_value_changed(value):
 	GameSettings.graphics = value
+
+func _on_sound_slider_value_changed(value):
+	GameSettings.sound = value

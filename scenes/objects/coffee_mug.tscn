@@ -77,7 +77,6 @@ alpha = 1.0
 glitched_material = SubResource("ShaderMaterial_urbdp")
 
 [node name="Collider" parent="." index="0"]
-visible = false
 shape = SubResource("BoxShape3D_646st")
 
 [node name="Mesh" parent="." index="1"]
