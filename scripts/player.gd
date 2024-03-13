@@ -28,7 +28,7 @@ enum PositionState {
 @export var grabbed_rotate_speed := 100.0
 @export var jump_buffer_duration := 0.2
 @export var killed_rotation_speed := 10.0
-@export var item_zoom_speed := 1.5
+@export var item_zoom_duration := 1.5
 @export var item_zoom_in_speed_controller := 1.0
 @export var item_zoom_in_speed_mouse := 0.05
 
@@ -411,8 +411,8 @@ func do_item():
 			interactive.view()
 			interactive.reparent(%HoldItemPoint)
 			var tween = create_tween()
-			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_speed)
-			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_speed)
+			tween.tween_property(interactive, "position", Vector3.ZERO, item_zoom_duration)
+			tween.parallel().tween_property(interactive, "quaternion", Quaternion.IDENTITY, item_zoom_duration)
 			position_state = PositionState.ITEM_ZOOM
 			%Cursor.visible = false
 		elif interactive != null:
